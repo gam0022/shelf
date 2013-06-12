@@ -1,0 +1,113 @@
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>MatrixEngine WebGL Sample</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+
+    <script type="text/javascript" src="js/matrixengine-bootstrap.js"></script>
+    <script type="text/javascript" src="js/jquery-2.0.2.min.js"></script>
+    <!--script src="http://code.jquery.com/jquery.js"></script-->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+
+
+    <script>
+      function expandCanvas(canvas) {
+        var b = document.body;
+        var bodyWidth = Math.max(b.clientWidth , 64);
+        var bodyHeight = Math.max(b.clientHeight , 64);
+        var zoomer = window.devicePixelRatio;
+        if(zoomer == undefined){
+          if("MxeUtil" in window && MxeUtil.detectSmartPhone()){
+            zoomer = window.screen.width/bodyWidth;
+            }else{
+            zoomer = 1.0;
+          }
+        }
+        canvas.width=bodyWidth*zoomer;
+        canvas.height=bodyHeight*zoomer;
+        canvas.style.width=bodyWidth;
+        canvas.style.height=bodyHeight;
+
+      };
+
+      function startMatrixEngine() {
+        var canvas = document.getElementById("matrixengine-canvas");
+        //expandCanvas(canvas); //full screen
+        matrixEngine = new MxePlayer(canvas);
+        var mxeProject = new MxeProject();
+        mxeProject.contentsFile = "js/matrixengine-contents.js";
+        mxeProject.controllerFile = "js/controller.js";
+        matrixEngine.setProject(mxeProject);
+        matrixEngine.start();
+      };
+
+      window.onresize = function() {
+        var canvas = document.getElementById("matrixengine-canvas");
+        //expandCanvas(canvas);
+      };
+
+      window.onload = function() {
+        bootMatrixEngine();
+      };
+
+      window.onloadmatrixengine = function() {
+        startMatrixEngine();
+      };
+
+    </script>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Project name</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!--div id="prog"></div-->
+
+      <h1>Bootstrap starter template</h1>
+      <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
+
+      <div class="progress">
+        <div class="bar" style="width: 0%;" id="status"></div>
+      </div>
+
+      <div width="800px" height="600px" style="margin:0; padding:0;" align="center">
+        <canvas id="matrixengine-canvas" style="border:none; margin:0;" width=800px height=600px></canvas>
+      </div>
+
+    </div> <!-- /container -->
+  </body>
+</html>

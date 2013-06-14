@@ -294,7 +294,7 @@ var MxeDefaultController = function(contents) {
   this.MAX_FACES  = this.ITEM_MAX / this.NUM_PANEL;
 
   // 棚の回転のフレーム数
-  this.FRAME_SHELF_ROLL = 12;
+  this.FRAME_SHELF_ROLL = 20;
   // パネルのポップアップのフレーム数
   this.FRAME_PANEL_POPUP = 5;
 
@@ -303,6 +303,10 @@ var MxeDefaultController = function(contents) {
   //
 
   this.main_count = 0;
+
+  //
+  // Shelf の回転の制御用
+  //
 
   this.is_shelf_rolling = false;
   this.shelf_rol_state = 0;
@@ -314,18 +318,31 @@ var MxeDefaultController = function(contents) {
   // 面が最後に読み込んだアイテムを記憶する
   this.shelf_texture_loaded_item = [-1, -1, -1, -1];
 
-  // パペット化
-  this.shelf_root = this.sShelfScore.tracks[0];
-  this.shelf_root.setPuppet(true);
-  this.shelf_root.frame.visible = true;
-
-  this.PANEL_TRACKS = [];
-  this.PANEL_GHOST_TRACKS = [];
+  //
+  // Panel の Popup の制御用
+  //
 
   this.is_panel_popup = false; 
   this.popup_panel_id = 0;
   this.popup_panel_count = 0;
   this.panel_original_pos = [];
+  this.POPUP_TARGET_POS = [0, 23, -155];
+
+  //
+  // Shelf の Root のパペット化
+  //
+
+  this.shelf_root = this.sShelfScore.tracks[0];
+  this.shelf_root.setPuppet(true);
+  this.shelf_root.frame.visible = true;
+
+
+  //
+  // Panel のパペット化
+  //
+
+  this.PANEL_TRACKS = [];
+  this.PANEL_GHOST_TRACKS = [];
 
   for (var i = 0; i < 4; ++i) {
     for (var j = 0; j < 9; ++j) {
@@ -346,15 +363,11 @@ var MxeDefaultController = function(contents) {
     }
   }
 
-  this.POPUP_TARGET_POS = [0, 23, -155];
-
 
   this.load_textures(0);
   this.load_textures(1);
   this.load_textures(2);
   this.load_textures(3);
-
-
 };
 
 MxePlayer.registerControllerClass(MxeDefaultController);
@@ -711,13 +724,11 @@ MxeDefaultController.prototype.update_statusbar = function () {
 }
 
 //
-// 等間隔な [0 1] を入力として、カーブとなるような値を返す
+// 等間隔な [0 1] を入力として、EaseOutするような関数を返す
 //
 
-MxeDefaultController.prototype.curve = function (d, n) {
-// d: [0 1]
-// n: 適当な係数。大きいほどカーブが強くなる
-  return Math.log( 1 + (Math.E - 1) * Math.pow(d, n) );
+MxeDefaultController.prototype.easeOut = function (x) {
+  return 1 - Math.exp(-6 * x);
 }
 
 
@@ -751,7 +762,7 @@ MxeDefaultController.prototype.execute_pop_panel = function() {
   }
 
   var d = this.popup_panel_count / this.FRAME_PANEL_POPUP;// [0 1]の係数
-  var z = this.curve(d, 3);
+  var z = this.easeOut(d);
   var original_pos = this.panel_original_pos[this.popup_panel_id];
   var v = diff_pos(this.POPUP_TARGET_POS, original_pos);
   var diff = scale_pos(v, z);
@@ -769,7 +780,7 @@ MxeDefaultController.prototype.shelf_loop = function () {
     var rd  = Math.PI / 2;
     var pad = this.shelf_rol_state_pre * rd;
     var d   = this.shelf_rot_count / this.FRAME_SHELF_ROLL;
-    var z   = this.curve(d, 2);
+    var z   = this.easeOut(d);////this.easeOut(d, 2);
     this.shelf_rot = this.is_shelf_rot_right ? pad + rd * z : pad - rd * z;
     this.shelf_root.frame.rot[1] = this.shelf_rot;
 

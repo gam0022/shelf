@@ -279,34 +279,37 @@ var MxeDefaultController = function(contents) {
     contents.textureCastsL["Texture_35"].index
       ];
 
-  // 通信で取得した画像をテクスチャキャストに貼り付け
-  //for (var i = 0; i < 36; ++i) {
-  //  loadingImage = contents.textureCastsL["LoadTx"].getImage();
-  //  contents.textureCasts[this.PANEL_TEXTURE[i]].loadImage(loadingImage);
-
-  //  url = this.ITEM_IMAGE_PATH + this.ITEM_DATA[i * 3 + 0];
-  //  contents.textureCasts[this.PANEL_TEXTURE[i]].loadImage(url);
-  //}
-
-
-
   // add
   this.sShelfScore = contents.scoresL["shelf"];
 
+  //
   // consts
+  //
+
+  // 棚1面あたりのパネル数
   this.NUM_PANEL  = 9;
+  // 存在するパネル数
   this.MAX_PANELS = this.NUM_PANEL * 4;
+  // 仮想的な棚の面数
   this.MAX_FACES  = this.ITEM_MAX / this.NUM_PANEL;
-  this.PANEL_POPUP_FRAME = 3;
 
-  this.PI = 3.14159265359;
+  // 棚の回転のフレーム数
+  this.FRAME_SHELF_ROLL = 12;
+  // パネルのポップアップのフレーム数
+  this.FRAME_PANEL_POPUP = 5;
 
+  //
   // member
-  this.main_cnt = 0;
-  this.shelf_rol_state = 0;
+  //
+
+  this.main_count = 0;
+
   this.is_shelf_rolling = false;
+  this.shelf_rol_state = 0;
+  this.shelf_rol_state_pre = 0;
   this.shelf_rot = 0.0;
-  this.shelf_rotv = 0.0;
+  this.shelf_rot_count = 0;
+  this.is_shelf_rot_right = true;
 
   // 面が最後に読み込んだアイテムを記憶する
   this.shelf_texture_loaded_item = [-1, -1, -1, -1];
@@ -318,10 +321,10 @@ var MxeDefaultController = function(contents) {
 
   this.PANEL_TRACKS = [];
   this.PANEL_GHOST_TRACKS = [];
-  //this.is_panel_popup = [];
+
   this.is_panel_popup = false; 
   this.popup_panel_id = 0;
-  this.popup_panel_state = 0;// 0 ～ 100
+  this.popup_panel_count = 0;// 0 ～ 100
   this.panel_original_pos = [];
 
   for (var i = 0; i < 4; ++i) {
@@ -340,12 +343,10 @@ var MxeDefaultController = function(contents) {
       gt.frame.visible = true;
       this.PANEL_GHOST_TRACKS.push(gt);
       this.panel_original_pos.push(jQuery.extend(true, {}, gt.frame.pos));
-
-      //this.is_panel_popup.push(false);
     }
   }
 
-  this.POPUP_TARGET_POS = [0, 23, -150];
+  this.POPUP_TARGET_POS = [0, 23, -155];
 
 
   this.load_textures(0);
@@ -710,6 +711,50 @@ MxeDefaultController.prototype.update_statusbar = function () {
 }
 
 //
+// 漸近の関数を返す
+//
+
+// d: [0 1]
+// n: 適当な係数。大きいほどカーブが強くなる
+MxeDefaultController.prototype.curve = function (d, n) {
+  return Math.log( 1 + (Math.E - 1) * Math.pow(d, n) );
+}
+
+
+MxeDefaultController.prototype.execute_pop_panel = function() {
+  var scale_pos = function(pos, d) {
+    var new_pos = [];
+    new_pos[0] = pos[0] * d;
+    new_pos[1] = pos[1] * d;
+    new_pos[2] = pos[2] * d;
+    return new_pos;
+  }
+
+  var add_pos = function(p0, p1) {
+    var new_pos = [];
+    new_pos[0] = p0[0] + p1[0];
+    new_pos[1] = p0[1] + p1[1];
+    new_pos[2] = p0[2] + p1[2];
+    return new_pos;
+  }
+
+  var diff_pos = function(p0, p1) {
+    var new_pos = [];
+    new_pos[0] = p0[0] - p1[0];
+    new_pos[1] = p0[1] - p1[1];
+    new_pos[2] = p0[2] - p1[2];
+    return new_pos;
+  }
+
+  var d = this.popup_panel_count / this.FRAME_PANEL_POPUP;// [0 1]の係数
+  var z = this.curve(d, 3);
+  var original_pos = this.panel_original_pos[this.popup_panel_id];
+  var v = diff_pos(this.POPUP_TARGET_POS, original_pos);
+  var diff = scale_pos(v, z);
+  this.PANEL_GHOST_TRACKS[this.popup_panel_id].frame.pos = add_pos(original_pos, diff);
+}
+
+//
 // Main
 //
 
@@ -717,76 +762,39 @@ MxeDefaultController.prototype.shelf_loop = function () {
 
   // Shelf
   if (this.is_shelf_rolling) {
-    var stop_flag = false;
-    var target = 0.5 * this.PI * this.shelf_rol_state;
-
-    this.shelf_rot += this.shelf_rotv;
-    this.shelf_rotv *= 0.91;
-
-    if ( (this.shelf_rotv > 0 && this.shelf_rot > target) || (this.shelf_rotv < 0 && this.shelf_rot < target) ) {
-      stop_flag = true;
-      this.shelf_rot = target;
-      this.shelf_rotv = 0.0;
-    }
-
+    var rd  = Math.PI / 2;
+    var pad = this.shelf_rol_state_pre * rd;
+    var d   = this.shelf_rot_count / this.FRAME_SHELF_ROLL;
+    var z   = this.curve(d, 2);
+    this.shelf_rot = this.is_shelf_rot_right ? pad + rd * z : pad - rd * z;
     this.shelf_root.frame.rot[1] = this.shelf_rot;
 
-    if ( stop_flag ) {
+    ++this.shelf_rot_count;
+
+    if (this.shelf_rot_count > this.FRAME_SHELF_ROLL) {
       this.is_shelf_rolling = false;
-      // テスクチャの更新
       //this.load_textures(this.shelf_rol_state + 1);
       //this.load_textures(this.shelf_rol_state - 1);
     }
   }
 
-  var execute_pop_panel = function(p) {
-    var scale_pos = function(pos, d) {
-      var new_pos = [];
-      new_pos[0] = pos[0] * d;
-      new_pos[1] = pos[1] * d;
-      new_pos[2] = pos[2] * d;
-      return new_pos;
-    }
-
-    var add_pos = function(p0, p1) {
-      var new_pos = [];
-      new_pos[0] = p0[0] + p1[0];
-      new_pos[1] = p0[1] + p1[1];
-      new_pos[2] = p0[2] + p1[2];
-      return new_pos;
-    }
-
-    var diff_pos = function(p0, p1) {
-      var new_pos = [];
-      new_pos[0] = p0[0] - p1[0];
-      new_pos[1] = p0[1] - p1[1];
-      new_pos[2] = p0[2] - p1[2];
-      return new_pos;
-    }
-    var d = p.popup_panel_state / p.PANEL_POPUP_FRAME;
-    var org_pos = p.panel_original_pos[p.popup_panel_id];
-    var v = diff_pos(p.POPUP_TARGET_POS, org_pos);
-    var diff = scale_pos(v, d);
-    p.PANEL_GHOST_TRACKS[p.popup_panel_id].frame.pos = add_pos(org_pos, diff);
-  }
-
   // Panel PopUp
-  if ( this.is_panel_popup && this.popup_panel_state < this.PANEL_POPUP_FRAME ) {
-    ++this.popup_panel_state;
-    execute_pop_panel(this);
+  if ( this.is_panel_popup && this.popup_panel_count < this.FRAME_PANEL_POPUP ) {
+    ++this.popup_panel_count;
+    this.execute_pop_panel();
   }
 
   // Panel PopDown
-  if ( !this.is_panel_popup && this.popup_panel_state > 0 ) {
-    --this.popup_panel_state;
-    execute_pop_panel(this);
+  if ( !this.is_panel_popup && this.popup_panel_count > 0 ) {
+    --this.popup_panel_count;
+    this.execute_pop_panel();
   }
 
   // Main Count
-  if (this.main_cnt == 0) {
+  if (this.main_count == 0) {
     this.update_statusbar();
   }
-  ++this.main_cnt;
+  ++this.main_count;
 };
 
 //
@@ -795,9 +803,14 @@ MxeDefaultController.prototype.shelf_loop = function () {
 
 MxeDefaultController.prototype.shelf_turn_left = function () {
   if (!this.is_shelf_rolling && this.shelf_rol_state > 0) {
+
     this.is_shelf_rolling = true;
-    this.shelf_rotv = -0.17;
+    this.is_shelf_rot_right = false;
+    this.shelf_rot_count = 0;
+
+    this.shelf_rol_state_pre = this.shelf_rol_state;
     --this.shelf_rol_state;
+
     this.load_textures(this.shelf_rol_state-1);
     this.update_statusbar();
   }
@@ -809,9 +822,14 @@ MxeDefaultController.prototype.shelf_turn_left = function () {
 
 MxeDefaultController.prototype.shelf_turn_right = function () {
   if (!this.is_shelf_rolling && this.shelf_rol_state < this.MAX_FACES - 2) {
+
     this.is_shelf_rolling = true;
-    this.shelf_rotv = 0.17;
+    this.is_shelf_rot_right = true;
+    this.shelf_rot_count = 0;
+
+    this.shelf_rol_state_pre = this.shelf_rol_state;
     ++this.shelf_rol_state;
+
     this.load_textures(this.shelf_rol_state+1);
     this.update_statusbar();
   }
@@ -825,13 +843,13 @@ MxeDefaultController.prototype.panel_popup = function (id) {
 
   if (this.is_panel_popup) {
     // pop down
-    if (id == this.popup_panel_id && this.popup_panel_state == this.PANEL_POPUP_FRAME) {
+    if (id == this.popup_panel_id && this.popup_panel_count == this.FRAME_PANEL_POPUP) {
       this.is_panel_popup = false;
     }
 
   } else {
     // pop up
-    if (this.popup_panel_state == 0) {
+    if (this.popup_panel_count == 0) {
       this.is_panel_popup = true;
       this.popup_panel_id = id;
     }

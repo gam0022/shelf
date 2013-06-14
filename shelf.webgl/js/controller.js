@@ -298,6 +298,7 @@ var MxeDefaultController = function(contents) {
   this.NUM_PANEL  = 9;
   this.MAX_PANELS = this.NUM_PANEL * 4;
   this.MAX_FACES  = this.ITEM_MAX / this.NUM_PANEL;
+  this.PANEL_POPUP_FRAME = 3;
 
   this.PI = 3.14159265359;
 
@@ -317,18 +318,35 @@ var MxeDefaultController = function(contents) {
   this.shelf_root.frame.visible = true;
 
   this.PANEL_TRACKS = [];
-  this.is_panel_popup = [];
+  this.PANEL_GHOST_TRACKS = [];
+  //this.is_panel_popup = [];
+  this.is_panel_popup = false; 
+  this.popup_panel_id = 0;
+  this.popup_panel_state = 0;// 0 ～ 100
+  this.panel_original_pos = [];
 
   for (var i = 0; i < 4; ++i) {
     for (var j = 0; j < 9; ++j) {
-      var t = this.sShelfScore.tracks[i * 19 + j * 2 + 4];
-      t.setPuppet(true);
-      t.frame.visible = true;
-      t.frame.siz = [0.17, 0.17, 0.17];
-      this.PANEL_TRACKS.push(t);
-      this.is_panel_popup.push(false);
+
+      var pt = this.sShelfScore.tracks[i * 19 + j * 2 + 4];
+      pt.setPuppet(true);
+      pt.frame.visible = true;
+      pt.frame.siz = [0.17, 0.17, 0.17];
+      this.PANEL_TRACKS.push(pt);
+
+      var gt = this.sShelfScore.tracks[i * 19 + j * 2 + 3];
+      gt.setPuppet(true);
+      gt.frame.pos = [(j%3 - 1) * 20, 35 - Math.floor( j / 3 ) * 31, -40];
+      gt.frame.siz = [1, 1, 1];
+      gt.frame.visible = true;
+      this.PANEL_GHOST_TRACKS.push(gt);
+      this.panel_original_pos.push(jQuery.extend(true, {}, gt.frame.pos));
+
+      //this.is_panel_popup.push(false);
     }
   }
+
+  this.POPUP_TARGET_POS = [0, 23, -150];
 
 
   this.load_textures(0);
@@ -693,10 +711,12 @@ MxeDefaultController.prototype.update_statusbar = function () {
 }
 
 //
-// 棚のmain処理
+// Main
 //
 
 MxeDefaultController.prototype.shelf_loop = function () {
+
+  // Shelf
   if (this.is_shelf_rolling) {
     var stop_flag = false;
     var target = 0.5 * this.PI * this.shelf_rol_state;
@@ -720,12 +740,54 @@ MxeDefaultController.prototype.shelf_loop = function () {
     }
   }
 
+  var execute_pop_panel = function(p) {
+    var scale_pos = function(pos, d) {
+      var new_pos = [];
+      new_pos[0] = pos[0] * d;
+      new_pos[1] = pos[1] * d;
+      new_pos[2] = pos[2] * d;
+      return new_pos;
+    }
+
+    var add_pos = function(p0, p1) {
+      var new_pos = [];
+      new_pos[0] = p0[0] + p1[0];
+      new_pos[1] = p0[1] + p1[1];
+      new_pos[2] = p0[2] + p1[2];
+      return new_pos;
+    }
+
+    var diff_pos = function(p0, p1) {
+      var new_pos = [];
+      new_pos[0] = p0[0] - p1[0];
+      new_pos[1] = p0[1] - p1[1];
+      new_pos[2] = p0[2] - p1[2];
+      return new_pos;
+    }
+    var d = p.popup_panel_state / p.PANEL_POPUP_FRAME;
+    var org_pos = p.panel_original_pos[p.popup_panel_id];
+    var v = diff_pos(p.POPUP_TARGET_POS, org_pos);
+    var diff = scale_pos(v, d);
+    p.PANEL_GHOST_TRACKS[p.popup_panel_id].frame.pos = add_pos(org_pos, diff);
+  }
+
+  // Panel PopUp
+  if ( this.is_panel_popup && this.popup_panel_state < this.PANEL_POPUP_FRAME ) {
+    ++this.popup_panel_state;
+    execute_pop_panel(this);
+  }
+
+  // Panel PopDown
+  if ( !this.is_panel_popup && this.popup_panel_state > 0 ) {
+    --this.popup_panel_state;
+    execute_pop_panel(this);
+  }
+
+  // Main Count
   if (this.main_cnt == 0) {
     this.update_statusbar();
   }
-
   ++this.main_cnt;
-
 };
 
 //
@@ -760,16 +822,20 @@ MxeDefaultController.prototype.shelf_turn_right = function () {
 // パネルのクリック
 //
 
-MxeDefaultController.prototype.panel_popup = function (panel_n) {
+MxeDefaultController.prototype.panel_popup = function (id) {
 
-  if (this.is_panel_popup[panel_n]) {
+  if (this.is_panel_popup) {
     // pop down
-    this.PANEL_TRACKS[panel_n].frame.siz = [0.17, 0.17, 0.17];
-    this.is_panel_popup[panel_n] = false;
+    if (id == this.popup_panel_id && this.popup_panel_state == this.PANEL_POPUP_FRAME) {
+      this.is_panel_popup = false;
+    }
+
   } else {
     // pop up
-    this.PANEL_TRACKS[panel_n].frame.siz = [0.3, 0.3, 0.3];
-    this.is_panel_popup[panel_n] = true;
+    if (this.popup_panel_state == 0) {
+      this.is_panel_popup = true;
+      this.popup_panel_id = id;
+    }
   }
 
 }

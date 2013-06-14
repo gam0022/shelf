@@ -8,6 +8,114 @@ var MxeDefaultController = function(contents) {
 
   score = contents.scores[1];
 
+  track = score.tracks[4];
+  track.addEventListener("onclick", eventproc.onCastClick004, this, [1,]);
+
+  track = score.tracks[6];
+  track.addEventListener("onclick", eventproc.onCastClick005, this, [1,]);
+
+  track = score.tracks[8];
+  track.addEventListener("onclick", eventproc.onCastClick006, this, [1,]);
+
+  track = score.tracks[10];
+  track.addEventListener("onclick", eventproc.onCastClick007, this, [1,]);
+
+  track = score.tracks[12];
+  track.addEventListener("onclick", eventproc.onCastClick008, this, [1,]);
+
+  track = score.tracks[14];
+  track.addEventListener("onclick", eventproc.onCastClick009, this, [1,]);
+
+  track = score.tracks[16];
+  track.addEventListener("onclick", eventproc.onCastClick010, this, [1,]);
+
+  track = score.tracks[18];
+  track.addEventListener("onclick", eventproc.onCastClick011, this, [1,]);
+
+  track = score.tracks[20];
+  track.addEventListener("onclick", eventproc.onCastClick012, this, [1,]);
+
+  track = score.tracks[23];
+  track.addEventListener("onclick", eventproc.onCastClick013, this, [1,]);
+
+  track = score.tracks[25];
+  track.addEventListener("onclick", eventproc.onCastClick014, this, [1,]);
+
+  track = score.tracks[27];
+  track.addEventListener("onclick", eventproc.onCastClick015, this, [1,]);
+
+  track = score.tracks[29];
+  track.addEventListener("onclick", eventproc.onCastClick016, this, [1,]);
+
+  track = score.tracks[31];
+  track.addEventListener("onclick", eventproc.onCastClick017, this, [1,]);
+
+  track = score.tracks[33];
+  track.addEventListener("onclick", eventproc.onCastClick018, this, [1,]);
+
+  track = score.tracks[35];
+  track.addEventListener("onclick", eventproc.onCastClick019, this, [1,]);
+
+  track = score.tracks[37];
+  track.addEventListener("onclick", eventproc.onCastClick020, this, [1,]);
+
+  track = score.tracks[39];
+  track.addEventListener("onclick", eventproc.onCastClick021, this, [1,]);
+
+  track = score.tracks[42];
+  track.addEventListener("onclick", eventproc.onCastClick022, this, [1,]);
+
+  track = score.tracks[44];
+  track.addEventListener("onclick", eventproc.onCastClick023, this, [1,]);
+
+  track = score.tracks[46];
+  track.addEventListener("onclick", eventproc.onCastClick024, this, [1,]);
+
+  track = score.tracks[48];
+  track.addEventListener("onclick", eventproc.onCastClick025, this, [1,]);
+
+  track = score.tracks[50];
+  track.addEventListener("onclick", eventproc.onCastClick026, this, [1,]);
+
+  track = score.tracks[52];
+  track.addEventListener("onclick", eventproc.onCastClick027, this, [1,]);
+
+  track = score.tracks[54];
+  track.addEventListener("onclick", eventproc.onCastClick028, this, [1,]);
+
+  track = score.tracks[56];
+  track.addEventListener("onclick", eventproc.onCastClick029, this, [1,]);
+
+  track = score.tracks[58];
+  track.addEventListener("onclick", eventproc.onCastClick030, this, [1,]);
+
+  track = score.tracks[61];
+  track.addEventListener("onclick", eventproc.onCastClick031, this, [1,]);
+
+  track = score.tracks[63];
+  track.addEventListener("onclick", eventproc.onCastClick032, this, [1,]);
+
+  track = score.tracks[65];
+  track.addEventListener("onclick", eventproc.onCastClick033, this, [1,]);
+
+  track = score.tracks[67];
+  track.addEventListener("onclick", eventproc.onCastClick034, this, [1,]);
+
+  track = score.tracks[69];
+  track.addEventListener("onclick", eventproc.onCastClick035, this, [1,]);
+
+  track = score.tracks[71];
+  track.addEventListener("onclick", eventproc.onCastClick036, this, [1,]);
+
+  track = score.tracks[73];
+  track.addEventListener("onclick", eventproc.onCastClick037, this, [1,]);
+
+  track = score.tracks[75];
+  track.addEventListener("onclick", eventproc.onCastClick038, this, [1,]);
+
+  track = score.tracks[77];
+  track.addEventListener("onclick", eventproc.onCastClick039, this, [1,]);
+
   track = score.tracks[79];
   score.addEventListener("onexitframe", eventproc.onExitFrame002, this, [1,]);
 
@@ -209,6 +317,7 @@ var MxeDefaultController = function(contents) {
   this.shelf_root.frame.visible = true;
 
   this.PANEL_TRACKS = [];
+  this.is_panel_popup = [];
 
   for (var i = 0; i < 4; ++i) {
     for (var j = 0; j < 9; ++j) {
@@ -217,8 +326,10 @@ var MxeDefaultController = function(contents) {
       t.frame.visible = true;
       t.frame.siz = [0.17, 0.17, 0.17];
       this.PANEL_TRACKS.push(t);
+      this.is_panel_popup.push(false);
     }
   }
+
 
   this.load_textures(0);
   this.load_textures(1);
@@ -233,25 +344,316 @@ MxePlayer.registerControllerClass(MxeDefaultController);
 MxeDefaultController.eventproc = {};
 
 //=============================================
-// SCRIPT CAST 0
+// Click Shelf Turn Left Button
 //=============================================
 MxeDefaultController.eventproc.onCastClick000 = function(e) {
   e.userObj.shelf_turn_left();
 };
 
 //=============================================
-// SCRIPT CAST 1
+// Click Shelf Turn Right Button
 //=============================================
 MxeDefaultController.eventproc.onCastClick001 = function(e) {
   e.userObj.shelf_turn_right();
 };
 
 //=============================================
-// SCRIPT CAST 2
+// Main loop
 //=============================================
 MxeDefaultController.eventproc.onExitFrame002 = function(e) {
   e.userObj.shelf_loop();
 };
+
+//=============================================
+// Click Panel 0
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick004 = function(e) {
+  e.userObj.panel_popup(0);
+};
+
+//=============================================
+// Click Panel 1
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick005 = function(e) {
+  e.userObj.panel_popup(1);
+};
+
+//=============================================
+// Click Panel 2
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick006 = function(e) {
+  e.userObj.panel_popup(2);
+};
+
+//=============================================
+// Click Panel 3
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick007 = function(e) {
+  e.userObj.panel_popup(3);
+};
+
+//=============================================
+// Click Panel 4
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick008 = function(e) {
+  e.userObj.panel_popup(4);
+};
+
+//=============================================
+// Click Panel 5
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick009 = function(e) {
+  e.userObj.panel_popup(5);
+};
+
+//=============================================
+// Click Panel 6
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick010 = function(e) {
+  e.userObj.panel_popup(6);
+};
+
+//=============================================
+// Click Panel 7
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick011 = function(e) {
+  e.userObj.panel_popup(7);
+};
+
+//=============================================
+// Click Panel 8
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick012 = function(e) {
+  e.userObj.panel_popup(8);
+};
+
+//=============================================
+// Click Panel 9
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick013 = function(e) {
+  e.userObj.panel_popup(9);
+};
+
+//=============================================
+// Click Panel 10
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick014 = function(e) {
+  e.userObj.panel_popup(10);
+};
+
+//=============================================
+// Click Panel 11
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick015 = function(e) {
+  e.userObj.panel_popup(11);
+};
+
+//=============================================
+// Click Panel 12
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick016 = function(e) {
+  e.userObj.panel_popup(12);
+};
+
+//=============================================
+// Click Panel 13
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick017 = function(e) {
+  e.userObj.panel_popup(13);
+};
+
+//=============================================
+// Click Panel 14
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick018 = function(e) {
+  e.userObj.panel_popup(14);
+};
+
+//=============================================
+// Click Panel 15
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick019 = function(e) {
+  e.userObj.panel_popup(15);
+};
+
+//=============================================
+// Click Panel 16
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick020 = function(e) {
+  e.userObj.panel_popup(16);
+};
+
+//=============================================
+// Click Panel 17
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick021 = function(e) {
+  e.userObj.panel_popup(17);
+};
+
+//=============================================
+// Click Panel 18
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick022 = function(e) {
+  e.userObj.panel_popup(18);
+};
+
+//=============================================
+// Click Panel 19
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick023 = function(e) {
+  e.userObj.panel_popup(19);
+};
+
+//=============================================
+// Click Panel 20
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick024 = function(e) {
+  e.userObj.panel_popup(20);
+};
+
+//=============================================
+// Click Panel 21
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick025 = function(e) {
+  e.userObj.panel_popup(21);
+};
+
+//=============================================
+// Click Panel 22
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick026 = function(e) {
+  e.userObj.panel_popup(22);
+};
+
+//=============================================
+// Click Panel 23
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick027 = function(e) {
+  e.userObj.panel_popup(23);
+};
+
+//=============================================
+// Click Panel 24
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick028 = function(e) {
+  e.userObj.panel_popup(24);
+};
+
+//=============================================
+// Click Panel 25
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick029 = function(e) {
+  e.userObj.panel_popup(25);
+};
+
+//=============================================
+// Click Panel 26
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick030 = function(e) {
+  e.userObj.panel_popup(26);
+};
+
+//=============================================
+// Click Panel 27
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick031 = function(e) {
+  e.userObj.panel_popup(27);
+};
+
+//=============================================
+// Click Panel 28
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick032 = function(e) {
+  e.userObj.panel_popup(28);
+};
+
+//=============================================
+// Click Panel 29
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick033 = function(e) {
+  e.userObj.panel_popup(29);
+};
+
+//=============================================
+// Click Panel 30
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick034 = function(e) {
+  e.userObj.panel_popup(30);
+};
+
+//=============================================
+// Click Panel 31
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick035 = function(e) {
+  e.userObj.panel_popup(31);
+};
+
+//=============================================
+// Click Panel 32
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick036 = function(e) {
+  e.userObj.panel_popup(32);
+};
+
+//=============================================
+// Click Panel 33
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick037 = function(e) {
+  e.userObj.panel_popup(33);
+};
+
+//=============================================
+// Click Panel 34
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick038 = function(e) {
+  e.userObj.panel_popup(34);
+};
+
+//=============================================
+// Click Panel 35
+//=============================================
+
+MxeDefaultController.eventproc.onCastClick039 = function(e) {
+  e.userObj.panel_popup(35);
+};
+
+
+
 
 //
 // テスクチャの更新
@@ -353,3 +755,21 @@ MxeDefaultController.prototype.shelf_turn_right = function () {
     this.update_statusbar();
   }
 };
+
+//
+// パネルのクリック
+//
+
+MxeDefaultController.prototype.panel_popup = function (panel_n) {
+
+  if (this.is_panel_popup[panel_n]) {
+    // pop down
+    this.PANEL_TRACKS[panel_n].frame.siz = [0.17, 0.17, 0.17];
+    this.is_panel_popup[panel_n] = false;
+  } else {
+    // pop up
+    this.PANEL_TRACKS[panel_n].frame.siz = [0.3, 0.3, 0.3];
+    this.is_panel_popup[panel_n] = true;
+  }
+
+}

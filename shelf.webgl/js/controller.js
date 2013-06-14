@@ -324,7 +324,7 @@ var MxeDefaultController = function(contents) {
 
   this.is_panel_popup = false; 
   this.popup_panel_id = 0;
-  this.popup_panel_count = 0;// 0 ～ 100
+  this.popup_panel_count = 0;
   this.panel_original_pos = [];
 
   for (var i = 0; i < 4; ++i) {
@@ -711,15 +711,19 @@ MxeDefaultController.prototype.update_statusbar = function () {
 }
 
 //
-// 漸近の関数を返す
+// 等間隔な [0 1] を入力として、カーブとなるような値を返す
 //
 
+MxeDefaultController.prototype.curve = function (d, n) {
 // d: [0 1]
 // n: 適当な係数。大きいほどカーブが強くなる
-MxeDefaultController.prototype.curve = function (d, n) {
   return Math.log( 1 + (Math.E - 1) * Math.pow(d, n) );
 }
 
+
+//
+// パネルのポップアップ/ポップダウンの内部処理
+//
 
 MxeDefaultController.prototype.execute_pop_panel = function() {
   var scale_pos = function(pos, d) {

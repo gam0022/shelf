@@ -135,8 +135,7 @@ var MxeDefaultController = function(contents) {
   // IMAGES
   //
 
-  //this.this.ITEM_IMAGE_PATH = "http://koakiyama.web.fc2.com/Variation04/images/bag/";
-  this.ITEM_IMAGE_PATH = "./images/bag-256/";
+  this.ITEM_IMAGE_PATH = "./images/bag/";
   this.ITEM_MAX = 100;
   this.ITEM_DATA = [
     "bag001-256.jpg", "バルーン型トートバッグ【ネット限定カラーあり】", "価格\\3,045(税込)",

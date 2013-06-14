@@ -319,14 +319,24 @@ var MxeDefaultController = function(contents) {
   this.shelf_texture_loaded_item = [-1, -1, -1, -1];
 
   //
-  // Panel の Popup の制御用
+  // Panel の PopUp/PopDown の制御用
   //
+
+  this.panel_original_pos = [];
+  this.POPUP_TARGET_POS = [0, 23, -155];
+
+  this.POPDOWN = 0;
+  this.POPING = 1;
+  this.POPUP = 2;
+  this.panel_pop_state = [];
 
   this.is_panel_popup = false; 
   this.popup_panel_id = 0;
   this.popup_panel_count = 0;
-  this.panel_original_pos = [];
-  this.POPUP_TARGET_POS = [0, 23, -155];
+
+  this.is_panel_popdown = false;
+  this.popdown_panel_id = 0;
+  this.popdown_panel_count = 0;
 
   //
   // Shelf の Root のパペット化
@@ -359,7 +369,9 @@ var MxeDefaultController = function(contents) {
       gt.frame.siz = [1, 1, 1];
       gt.frame.visible = true;
       this.PANEL_GHOST_TRACKS.push(gt);
+
       this.panel_original_pos.push(jQuery.extend(true, {}, gt.frame.pos));
+      this.panel_pop_state.push(this.POPDOWN);
     }
   }
 
@@ -400,7 +412,7 @@ MxeDefaultController.eventproc.onExitFrame002 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick004 = function(e) {
-  e.userObj.panel_popup(0);
+  e.userObj.panel_click(0);
 };
 
 //=============================================
@@ -408,7 +420,7 @@ MxeDefaultController.eventproc.onCastClick004 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick005 = function(e) {
-  e.userObj.panel_popup(1);
+  e.userObj.panel_click(1);
 };
 
 //=============================================
@@ -416,7 +428,7 @@ MxeDefaultController.eventproc.onCastClick005 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick006 = function(e) {
-  e.userObj.panel_popup(2);
+  e.userObj.panel_click(2);
 };
 
 //=============================================
@@ -424,7 +436,7 @@ MxeDefaultController.eventproc.onCastClick006 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick007 = function(e) {
-  e.userObj.panel_popup(3);
+  e.userObj.panel_click(3);
 };
 
 //=============================================
@@ -432,7 +444,7 @@ MxeDefaultController.eventproc.onCastClick007 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick008 = function(e) {
-  e.userObj.panel_popup(4);
+  e.userObj.panel_click(4);
 };
 
 //=============================================
@@ -440,7 +452,7 @@ MxeDefaultController.eventproc.onCastClick008 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick009 = function(e) {
-  e.userObj.panel_popup(5);
+  e.userObj.panel_click(5);
 };
 
 //=============================================
@@ -448,7 +460,7 @@ MxeDefaultController.eventproc.onCastClick009 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick010 = function(e) {
-  e.userObj.panel_popup(6);
+  e.userObj.panel_click(6);
 };
 
 //=============================================
@@ -456,7 +468,7 @@ MxeDefaultController.eventproc.onCastClick010 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick011 = function(e) {
-  e.userObj.panel_popup(7);
+  e.userObj.panel_click(7);
 };
 
 //=============================================
@@ -464,7 +476,7 @@ MxeDefaultController.eventproc.onCastClick011 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick012 = function(e) {
-  e.userObj.panel_popup(8);
+  e.userObj.panel_click(8);
 };
 
 //=============================================
@@ -472,7 +484,7 @@ MxeDefaultController.eventproc.onCastClick012 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick013 = function(e) {
-  e.userObj.panel_popup(9);
+  e.userObj.panel_click(9);
 };
 
 //=============================================
@@ -480,7 +492,7 @@ MxeDefaultController.eventproc.onCastClick013 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick014 = function(e) {
-  e.userObj.panel_popup(10);
+  e.userObj.panel_click(10);
 };
 
 //=============================================
@@ -488,7 +500,7 @@ MxeDefaultController.eventproc.onCastClick014 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick015 = function(e) {
-  e.userObj.panel_popup(11);
+  e.userObj.panel_click(11);
 };
 
 //=============================================
@@ -496,7 +508,7 @@ MxeDefaultController.eventproc.onCastClick015 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick016 = function(e) {
-  e.userObj.panel_popup(12);
+  e.userObj.panel_click(12);
 };
 
 //=============================================
@@ -504,7 +516,7 @@ MxeDefaultController.eventproc.onCastClick016 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick017 = function(e) {
-  e.userObj.panel_popup(13);
+  e.userObj.panel_click(13);
 };
 
 //=============================================
@@ -512,7 +524,7 @@ MxeDefaultController.eventproc.onCastClick017 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick018 = function(e) {
-  e.userObj.panel_popup(14);
+  e.userObj.panel_click(14);
 };
 
 //=============================================
@@ -520,7 +532,7 @@ MxeDefaultController.eventproc.onCastClick018 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick019 = function(e) {
-  e.userObj.panel_popup(15);
+  e.userObj.panel_click(15);
 };
 
 //=============================================
@@ -528,7 +540,7 @@ MxeDefaultController.eventproc.onCastClick019 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick020 = function(e) {
-  e.userObj.panel_popup(16);
+  e.userObj.panel_click(16);
 };
 
 //=============================================
@@ -536,7 +548,7 @@ MxeDefaultController.eventproc.onCastClick020 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick021 = function(e) {
-  e.userObj.panel_popup(17);
+  e.userObj.panel_click(17);
 };
 
 //=============================================
@@ -544,7 +556,7 @@ MxeDefaultController.eventproc.onCastClick021 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick022 = function(e) {
-  e.userObj.panel_popup(18);
+  e.userObj.panel_click(18);
 };
 
 //=============================================
@@ -552,7 +564,7 @@ MxeDefaultController.eventproc.onCastClick022 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick023 = function(e) {
-  e.userObj.panel_popup(19);
+  e.userObj.panel_click(19);
 };
 
 //=============================================
@@ -560,7 +572,7 @@ MxeDefaultController.eventproc.onCastClick023 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick024 = function(e) {
-  e.userObj.panel_popup(20);
+  e.userObj.panel_click(20);
 };
 
 //=============================================
@@ -568,7 +580,7 @@ MxeDefaultController.eventproc.onCastClick024 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick025 = function(e) {
-  e.userObj.panel_popup(21);
+  e.userObj.panel_click(21);
 };
 
 //=============================================
@@ -576,7 +588,7 @@ MxeDefaultController.eventproc.onCastClick025 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick026 = function(e) {
-  e.userObj.panel_popup(22);
+  e.userObj.panel_click(22);
 };
 
 //=============================================
@@ -584,7 +596,7 @@ MxeDefaultController.eventproc.onCastClick026 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick027 = function(e) {
-  e.userObj.panel_popup(23);
+  e.userObj.panel_click(23);
 };
 
 //=============================================
@@ -592,7 +604,7 @@ MxeDefaultController.eventproc.onCastClick027 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick028 = function(e) {
-  e.userObj.panel_popup(24);
+  e.userObj.panel_click(24);
 };
 
 //=============================================
@@ -600,7 +612,7 @@ MxeDefaultController.eventproc.onCastClick028 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick029 = function(e) {
-  e.userObj.panel_popup(25);
+  e.userObj.panel_click(25);
 };
 
 //=============================================
@@ -608,7 +620,7 @@ MxeDefaultController.eventproc.onCastClick029 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick030 = function(e) {
-  e.userObj.panel_popup(26);
+  e.userObj.panel_click(26);
 };
 
 //=============================================
@@ -616,7 +628,7 @@ MxeDefaultController.eventproc.onCastClick030 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick031 = function(e) {
-  e.userObj.panel_popup(27);
+  e.userObj.panel_click(27);
 };
 
 //=============================================
@@ -624,7 +636,7 @@ MxeDefaultController.eventproc.onCastClick031 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick032 = function(e) {
-  e.userObj.panel_popup(28);
+  e.userObj.panel_click(28);
 };
 
 //=============================================
@@ -632,7 +644,7 @@ MxeDefaultController.eventproc.onCastClick032 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick033 = function(e) {
-  e.userObj.panel_popup(29);
+  e.userObj.panel_click(29);
 };
 
 //=============================================
@@ -640,7 +652,7 @@ MxeDefaultController.eventproc.onCastClick033 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick034 = function(e) {
-  e.userObj.panel_popup(30);
+  e.userObj.panel_click(30);
 };
 
 //=============================================
@@ -648,7 +660,7 @@ MxeDefaultController.eventproc.onCastClick034 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick035 = function(e) {
-  e.userObj.panel_popup(31);
+  e.userObj.panel_click(31);
 };
 
 //=============================================
@@ -656,7 +668,7 @@ MxeDefaultController.eventproc.onCastClick035 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick036 = function(e) {
-  e.userObj.panel_popup(32);
+  e.userObj.panel_click(32);
 };
 
 //=============================================
@@ -664,7 +676,7 @@ MxeDefaultController.eventproc.onCastClick036 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick037 = function(e) {
-  e.userObj.panel_popup(33);
+  e.userObj.panel_click(33);
 };
 
 //=============================================
@@ -672,7 +684,7 @@ MxeDefaultController.eventproc.onCastClick037 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick038 = function(e) {
-  e.userObj.panel_popup(34);
+  e.userObj.panel_click(34);
 };
 
 //=============================================
@@ -680,7 +692,7 @@ MxeDefaultController.eventproc.onCastClick038 = function(e) {
 //=============================================
 
 MxeDefaultController.eventproc.onCastClick039 = function(e) {
-  e.userObj.panel_popup(35);
+  e.userObj.panel_click(35);
 };
 
 
@@ -736,7 +748,7 @@ MxeDefaultController.prototype.easeOut = function (x) {
 // パネルのポップアップ/ポップダウンの内部処理
 //
 
-MxeDefaultController.prototype.execute_pop_panel = function() {
+MxeDefaultController.prototype.execute_pop_panel = function(panel_id, count) {
   var scale_pos = function(pos, d) {
     var new_pos = [];
     new_pos[0] = pos[0] * d;
@@ -761,12 +773,12 @@ MxeDefaultController.prototype.execute_pop_panel = function() {
     return new_pos;
   }
 
-  var d = this.popup_panel_count / this.FRAME_PANEL_POPUP;// [0 1]の係数
-  var z = this.easeOut(d);
-  var original_pos = this.panel_original_pos[this.popup_panel_id];
+  var x = count / this.FRAME_PANEL_POPUP;// [0 1]の係数
+  var z = this.easeOut(x);
+  var original_pos = this.panel_original_pos[panel_id];
   var v = diff_pos(this.POPUP_TARGET_POS, original_pos);
   var diff = scale_pos(v, z);
-  this.PANEL_GHOST_TRACKS[this.popup_panel_id].frame.pos = add_pos(original_pos, diff);
+  this.PANEL_GHOST_TRACKS[panel_id].frame.pos = add_pos(original_pos, diff);
 }
 
 //
@@ -780,7 +792,7 @@ MxeDefaultController.prototype.shelf_loop = function () {
     var rd  = Math.PI / 2;
     var pad = this.shelf_rol_state_pre * rd;
     var d   = this.shelf_rot_count / this.FRAME_SHELF_ROLL;
-    var z   = this.easeOut(d);////this.easeOut(d, 2);
+    var z   = this.easeOut(d);
     this.shelf_rot = this.is_shelf_rot_right ? pad + rd * z : pad - rd * z;
     this.shelf_root.frame.rot[1] = this.shelf_rot;
 
@@ -794,15 +806,23 @@ MxeDefaultController.prototype.shelf_loop = function () {
   }
 
   // Panel PopUp
-  if ( this.is_panel_popup && this.popup_panel_count < this.FRAME_PANEL_POPUP ) {
+  if ( this.is_panel_popup && this.panel_pop_state[this.popup_panel_id] == this.POPING) {
     ++this.popup_panel_count;
-    this.execute_pop_panel();
+    this.execute_pop_panel(this.popup_panel_id, this.popup_panel_count);
+    if ( this.popup_panel_count == this.FRAME_PANEL_POPUP) {
+      this.is_panel_popup = false;
+      this.panel_pop_state[this.popup_panel_id] = this.POPUP;
+    }
   }
 
   // Panel PopDown
-  if ( !this.is_panel_popup && this.popup_panel_count > 0 ) {
-    --this.popup_panel_count;
-    this.execute_pop_panel();
+  if ( this.is_panel_popdown && this.panel_pop_state[this.popdown_panel_id] == this.POPING) {
+    --this.popdown_panel_count;
+    this.execute_pop_panel(this.popdown_panel_id, this.popdown_panel_count);
+    if ( this.popdown_panel_count == 0) {
+      this.is_panel_popdown = false;
+      this.panel_pop_state[this.popdown_panel_id] = this.POPDOWN;
+    }
   }
 
   // Main Count
@@ -818,6 +838,8 @@ MxeDefaultController.prototype.shelf_loop = function () {
 
 MxeDefaultController.prototype.shelf_turn_left = function () {
   if (!this.is_shelf_rolling && this.shelf_rol_state > 0) {
+
+    this.force_panel_popdown();
 
     this.is_shelf_rolling = true;
     this.is_shelf_rot_right = false;
@@ -838,6 +860,8 @@ MxeDefaultController.prototype.shelf_turn_left = function () {
 MxeDefaultController.prototype.shelf_turn_right = function () {
   if (!this.is_shelf_rolling && this.shelf_rol_state < this.MAX_FACES - 2) {
 
+    this.force_panel_popdown();
+
     this.is_shelf_rolling = true;
     this.is_shelf_rot_right = true;
     this.shelf_rot_count = 0;
@@ -851,23 +875,49 @@ MxeDefaultController.prototype.shelf_turn_right = function () {
 };
 
 //
+// PopUpされたPanelの強制PopDown
+//
+
+MxeDefaultController.prototype.force_panel_popdown = function () {
+
+  var panel_id = this.popup_panel_id;
+  if (panel_id == -1 || this.panel_pop_state[panel_id] != this.POPUP) {
+    return;
+  }
+
+  this.is_panel_popdown = true;
+  this.popdown_panel_id = panel_id;
+  this.popdown_panel_count = this.FRAME_PANEL_POPUP;
+  this.panel_pop_state[panel_id] = this.POPING;
+
+}
+
+//
 // パネルのクリック
 //
 
-MxeDefaultController.prototype.panel_popup = function (id) {
+MxeDefaultController.prototype.panel_click = function (panel_id) {
 
-  if (this.is_panel_popup) {
-    // pop down
-    if (id == this.popup_panel_id && this.popup_panel_count == this.FRAME_PANEL_POPUP) {
-      this.is_panel_popup = false;
-    }
-
-  } else {
-    // pop up
-    if (this.popup_panel_count == 0) {
-      this.is_panel_popup = true;
-      this.popup_panel_id = id;
-    }
+  if (panel_id == -1 || this.is_panel_popup || this.is_panel_popdown) {
+    return;
   }
 
+  // PopDown
+  if ( this.panel_pop_state[panel_id] == this.POPUP ) {
+    this.is_panel_popdown = true;
+    this.popdown_panel_id = panel_id;
+    this.popdown_panel_count = this.FRAME_PANEL_POPUP;
+    this.panel_pop_state[panel_id] = this.POPING;
+  }
+
+  // PopUp
+  if ( this.panel_pop_state[panel_id] == this.POPDOWN ) {
+
+    this.force_panel_popdown();
+
+    this.is_panel_popup = true;
+    this.popup_panel_id = panel_id;
+    this.popup_panel_count = 0;
+    this.panel_pop_state[panel_id] = this.POPING;
+  }
 }

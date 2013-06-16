@@ -3115,22 +3115,23 @@ MxeDefaultContents.prototype.createScores = function() {
     score = this.scores[0];
     score.tracks = new Array(7);
     score.tracksL = {};
-    score.maxFrameOfScore = 1;
+    score.maxFrameOfScore = 2;
     score.loops = [
-        4, 
+        0, 4, 
     ];
     score.frameLabelPos = {
-        "L0": 0,
+        "L0": 1,
         length: 1,
     };
     
     score.tracks[0] = track = new MxeTrack3D(score, 0, "");
     track.castType = 7;
     track.cast = this.cameraCasts[0];
-    track.maxFrame = 1;
-    animation = track.animationData = new Array(1);
-    track.visibleData = UI8A([1,]);
+    track.maxFrame = 2;
+    animation = track.animationData = new Array(2);
+    track.visibleData = UI8A([0,1,]);
     animation[0] = [F32A([-0.000122, 28.725393, -196.310699]), F32A([0.138132, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
+    animation[1] = [F32A([-0.000122, 28.725393, -196.310699]), F32A([0.138132, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
     
     
     score.tracks[1] = track = new MxeTrack3D(score, 1, "");
@@ -3145,52 +3146,57 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[2] = track = new MxeTrack3D(score, 2, "");
     track.castType = 10;
     track.cast = this.scores[1];
-    track.maxFrame = 1;
-    animation = track.animationData = new Array(1);
-    track.visibleData = UI8A([1,]);
+    track.maxFrame = 2;
+    animation = track.animationData = new Array(2);
+    track.visibleData = UI8A([0,1,]);
     animation[0] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
+    animation[1] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
     
     
     score.tracks[3] = track = new MxeTrack3D(score, 3, "");
     track.castType = 10;
     track.cast = this.scores[2];
-    track.maxFrame = 1;
-    animation = track.animationData = new Array(1);
-    track.visibleData = UI8A([1,]);
+    track.maxFrame = 2;
+    animation = track.animationData = new Array(2);
+    track.visibleData = UI8A([0,1,]);
     animation[0] = [F32A([0.000000, 0.000000, 103.150383]), F32A([0.000000, 0.000000, 0.000000]), F32A([4.000000, 4.000000, 4.000000]), ];
+    animation[1] = [F32A([0.000000, 0.000000, 103.150383]), F32A([0.000000, 0.000000, 0.000000]), F32A([4.000000, 4.000000, 4.000000]), ];
     
     
     score.tracks[4] = track = new MxeTrack3D(score, 4, "");
     track.castType = 10;
     track.cast = this.scores[3];
-    track.maxFrame = 1;
-    animation = track.animationData = new Array(1);
-    track.visibleData = UI8A([1,]);
+    track.maxFrame = 2;
+    animation = track.animationData = new Array(2);
+    track.visibleData = UI8A([0,1,]);
     animation[0] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
+    animation[1] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
     
     
     score.tracks[5] = track = new MxeTrack3D(score, 5, "");
     track.castType = 8;
     track.cast = this.lightCasts[1];
-    track.maxFrame = 1;
-    animation = track.animationData = new Array(1);
-    track.visibleData = UI8A([1,]);
+    track.maxFrame = 2;
+    animation = track.animationData = new Array(2);
+    track.visibleData = UI8A([0,1,]);
     animation[0] = [F32A([54.307312, 221.123001, -153.429947]), F32A([0.883378, -0.266764, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
+    animation[1] = [F32A([54.307312, 221.123001, -153.429947]), F32A([0.883378, -0.266764, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
     
     
     score.tracks[6] = track = new MxeTrack3D(score, 6, "");
     track.castType = 8;
     track.cast = this.lightCasts[0];
-    track.maxFrame = 1;
-    animation = track.animationData = new Array(1);
-    track.visibleData = UI8A([1,]);
+    track.maxFrame = 2;
+    animation = track.animationData = new Array(2);
+    track.visibleData = UI8A([0,1,]);
     animation[0] = [F32A([3.131028, -2.054748, -351.595367]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
+    animation[1] = [F32A([3.131028, -2.054748, -351.595367]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
     
     
     
     
     score = this.scores[1];
-    score.tracks = new Array(80);
+    score.tracks = new Array(79);
     score.tracksL = {};
     score.maxFrameOfScore = 2;
     score.selfTrack = this.scores[0].tracks[2];
@@ -4019,11 +4025,6 @@ MxeDefaultContents.prototype.createScores = function() {
     
     
     score.tracks[78] = track = new MxeTrackUnknown(score, 78, "");
-    track.castType = 6;
-    track.maxFrame = 1;
-    
-    
-    score.tracks[79] = track = new MxeTrackUnknown(score, 79, "");
     track.castType = 6;
     track.maxFrame = 2;
     

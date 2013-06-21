@@ -10,8 +10,9 @@ HTML5とWebGLを駆使して作成したカバンの商品カタログっぽい�
 
 * shelf.mxp ... マトリックスなんとかのプロジェクトファイル。バイナリ。
 * misc/ ... テスクチャに使えそうな画像を適当に置くディレクトリ。
-* assets/ ... bootstrap用のディレクトリ。
+* bag\_info/ ... バックの情報用のCSVなどを置くディレクトリ。
 * shelf.webgl/ ... 上のプロジェクトから作成したHTML5用のランタイムファイルを生成するディレクトリ。
+    * assets/ ... bootstrap用のディレクトリ。
     * images/ ... 画像を置くディレクトリ。
     * js/ ... JavaScript用のディレクトリ。
         * matrixengine-controller-skeleton.js  ... MVCでいうCの部分だが、自動生成されたファイルなので使わない。

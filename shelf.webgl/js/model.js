@@ -496,3 +496,20 @@ Model.prototype.panel_click = function (panel_id) {
     this.panel_pop_state[panel_id] = this.POPING;
   }
 }
+
+
+//
+// Item の Sort
+//
+
+
+Model.prototype.sort_items = function (compare) {
+
+  this.ITEM_DATA.sort(compare);
+
+  // テスクチャの更新
+  this.shelf_texture_loaded_item = [-1, -1, -1, -1];
+  this.load_textures(this.shelf_rol_state - 1);
+  this.load_textures(this.shelf_rol_state);
+  this.load_textures(this.shelf_rol_state + 1);
+}

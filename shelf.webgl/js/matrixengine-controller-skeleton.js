@@ -130,6 +130,8 @@ var MxeDefaultController = function(contents) {
     track = score.tracks[1];
     track.addEventListener("onclick", eventproc.onCastClick002, this, [0,]);
     
+    score = contents.scores[4];
+    
     
 };
 

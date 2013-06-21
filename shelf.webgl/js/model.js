@@ -161,10 +161,12 @@ Model.prototype.init = function (contents) {
   //
 
   // 棚1面あたりのパネル数
-  this.NUM_PANEL  = 9;
+  this.NUM_PANEL = 9;
+  // 存在する面数
+  this.NUM_FACES = 4;
   // 存在するパネル数
-  this.MAX_PANELS = this.NUM_PANEL * 4;
-  // 仮想的な棚の面数
+  this.MAX_PANELS = this.NUM_PANEL * this.NUM_FACES;
+  // 仮想的な面数
   this.MAX_FACES  = this.ITEM_MAX / this.NUM_PANEL;
 
   // 棚の回転のフレーム数
@@ -172,7 +174,7 @@ Model.prototype.init = function (contents) {
   // パネルのポップアップのフレーム数
   this.FRAME_PANEL_POPUP = 5;
   // パネルのポップのフレーム数
-  this.FRAME_SCREEN_POP = 20;
+  this.FRAME_SCREEN_POP = 15;
 
   //
   // member
@@ -311,16 +313,18 @@ Model.prototype.ufo = function (a, b){
 Model.prototype.load_textures = function (face_n) {
 
 
-  if (face_n == this.shelf_texture_loaded_item[face_n % 4] || face_n < 0 || face_n >= this.MAX_FACES) {
+  if (face_n == this.shelf_texture_loaded_item[face_n % this.NUM_FACES] || 
+      face_n < 0 || face_n >= Math.ceil(this.MAX_FACES)) {
     return;
   }
 
-  this.shelf_texture_loaded_item[face_n % 4] = face_n;
+  this.shelf_texture_loaded_item[face_n % this.NUM_FACES] = face_n;
   var item_n = face_n * this.NUM_PANEL;
+  var texture_n = (face_n % this.NUM_FACES) * this.NUM_PANEL;
 
   for (var i = 0; i < this.NUM_PANEL; ++i) {
 
-    var texture_id = (face_n * this.NUM_PANEL + i) % this.MAX_PANELS;
+    var texture_id = texture_n + i;
     var item_id = item_n + i;
 
     if (item_id < this.ITEM_MAX) {
@@ -338,7 +342,7 @@ Model.prototype.load_textures = function (face_n) {
 //
 
 Model.prototype.update_statusbar = function () {
-  $("div#status").css("width", "" + (100.0 * (this.shelf_rol_state + 1) / (this.MAX_FACES - 1)) + "%");
+  $("div#status").css("width", "" + (100.0 * (this.shelf_rol_state+1) / (this.MAX_FACES)) + "%");
 }
 
 //
@@ -409,8 +413,8 @@ Model.prototype.shelf_main = function () {
 
     if (this.shelf_rot_count > this.FRAME_SHELF_ROLL) {
       this.is_shelf_rolling = false;
-      //this.load_textures(this.shelf_rol_state + 1);
-      //this.load_textures(this.shelf_rol_state - 1);
+      this.load_textures(this.shelf_rol_state + 1);
+      this.load_textures(this.shelf_rol_state - 1);
     }
   }
 
@@ -474,7 +478,7 @@ Model.prototype.shelf_turn_left = function () {
     this.shelf_rol_state_pre = this.shelf_rol_state;
     --this.shelf_rol_state;
 
-    this.load_textures(this.shelf_rol_state-1);
+    //this.load_textures(this.shelf_rol_state-1);
     this.update_statusbar();
   }
 };
@@ -484,7 +488,7 @@ Model.prototype.shelf_turn_left = function () {
 //
 
 Model.prototype.shelf_turn_right = function () {
-  if (!this.is_shelf_rolling && this.shelf_rol_state < this.MAX_FACES - 2) {
+  if (!this.is_shelf_rolling && this.shelf_rol_state < this.MAX_FACES - 1) {
 
     this.force_panel_popdown();
 
@@ -495,7 +499,7 @@ Model.prototype.shelf_turn_right = function () {
     this.shelf_rol_state_pre = this.shelf_rol_state;
     ++this.shelf_rol_state;
 
-    this.load_textures(this.shelf_rol_state+1);
+    //this.load_textures(this.shelf_rol_state+1);
     this.update_statusbar();
   }
 };
@@ -552,8 +556,9 @@ Model.prototype.panel_click = function (panel_id) {
     this.panel_pop_state[panel_id] = this.POPING;
 
     // Screen
-    this.contents.textCastsL["NameText"].lines[0] = this.ITEM_DATA[this.popup_panel_id][1];
-    this.contents.textCastsL["PriceText"].lines[0] = "" + this.ITEM_DATA[this.popup_panel_id][2] + "円";
+    var item_id = this.shelf_rol_state * this.NUM_PANEL + this.popup_panel_id % this.NUM_PANEL;
+    this.contents.textCastsL["NameText"].lines[0] = this.ITEM_DATA[item_id][1];
+    this.contents.textCastsL["PriceText"].lines[0] = "" + this.ITEM_DATA[item_id][2] + "円, " + item_id;
     this.contents.textCastsL["NameText"].invalidate();
     this.contents.textCastsL["PriceText"].invalidate();
 

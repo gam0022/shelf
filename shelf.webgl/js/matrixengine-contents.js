@@ -37,16 +37,16 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     var bbinfo;
     var bbmat;
     
-    this.textureCasts[0] = this.textureCastsL["tree"] = cast = new MxeTexture(this, 0, "tree");
+    this.textureCasts[0] = this.textureCastsL["wood"] = cast = new MxeTexture(this, 0, "wood");
     cast.imageSrc = "images/t0000.png";
-    cast.presetWidth = 256;
-    cast.presetHeight = 1024;
+    cast.presetWidth = 512;
+    cast.presetHeight = 512;
     cast.magFilter = GL.LINEAR;
     cast.minFilter = GL.LINEAR;
     cast.rotateCenter = F32A([-0.000000, -0.000000, 0]);
     bbinfo = cast.billboardInfo = new MxeBillboardInfo();
     bbinfo.pos = F32A([-0.000000, -0.000000, 0.000000]);
-    bbinfo.siz = F32A([1.312500, 0.751953, 0.0]);
+    bbinfo.siz = F32A([1.250000, 0.833984, 0.0]);
     bbmat = bbinfo.material;
     bbmat.blendFactorSrc = GL.SRC_ALPHA;
     bbmat.blendFactorDst = GL.ONE_MINUS_SRC_ALPHA;
@@ -890,10 +890,11 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     sector.boxMax = F32A([1.001480, 1.000000, 1.001480]);
     
     sector.material = material = new MxeMaterial();
-    material.color = F32A([1.000000, 1.000000, 1.000000, 1.000000]);
+    material.color = F32A([0.882353, 0.882353, 0.882353, 1.000000]);
     material.emissionColor = F32A([0.000000, 0.000000, 0.000000]);
-    material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
+    material.specularColor = F32A([0.000000, 0.000000, 0.000000]);
     material.shininess = 0.000000;
+    material.enableFog = false;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
     texInfo.cast = this.textureCasts[0];
     texInfo.option = 0;

@@ -1,0 +1,29 @@
+a#navi-left {
+  display: block;
+  width: 64px; height: 64px;
+  background-image: url("images/other/navi_left.png");
+}
+a#navi-left:hover {
+  display: block;
+  width: 64px; height: 64px;
+  background-image: url("images/other/navi_left_fover.png");
+}
+
+a#navi-right {
+  display: block;
+  width: 64px; height: 64px;
+  background-image: url("images/other/navi_right.png");
+}
+a#navi-right:hover {
+  display: block;
+  width: 64px; height: 64px;
+  background-image: url("images/other/navi_right_fover.png");
+}
+
+
+div.canvas {
+  position: absolute;
+  left: 0; top: 0;
+  width: 800px; height: 600px;
+  margin:0; padding:0;
+}

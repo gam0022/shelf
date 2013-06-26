@@ -15,6 +15,7 @@
       }
     </style>
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -122,8 +123,16 @@
         <div class="bar" style="width: 0%;" id="status"></div>
       </div>
 
-      <div width="800px" height="600px" style="margin:0; padding:0;" align="center">
-        <canvas id="matrixengine-canvas" style="border:none; margin:0;" width=800px height=600px></canvas>
+      <div style="position: relative;">
+        <div class="canvas">
+          <canvas id="matrixengine-canvas" style="border:none; margin:0;" width=800px height=600px></canvas>
+        </div>
+        <div style="position: absolute; left: 100px; top: 280px;">
+          <a id="navi-left" onclick="model.shelf_turn_left();"></a>
+        </div>
+        <div style="position: absolute; left: 634px; top: 280px;">
+          <a id="navi-right" onclick="model.shelf_turn_right();"></a>
+        </div>
       </div>
     </div> <!-- /container -->
 

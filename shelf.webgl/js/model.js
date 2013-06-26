@@ -557,8 +557,8 @@ Model.prototype.panel_click = function (panel_id) {
 
     // Screen
     var item_id = this.shelf_rol_state * this.NUM_PANEL + this.popup_panel_id % this.NUM_PANEL;
-    this.contents.textCastsL["NameText"].lines[0] = this.ITEM_DATA[item_id][1];
-    this.contents.textCastsL["PriceText"].lines[0] = "" + this.ITEM_DATA[item_id][2] + "円, " + item_id;
+    this.contents.textCastsL["NameText"].lines[0] = "#" + item_id + " " + this.ITEM_DATA[item_id][1];
+    this.contents.textCastsL["PriceText"].lines[0] = "" + this.ITEM_DATA[item_id][2] + "円";
     this.contents.textCastsL["NameText"].invalidate();
     this.contents.textCastsL["PriceText"].invalidate();
 

@@ -780,43 +780,17 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
 };
 
 MxeDefaultContents.prototype.createBitmapCasts = function() {
-    this.bitmapCasts = new Array(4);
+    this.bitmapCasts = new Array(2);
     this.bitmapCastsL = {};
     var cast;
     var bbinfo;
     var bbmat;
     
-    this.bitmapCasts[0] = this.bitmapCastsL["navi_left"] = cast = new MxeBitmap(this, 0, "navi_left");
+    this.bitmapCasts[0] = this.bitmapCastsL["white"] = cast = new MxeBitmap(this, 0, "white");
     cast.rotatable = true;
     cast.alphaBlendable = true;
     cast.scalable = true;
     cast.imageSrc = "images/b0000.png";
-    cast.presetWidth = 64;
-    cast.presetHeight = 64;
-    cast.alphaType = MxeMaterial.def.HAS_TRANSPARENT|MxeMaterial.def.HAS_TRANSLUCENT;
-    cast.magFilter = GL.LINEAR;
-    cast.minFilter = GL.LINEAR;
-    cast.rotateCenter = F32A([-0.000000, -0.000000, 0]);
-    
-    
-    this.bitmapCasts[1] = this.bitmapCastsL["navi_right"] = cast = new MxeBitmap(this, 1, "navi_right");
-    cast.rotatable = true;
-    cast.alphaBlendable = true;
-    cast.scalable = true;
-    cast.imageSrc = "images/b0001.png";
-    cast.presetWidth = 64;
-    cast.presetHeight = 64;
-    cast.alphaType = MxeMaterial.def.HAS_TRANSPARENT|MxeMaterial.def.HAS_TRANSLUCENT;
-    cast.magFilter = GL.LINEAR;
-    cast.minFilter = GL.LINEAR;
-    cast.rotateCenter = F32A([-0.000000, -0.000000, 0]);
-    
-    
-    this.bitmapCasts[2] = this.bitmapCastsL["white"] = cast = new MxeBitmap(this, 2, "white");
-    cast.rotatable = true;
-    cast.alphaBlendable = true;
-    cast.scalable = true;
-    cast.imageSrc = "images/b0002.png";
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -824,11 +798,11 @@ MxeDefaultContents.prototype.createBitmapCasts = function() {
     cast.rotateCenter = F32A([-0.000000, -0.000000, 0]);
     
     
-    this.bitmapCasts[3] = this.bitmapCastsL["black"] = cast = new MxeBitmap(this, 3, "black");
+    this.bitmapCasts[1] = this.bitmapCastsL["black"] = cast = new MxeBitmap(this, 1, "black");
     cast.rotatable = true;
     cast.alphaBlendable = true;
     cast.scalable = true;
-    cast.imageSrc = "images/b0003.png";
+    cast.imageSrc = "images/b0001.png";
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -3095,13 +3069,12 @@ MxeDefaultContents.prototype.createProceduralCasts= function() {
 };
 
 MxeDefaultContents.prototype.createScores = function() {
-    this.scores = new Array(5);
+    this.scores = new Array(4);
     this.scoresL = {};
     this.scores[0] = this.scoresL["スコア0"] = new MxeScore(this, 0, "スコア0");
     this.scores[1] = this.scoresL["shelf"] = new MxeScore(this, 1, "shelf");
     this.scores[2] = this.scoresL["background"] = new MxeScore(this, 2, "background");
-    this.scores[3] = this.scoresL["navigation"] = new MxeScore(this, 3, "navigation");
-    this.scores[4] = this.scoresL["screen"] = new MxeScore(this, 4, "screen");
+    this.scores[3] = this.scoresL["screen"] = new MxeScore(this, 3, "screen");
     var score;
     var track;
     var animation;
@@ -3110,7 +3083,7 @@ MxeDefaultContents.prototype.createScores = function() {
     var casts;
     
     score = this.scores[0];
-    score.tracks = new Array(8);
+    score.tracks = new Array(7);
     score.tracksL = {};
     score.maxFrameOfScore = 2;
     score.loops = [
@@ -3132,45 +3105,6 @@ MxeDefaultContents.prototype.createScores = function() {
     
     
     score.tracks[1] = track = new MxeTrack3D(score, 1, "");
-    track.castType = 8;
-    track.cast = this.lightCasts[0];
-    track.maxFrame = 0;
-    animation = track.animationData = new Array(1);
-    track.visibleData = UI8A(1);
-    animation[0] = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0], ];
-    
-    
-    score.tracks[2] = track = new MxeTrack3D(score, 2, "");
-    track.castType = 10;
-    track.cast = this.scores[4];
-    track.maxFrame = 2;
-    animation = track.animationData = new Array(2);
-    track.visibleData = UI8A([0,1,]);
-    animation[0] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
-    animation[1] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
-    
-    
-    score.tracks[3] = track = new MxeTrack3D(score, 3, "");
-    track.castType = 10;
-    track.cast = this.scores[1];
-    track.maxFrame = 2;
-    animation = track.animationData = new Array(2);
-    track.visibleData = UI8A([0,1,]);
-    animation[0] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
-    animation[1] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
-    
-    
-    score.tracks[4] = track = new MxeTrack3D(score, 4, "");
-    track.castType = 10;
-    track.cast = this.scores[2];
-    track.maxFrame = 2;
-    animation = track.animationData = new Array(2);
-    track.visibleData = UI8A([0,1,]);
-    animation[0] = [F32A([0.000000, 0.000000, 103.150383]), F32A([0.000000, 0.000000, 0.000000]), F32A([4.000000, 4.000000, 4.000000]), ];
-    animation[1] = [F32A([0.000000, 0.000000, 103.150383]), F32A([0.000000, 0.000000, 0.000000]), F32A([4.000000, 4.000000, 4.000000]), ];
-    
-    
-    score.tracks[5] = track = new MxeTrack3D(score, 5, "");
     track.castType = 10;
     track.cast = this.scores[3];
     track.maxFrame = 2;
@@ -3180,7 +3114,27 @@ MxeDefaultContents.prototype.createScores = function() {
     animation[1] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
     
     
-    score.tracks[6] = track = new MxeTrack3D(score, 6, "");
+    score.tracks[2] = track = new MxeTrack3D(score, 2, "");
+    track.castType = 10;
+    track.cast = this.scores[1];
+    track.maxFrame = 2;
+    animation = track.animationData = new Array(2);
+    track.visibleData = UI8A([0,1,]);
+    animation[0] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
+    animation[1] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
+    
+    
+    score.tracks[3] = track = new MxeTrack3D(score, 3, "");
+    track.castType = 10;
+    track.cast = this.scores[2];
+    track.maxFrame = 2;
+    animation = track.animationData = new Array(2);
+    track.visibleData = UI8A([0,1,]);
+    animation[0] = [F32A([0.000000, 0.000000, 103.150383]), F32A([0.000000, 0.000000, 0.000000]), F32A([4.000000, 4.000000, 4.000000]), ];
+    animation[1] = [F32A([0.000000, 0.000000, 103.150383]), F32A([0.000000, 0.000000, 0.000000]), F32A([4.000000, 4.000000, 4.000000]), ];
+    
+    
+    score.tracks[4] = track = new MxeTrack3D(score, 4, "");
     track.castType = 8;
     track.cast = this.lightCasts[1];
     track.maxFrame = 2;
@@ -3190,7 +3144,7 @@ MxeDefaultContents.prototype.createScores = function() {
     animation[1] = [F32A([54.307312, 221.123001, -153.429947]), F32A([0.883378, -0.266764, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
     
     
-    score.tracks[7] = track = new MxeTrack3D(score, 7, "");
+    score.tracks[5] = track = new MxeTrack3D(score, 5, "");
     track.castType = 8;
     track.cast = this.lightCasts[0];
     track.maxFrame = 2;
@@ -3200,13 +3154,22 @@ MxeDefaultContents.prototype.createScores = function() {
     animation[1] = [F32A([3.131028, -2.054748, -351.595367]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
     
     
+    score.tracks[6] = track = new MxeTrack3D(score, 6, "");
+    track.castType = 8;
+    track.cast = this.lightCasts[0];
+    track.maxFrame = 0;
+    animation = track.animationData = new Array(1);
+    track.visibleData = UI8A(1);
+    animation[0] = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0], ];
+    
+    
     
     
     score = this.scores[1];
     score.tracks = new Array(79);
     score.tracksL = {};
     score.maxFrameOfScore = 2;
-    score.selfTrack = this.scores[0].tracks[3];
+    score.selfTrack = this.scores[0].tracks[2];
     score.loops = [
         0, 4, 
     ];
@@ -4264,7 +4227,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks = new Array(1);
     score.tracksL = {};
     score.maxFrameOfScore = 1;
-    score.selfTrack = this.scores[0].tracks[4];
+    score.selfTrack = this.scores[0].tracks[3];
     score.loops = [
         4, 
     ];
@@ -4292,49 +4255,10 @@ MxeDefaultContents.prototype.createScores = function() {
     
     
     score = this.scores[3];
-    score.tracks = new Array(2);
-    score.tracksL = {};
-    score.maxFrameOfScore = 1;
-    score.selfTrack = this.scores[0].tracks[5];
-    score.loops = [
-        4, 
-    ];
-    score.frameLabelPos = {
-        "L0": 0,
-        length: 1,
-    };
-    
-    score.tracks[0] = track = new MxeTrack2D(score, 0, "");
-    track.castType = 2;
-    track.cast = this.bitmapCasts[0];
-    track.maxFrame = 1;
-    casts = this.bitmapCasts;
-    animation = track.animationData = new Array(1);
-    animation[0] = [casts[0], [100, 280], [1.000000, 1.000000]];
-    
-    
-    score.tracks[1] = track = new MxeTrack2D(score, 1, "");
-    track.castType = 2;
-    track.cast = this.bitmapCasts[1];
-    track.maxFrame = 1;
-    casts = this.bitmapCasts;
-    animation = track.animationData = new Array(1);
-    animation[0] = [casts[1], [636, 280], [1.000000, 1.000000]];
-    
-    
-    track = score.tracks[0];
-    track.renderList = [[2, track]];
-    
-    track = score.tracks[1];
-    track.renderList = [[2, track]];
-    
-    
-    
-    score = this.scores[4];
     score.tracks = new Array(4);
     score.tracksL = {};
     score.maxFrameOfScore = 1;
-    score.selfTrack = this.scores[0].tracks[2];
+    score.selfTrack = this.scores[0].tracks[1];
     score.loops = [
         4, 
     ];
@@ -4354,11 +4278,11 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[1] = track = new MxeTrack2D(score, 1, "");
     track.parentTrack = score.tracks[0];
     track.castType = 2;
-    track.cast = this.bitmapCasts[3];
+    track.cast = this.bitmapCasts[1];
     track.maxFrame = 1;
     casts = this.bitmapCasts;
     animation = track.animationData = new Array(1);
-    animation[0] = [casts[3], [0, 0], [100.000000, 12.500000], 0.000000, 0x00, 0.835294];
+    animation[0] = [casts[1], [0, 0], [100.000000, 12.500000], 0.000000, 0x00, 0.835294];
     
     
     score.tracks[2] = track = new MxeTrack2D(score, 2, "");
@@ -4378,7 +4302,7 @@ MxeDefaultContents.prototype.createScores = function() {
     track.maxFrame = 1;
     casts = this.textCasts;
     animation = track.animationData = new Array(1);
-    animation[0] = [casts[2], [550, 60], [0.459184, 0.448276]];
+    animation[0] = [casts[2], [700, 60], [0.459184, 0.448276]];
     
     
     track = score.tracks[0];

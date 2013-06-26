@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.65835666"
-     inkscape:cx="889.72916"
-     inkscape:cy="64.846777"
+     inkscape:zoom="0.47730858"
+     inkscape:cx="1333.6236"
+     inkscape:cy="18.227202"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -122,15 +122,53 @@
        sodipodi:rx="185.46602"
        sodipodi:ry="171.67496"
        d="m 672.43321,924.43817 a 185.46602,171.67496 0 1 1 -370.93204,0 185.46602,171.67496 0 1 1 370.93204,0 z"
-       transform="matrix(-0.86852334,0,0,0.9382939,1799.6411,-210.27312)"
+       transform="matrix(-0.86852334,0,0,0.9382939,1954.6771,110.27423)"
        inkscape:export-filename="/Users/gam0022/Dropbox/cojt/shelf/misc/navi_right.png"
        inkscape:export-xdpi="16.870001"
        inkscape:export-ydpi="16.870001" />
     <path
        style="fill:#3c3c3c;fill-opacity:1;stroke:none"
-       d="m 1353.7216,579.9313 62.7731,73.2353 -62.7731,77.03976 0,-36.0917 34.2399,-40.94806 -34.2399,-39.14362 z"
+       d="m 1508.7576,900.47865 62.7731,73.2353 -62.7731,77.03975 0,-36.0917 34.2399,-40.94805 -34.2399,-39.14362 z"
        id="path3870"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#f0f0f0;fill-opacity:1;stroke:#505050;stroke-width:22.15489960000000025;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path3872"
+       sodipodi:cx="486.96719"
+       sodipodi:cy="924.43817"
+       sodipodi:rx="185.46602"
+       sodipodi:ry="171.67496"
+       d="m 672.43321,924.43817 a 185.46602,171.67496 0 1 1 -370.93204,0 185.46602,171.67496 0 1 1 370.93204,0 z"
+       transform="matrix(0.86852334,0,0,0.9382939,700.35637,563.70207)"
+       inkscape:export-filename="/Users/gam0022/Dropbox/cojt/shelf/misc/navi_left_fover.png"
+       inkscape:export-xdpi="16.870001"
+       inkscape:export-ydpi="16.870001" />
+    <path
+       style="fill:#505050;fill-opacity:1;stroke:none"
+       d="m 1146.2759,1353.9065 -62.7731,73.2353 62.7731,77.0398 0,-36.0917 -34.2399,-40.9481 34.2399,-39.1436 z"
+       id="path3874"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       inkscape:export-ydpi="16.870001"
+       inkscape:export-xdpi="16.870001"
+       inkscape:export-filename="/Users/gam0022/Dropbox/cojt/shelf/misc/navi_right_fover.png"
+       transform="matrix(-0.86852334,0,0,0.9382939,1977.723,560.71658)"
+       d="m 672.43321,924.43817 a 185.46602,171.67496 0 1 1 -370.93204,0 185.46602,171.67496 0 1 1 370.93204,0 z"
+       sodipodi:ry="171.67496"
+       sodipodi:rx="185.46602"
+       sodipodi:cy="924.43817"
+       sodipodi:cx="486.96719"
+       id="path3876"
+       style="fill:#f0f0f0;fill-opacity:1;stroke:#505050;stroke-width:22.15489960000000025;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       sodipodi:type="arc" />
+    <path
+       sodipodi:nodetypes="ccccccc"
+       inkscape:connector-curvature="0"
+       id="path3878"
+       d="m 1531.8035,1350.921 62.7731,73.2353 -62.7731,77.0398 0,-36.0917 34.2399,-40.9481 -34.2399,-39.1436 z"
+       style="fill:#505050;fill-opacity:1;stroke:none" />
   </g>
 </svg>

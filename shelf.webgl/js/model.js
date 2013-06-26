@@ -257,8 +257,8 @@ Model.prototype.init = function (contents) {
   // Screen
   //
   
-  this.SCREEN_POS_UP = [50, 490, 0];
-  this.SCREEN_POS_DOWN = [50, 600, 0];
+  this.SCREEN_POS_UP = [0, 490, 0];
+  this.SCREEN_POS_DOWN = [0, 600, 0];
 
   this.screen_ghost = this.contents.scoresL["screen"].tracks[0];
   this.screen_ghost.setPuppet(true);
@@ -587,6 +587,7 @@ Model.prototype.screen_move = function () {
 
 Model.prototype.sort_items = function (compare) {
 
+  this.force_panel_popdown();
   this.ITEM_DATA.sort(compare);
 
   // テスクチャの更新

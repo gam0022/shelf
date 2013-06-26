@@ -31,7 +31,7 @@ MxeDefaultContents.prototype.initialize = function(player) {
 };
 
 MxeDefaultContents.prototype.createTextureCasts = function() {
-    this.textureCasts = new Array(41);
+    this.textureCasts = new Array(39);
     this.textureCastsL = {};
     var cast;
     var bbinfo;
@@ -56,48 +56,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[1] = this.textureCastsL["arrow_left"] = cast = new MxeTexture(this, 1, "arrow_left");
+    this.textureCasts[1] = this.textureCastsL["background_1"] = cast = new MxeTexture(this, 1, "background_1");
     cast.imageSrc = "images/t0001.png";
-    cast.presetWidth = 512;
-    cast.presetHeight = 512;
-    cast.alphaType = MxeMaterial.def.HAS_TRANSPARENT|MxeMaterial.def.HAS_TRANSLUCENT;
-    cast.magFilter = GL.LINEAR;
-    cast.minFilter = GL.LINEAR;
-    cast.rotateCenter = F32A([-0.000000, -0.000000, 0]);
-    bbinfo = cast.billboardInfo = new MxeBillboardInfo();
-    bbinfo.pos = F32A([-0.000000, -0.000000, 0.000000]);
-    bbinfo.siz = F32A([1.000000, 1.107422, 0.0]);
-    bbmat = bbinfo.material;
-    bbmat.blendFactorSrc = GL.SRC_ALPHA;
-    bbmat.blendFactorDst = GL.ONE_MINUS_SRC_ALPHA;
-    bbmat.blendFactorAlphaSrc = GL.SRC_ALPHA;
-    bbmat.blendFactorAlphaDst = GL.DST_ALPHA;
-    bbmat.color = F32A([1.000000, 1.000000, 1.000000, 1.000000]);
-    bbmat.textureInfo[0].cast = cast
-    
-    
-    this.textureCasts[2] = this.textureCastsL["arrow_right"] = cast = new MxeTexture(this, 2, "arrow_right");
-    cast.imageSrc = "images/t0002.png";
-    cast.presetWidth = 512;
-    cast.presetHeight = 512;
-    cast.alphaType = MxeMaterial.def.HAS_TRANSPARENT|MxeMaterial.def.HAS_TRANSLUCENT;
-    cast.magFilter = GL.LINEAR;
-    cast.minFilter = GL.LINEAR;
-    cast.rotateCenter = F32A([-0.000000, -0.000000, 0]);
-    bbinfo = cast.billboardInfo = new MxeBillboardInfo();
-    bbinfo.pos = F32A([-0.000000, -0.000000, 0.000000]);
-    bbinfo.siz = F32A([1.000000, 1.107422, 0.0]);
-    bbmat = bbinfo.material;
-    bbmat.blendFactorSrc = GL.SRC_ALPHA;
-    bbmat.blendFactorDst = GL.ONE_MINUS_SRC_ALPHA;
-    bbmat.blendFactorAlphaSrc = GL.SRC_ALPHA;
-    bbmat.blendFactorAlphaDst = GL.DST_ALPHA;
-    bbmat.color = F32A([1.000000, 1.000000, 1.000000, 1.000000]);
-    bbmat.textureInfo[0].cast = cast
-    
-    
-    this.textureCasts[3] = this.textureCastsL["background_1"] = cast = new MxeTexture(this, 3, "background_1");
-    cast.imageSrc = "images/t0003.png";
     cast.presetWidth = 512;
     cast.presetHeight = 512;
     cast.magFilter = GL.LINEAR;
@@ -115,8 +75,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[4] = this.textureCastsL["Texture_00"] = cast = new MxeTexture(this, 4, "Texture_00");
-    cast.imageSrc = "images/t0004.png";
+    this.textureCasts[2] = this.textureCastsL["Texture_00"] = cast = new MxeTexture(this, 2, "Texture_00");
+    cast.imageSrc = "images/t0002.png";
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -134,8 +94,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[5] = this.textureCastsL["Texture_01"] = cast = new MxeTexture(this, 5, "Texture_01");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[3] = this.textureCastsL["Texture_01"] = cast = new MxeTexture(this, 3, "Texture_01");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -153,8 +113,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[6] = this.textureCastsL["Texture_02"] = cast = new MxeTexture(this, 6, "Texture_02");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[4] = this.textureCastsL["Texture_02"] = cast = new MxeTexture(this, 4, "Texture_02");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -172,8 +132,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[7] = this.textureCastsL["Texture_03"] = cast = new MxeTexture(this, 7, "Texture_03");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[5] = this.textureCastsL["Texture_03"] = cast = new MxeTexture(this, 5, "Texture_03");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -191,8 +151,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[8] = this.textureCastsL["Texture_04"] = cast = new MxeTexture(this, 8, "Texture_04");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[6] = this.textureCastsL["Texture_04"] = cast = new MxeTexture(this, 6, "Texture_04");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -210,8 +170,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[9] = this.textureCastsL["Texture_05"] = cast = new MxeTexture(this, 9, "Texture_05");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[7] = this.textureCastsL["Texture_05"] = cast = new MxeTexture(this, 7, "Texture_05");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -229,8 +189,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[10] = this.textureCastsL["Texture_06"] = cast = new MxeTexture(this, 10, "Texture_06");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[8] = this.textureCastsL["Texture_06"] = cast = new MxeTexture(this, 8, "Texture_06");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -248,8 +208,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[11] = this.textureCastsL["Texture_07"] = cast = new MxeTexture(this, 11, "Texture_07");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[9] = this.textureCastsL["Texture_07"] = cast = new MxeTexture(this, 9, "Texture_07");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -267,8 +227,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[12] = this.textureCastsL["Texture_08"] = cast = new MxeTexture(this, 12, "Texture_08");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[10] = this.textureCastsL["Texture_08"] = cast = new MxeTexture(this, 10, "Texture_08");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -286,8 +246,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[13] = this.textureCastsL["Texture_09"] = cast = new MxeTexture(this, 13, "Texture_09");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[11] = this.textureCastsL["Texture_09"] = cast = new MxeTexture(this, 11, "Texture_09");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -305,8 +265,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[14] = this.textureCastsL["Texture_10"] = cast = new MxeTexture(this, 14, "Texture_10");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[12] = this.textureCastsL["Texture_10"] = cast = new MxeTexture(this, 12, "Texture_10");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -324,8 +284,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[15] = this.textureCastsL["Texture_11"] = cast = new MxeTexture(this, 15, "Texture_11");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[13] = this.textureCastsL["Texture_11"] = cast = new MxeTexture(this, 13, "Texture_11");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -343,8 +303,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[16] = this.textureCastsL["Texture_12"] = cast = new MxeTexture(this, 16, "Texture_12");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[14] = this.textureCastsL["Texture_12"] = cast = new MxeTexture(this, 14, "Texture_12");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -362,8 +322,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[17] = this.textureCastsL["Texture_13"] = cast = new MxeTexture(this, 17, "Texture_13");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[15] = this.textureCastsL["Texture_13"] = cast = new MxeTexture(this, 15, "Texture_13");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -381,8 +341,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[18] = this.textureCastsL["Texture_14"] = cast = new MxeTexture(this, 18, "Texture_14");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[16] = this.textureCastsL["Texture_14"] = cast = new MxeTexture(this, 16, "Texture_14");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -400,8 +360,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[19] = this.textureCastsL["Texture_15"] = cast = new MxeTexture(this, 19, "Texture_15");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[17] = this.textureCastsL["Texture_15"] = cast = new MxeTexture(this, 17, "Texture_15");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -419,8 +379,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[20] = this.textureCastsL["Texture_16"] = cast = new MxeTexture(this, 20, "Texture_16");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[18] = this.textureCastsL["Texture_16"] = cast = new MxeTexture(this, 18, "Texture_16");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -438,8 +398,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[21] = this.textureCastsL["Texture_17"] = cast = new MxeTexture(this, 21, "Texture_17");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[19] = this.textureCastsL["Texture_17"] = cast = new MxeTexture(this, 19, "Texture_17");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -457,8 +417,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[22] = this.textureCastsL["Texture_18"] = cast = new MxeTexture(this, 22, "Texture_18");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[20] = this.textureCastsL["Texture_18"] = cast = new MxeTexture(this, 20, "Texture_18");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -476,8 +436,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[23] = this.textureCastsL["Texture_19"] = cast = new MxeTexture(this, 23, "Texture_19");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[21] = this.textureCastsL["Texture_19"] = cast = new MxeTexture(this, 21, "Texture_19");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -495,8 +455,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[24] = this.textureCastsL["Texture_20"] = cast = new MxeTexture(this, 24, "Texture_20");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[22] = this.textureCastsL["Texture_20"] = cast = new MxeTexture(this, 22, "Texture_20");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -514,8 +474,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[25] = this.textureCastsL["Texture_21"] = cast = new MxeTexture(this, 25, "Texture_21");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[23] = this.textureCastsL["Texture_21"] = cast = new MxeTexture(this, 23, "Texture_21");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -533,8 +493,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[26] = this.textureCastsL["Texture_22"] = cast = new MxeTexture(this, 26, "Texture_22");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[24] = this.textureCastsL["Texture_22"] = cast = new MxeTexture(this, 24, "Texture_22");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -552,8 +512,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[27] = this.textureCastsL["Texture_23"] = cast = new MxeTexture(this, 27, "Texture_23");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[25] = this.textureCastsL["Texture_23"] = cast = new MxeTexture(this, 25, "Texture_23");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -571,8 +531,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[28] = this.textureCastsL["Texture_24"] = cast = new MxeTexture(this, 28, "Texture_24");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[26] = this.textureCastsL["Texture_24"] = cast = new MxeTexture(this, 26, "Texture_24");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -590,8 +550,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[29] = this.textureCastsL["Texture_25"] = cast = new MxeTexture(this, 29, "Texture_25");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[27] = this.textureCastsL["Texture_25"] = cast = new MxeTexture(this, 27, "Texture_25");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -609,8 +569,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[30] = this.textureCastsL["Texture_26"] = cast = new MxeTexture(this, 30, "Texture_26");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[28] = this.textureCastsL["Texture_26"] = cast = new MxeTexture(this, 28, "Texture_26");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -628,8 +588,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[31] = this.textureCastsL["Texture_27"] = cast = new MxeTexture(this, 31, "Texture_27");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[29] = this.textureCastsL["Texture_27"] = cast = new MxeTexture(this, 29, "Texture_27");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -647,8 +607,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[32] = this.textureCastsL["Texture_28"] = cast = new MxeTexture(this, 32, "Texture_28");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[30] = this.textureCastsL["Texture_28"] = cast = new MxeTexture(this, 30, "Texture_28");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -666,8 +626,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[33] = this.textureCastsL["Texture_29"] = cast = new MxeTexture(this, 33, "Texture_29");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[31] = this.textureCastsL["Texture_29"] = cast = new MxeTexture(this, 31, "Texture_29");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -685,8 +645,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[34] = this.textureCastsL["Texture_30"] = cast = new MxeTexture(this, 34, "Texture_30");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[32] = this.textureCastsL["Texture_30"] = cast = new MxeTexture(this, 32, "Texture_30");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -704,8 +664,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[35] = this.textureCastsL["Texture_31"] = cast = new MxeTexture(this, 35, "Texture_31");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[33] = this.textureCastsL["Texture_31"] = cast = new MxeTexture(this, 33, "Texture_31");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -723,8 +683,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[36] = this.textureCastsL["Texture_32"] = cast = new MxeTexture(this, 36, "Texture_32");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[34] = this.textureCastsL["Texture_32"] = cast = new MxeTexture(this, 34, "Texture_32");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -742,8 +702,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[37] = this.textureCastsL["Texture_33"] = cast = new MxeTexture(this, 37, "Texture_33");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[35] = this.textureCastsL["Texture_33"] = cast = new MxeTexture(this, 35, "Texture_33");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -761,8 +721,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[38] = this.textureCastsL["Texture_34"] = cast = new MxeTexture(this, 38, "Texture_34");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[36] = this.textureCastsL["Texture_34"] = cast = new MxeTexture(this, 36, "Texture_34");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -780,8 +740,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[39] = this.textureCastsL["Texture_35"] = cast = new MxeTexture(this, 39, "Texture_35");
-    cast.imageSrc = this.textureCasts[4].imageSrc;
+    this.textureCasts[37] = this.textureCastsL["Texture_35"] = cast = new MxeTexture(this, 37, "Texture_35");
+    cast.imageSrc = this.textureCasts[2].imageSrc;
     cast.presetWidth = 8;
     cast.presetHeight = 8;
     cast.magFilter = GL.LINEAR;
@@ -799,8 +759,8 @@ MxeDefaultContents.prototype.createTextureCasts = function() {
     bbmat.textureInfo[0].cast = cast
     
     
-    this.textureCasts[40] = this.textureCastsL["LoadTx"] = cast = new MxeTexture(this, 40, "LoadTx");
-    cast.imageSrc = "images/t0040.png";
+    this.textureCasts[38] = this.textureCastsL["LoadTx"] = cast = new MxeTexture(this, 38, "LoadTx");
+    cast.imageSrc = "images/t0038.png";
     cast.presetWidth = 256;
     cast.presetHeight = 256;
     cast.magFilter = GL.LINEAR;
@@ -826,26 +786,26 @@ MxeDefaultContents.prototype.createBitmapCasts = function() {
     var bbinfo;
     var bbmat;
     
-    this.bitmapCasts[0] = this.bitmapCastsL["arrow_left"] = cast = new MxeBitmap(this, 0, "arrow_left");
+    this.bitmapCasts[0] = this.bitmapCastsL["navi_left"] = cast = new MxeBitmap(this, 0, "navi_left");
     cast.rotatable = true;
     cast.alphaBlendable = true;
     cast.scalable = true;
     cast.imageSrc = "images/b0000.png";
-    cast.presetWidth = 512;
-    cast.presetHeight = 567;
+    cast.presetWidth = 64;
+    cast.presetHeight = 64;
     cast.alphaType = MxeMaterial.def.HAS_TRANSPARENT|MxeMaterial.def.HAS_TRANSLUCENT;
     cast.magFilter = GL.LINEAR;
     cast.minFilter = GL.LINEAR;
     cast.rotateCenter = F32A([-0.000000, -0.000000, 0]);
     
     
-    this.bitmapCasts[1] = this.bitmapCastsL["arrow_right"] = cast = new MxeBitmap(this, 1, "arrow_right");
+    this.bitmapCasts[1] = this.bitmapCastsL["navi_right"] = cast = new MxeBitmap(this, 1, "navi_right");
     cast.rotatable = true;
     cast.alphaBlendable = true;
     cast.scalable = true;
     cast.imageSrc = "images/b0001.png";
-    cast.presetWidth = 512;
-    cast.presetHeight = 567;
+    cast.presetWidth = 64;
+    cast.presetHeight = 64;
     cast.alphaType = MxeMaterial.def.HAS_TRANSPARENT|MxeMaterial.def.HAS_TRANSLUCENT;
     cast.magFilter = GL.LINEAR;
     cast.minFilter = GL.LINEAR;
@@ -945,11 +905,6 @@ MxeDefaultContents.prototype.createModelCasts = function() {
         normal: F32A([
             0.000000, 0.000000, -1.000000, 0.000000, 0.000000, -1.000000, 0.000000, 0.000000, -1.000000, 0.000000, 0.000000, -1.000000, 
         ]),
-        texture: [
-            F32A([
-                0.000000, 1.000000, 1.000000, 1.000000, 0.000000, 0.000000, 1.000000, 0.000000, 
-            ]),
-        ],
         index: UI16A([
             2, 3, 1, 2, 1, 0, 
         ]),
@@ -965,12 +920,6 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.emissionColor = F32A([0.000000, 0.000000, 0.000000]);
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
-    texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[1];
-    texInfo.option = 0;
-    texInfo.mapType = 0;
-    texInfo.blendValue = 0.000000;
-    texInfo.blendMode = 0;
     material.blendFactorSrc = GL.SRC_ALPHA;
     material.blendFactorDst = GL.ONE_MINUS_SRC_ALPHA;
     material.blendFactorAlphaSrc = GL.SRC_ALPHA;
@@ -991,11 +940,6 @@ MxeDefaultContents.prototype.createModelCasts = function() {
         normal: F32A([
             0.000000, 0.000000, -1.000000, 0.000000, 0.000000, -1.000000, 0.000000, 0.000000, -1.000000, 0.000000, 0.000000, -1.000000, 
         ]),
-        texture: [
-            F32A([
-                0.000000, 1.000000, 1.000000, 1.000000, 0.000000, 0.000000, 1.000000, 0.000000, 
-            ]),
-        ],
         index: UI16A([
             2, 3, 1, 2, 1, 0, 
         ]),
@@ -1011,12 +955,6 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.emissionColor = F32A([0.000000, 0.000000, 0.000000]);
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
-    texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[2];
-    texInfo.option = 0;
-    texInfo.mapType = 0;
-    texInfo.blendValue = 0.000000;
-    texInfo.blendMode = 0;
     material.blendFactorSrc = GL.SRC_ALPHA;
     material.blendFactorDst = GL.ONE_MINUS_SRC_ALPHA;
     material.blendFactorAlphaSrc = GL.SRC_ALPHA;
@@ -1093,7 +1031,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[4];
+    texInfo.cast = this.textureCasts[2];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1139,7 +1077,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[5];
+    texInfo.cast = this.textureCasts[3];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1185,7 +1123,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[6];
+    texInfo.cast = this.textureCasts[4];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1231,7 +1169,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[7];
+    texInfo.cast = this.textureCasts[5];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1277,7 +1215,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[8];
+    texInfo.cast = this.textureCasts[6];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1323,7 +1261,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[9];
+    texInfo.cast = this.textureCasts[7];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1369,7 +1307,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[10];
+    texInfo.cast = this.textureCasts[8];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1415,7 +1353,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[11];
+    texInfo.cast = this.textureCasts[9];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1461,7 +1399,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[12];
+    texInfo.cast = this.textureCasts[10];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1507,7 +1445,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[13];
+    texInfo.cast = this.textureCasts[11];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1553,7 +1491,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[14];
+    texInfo.cast = this.textureCasts[12];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1599,7 +1537,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[15];
+    texInfo.cast = this.textureCasts[13];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1645,7 +1583,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[16];
+    texInfo.cast = this.textureCasts[14];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1691,7 +1629,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[17];
+    texInfo.cast = this.textureCasts[15];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1737,7 +1675,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[18];
+    texInfo.cast = this.textureCasts[16];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1783,7 +1721,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[19];
+    texInfo.cast = this.textureCasts[17];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1829,7 +1767,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[20];
+    texInfo.cast = this.textureCasts[18];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1875,7 +1813,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[21];
+    texInfo.cast = this.textureCasts[19];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1921,7 +1859,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[22];
+    texInfo.cast = this.textureCasts[20];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -1967,7 +1905,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[23];
+    texInfo.cast = this.textureCasts[21];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2013,7 +1951,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[24];
+    texInfo.cast = this.textureCasts[22];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2059,7 +1997,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[25];
+    texInfo.cast = this.textureCasts[23];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2105,7 +2043,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[26];
+    texInfo.cast = this.textureCasts[24];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2151,7 +2089,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[27];
+    texInfo.cast = this.textureCasts[25];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2197,7 +2135,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[28];
+    texInfo.cast = this.textureCasts[26];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2243,7 +2181,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[29];
+    texInfo.cast = this.textureCasts[27];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2289,7 +2227,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[30];
+    texInfo.cast = this.textureCasts[28];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2335,7 +2273,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[31];
+    texInfo.cast = this.textureCasts[29];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2381,7 +2319,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[32];
+    texInfo.cast = this.textureCasts[30];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2427,7 +2365,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[33];
+    texInfo.cast = this.textureCasts[31];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2473,7 +2411,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[34];
+    texInfo.cast = this.textureCasts[32];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2519,7 +2457,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[35];
+    texInfo.cast = this.textureCasts[33];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2565,7 +2503,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[36];
+    texInfo.cast = this.textureCasts[34];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2611,7 +2549,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[37];
+    texInfo.cast = this.textureCasts[35];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2657,7 +2595,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[38];
+    texInfo.cast = this.textureCasts[36];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -2703,7 +2641,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
     material.shininess = 0.000000;
     texInfo = material.textureInfo[0] = new MxeSectorTextureInfo();
-    texInfo.cast = this.textureCasts[39];
+    texInfo.cast = this.textureCasts[37];
     texInfo.option = 0;
     texInfo.mapType = 0;
     texInfo.blendValue = 0.000000;
@@ -4366,37 +4304,29 @@ MxeDefaultContents.prototype.createScores = function() {
         length: 1,
     };
     
-    score.tracks[0] = track = new MxeTrack3D(score, 0, "");
-    track.parentTrack = score.selfTrack;
-    track.castType = 0;
-    track.cast = this.modelCasts[1];
+    score.tracks[0] = track = new MxeTrack2D(score, 0, "");
+    track.castType = 2;
+    track.cast = this.bitmapCasts[0];
     track.maxFrame = 1;
+    casts = this.bitmapCasts;
     animation = track.animationData = new Array(1);
-    track.visibleData = UI8A([1,]);
-    animation[0] = [F32A([-80.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([0.300000, 0.300000, 0.300000]), ];
+    animation[0] = [casts[0], [100, 280], [1.000000, 1.000000]];
     
     
-    score.tracks[1] = track = new MxeTrack3D(score, 1, "");
-    track.parentTrack = score.selfTrack;
-    track.castType = 0;
-    track.cast = this.modelCasts[2];
+    score.tracks[1] = track = new MxeTrack2D(score, 1, "");
+    track.castType = 2;
+    track.cast = this.bitmapCasts[1];
     track.maxFrame = 1;
+    casts = this.bitmapCasts;
     animation = track.animationData = new Array(1);
-    track.visibleData = UI8A([1,]);
-    animation[0] = [F32A([80.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([0.300000, 0.300000, 0.300000]), ];
+    animation[0] = [casts[1], [636, 280], [1.000000, 1.000000]];
     
     
     track = score.tracks[0];
-    sectors = this.modelCasts[1].sectors;
-    track.renderList = [
-        [0, sectors[0], [track]],
-    ];
+    track.renderList = [[2, track]];
     
     track = score.tracks[1];
-    sectors = this.modelCasts[2].sectors;
-    track.renderList = [
-        [0, sectors[0], [track]],
-    ];
+    track.renderList = [[2, track]];
     
     
     
@@ -4418,7 +4348,7 @@ MxeDefaultContents.prototype.createScores = function() {
     track.maxFrame = 1;
     casts = this.textCasts;
     animation = track.animationData = new Array(1);
-    animation[0] = [casts[0], [50, 490], [1.000000, 1.000000]];
+    animation[0] = [casts[0], [0, 490], [1.000000, 1.000000]];
     
     
     score.tracks[1] = track = new MxeTrack2D(score, 1, "");
@@ -4428,7 +4358,7 @@ MxeDefaultContents.prototype.createScores = function() {
     track.maxFrame = 1;
     casts = this.bitmapCasts;
     animation = track.animationData = new Array(1);
-    animation[0] = [casts[3], [0, 0], [87.500000, 12.500000], 0.000000, 0x00, 0.835294];
+    animation[0] = [casts[3], [0, 0], [100.000000, 12.500000], 0.000000, 0x00, 0.835294];
     
     
     score.tracks[2] = track = new MxeTrack2D(score, 2, "");

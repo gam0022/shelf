@@ -281,37 +281,32 @@ Model.prototype.init = function (contents) {
   this.load_textures(1);
   this.load_textures(2);
   this.load_textures(3);
+
+
+  //
+  // Sort の種類
+  //
+
+  // 昇順と降順
+  this.ASC = 0;
+  this.DESC = 1;
+  
+  // ソートの種類
+  this.SORT_NONE  = 0;
+  this.SORT_PRICE = 2;
+
+  // 現在のソートの状態
+  this.sort_key = this.SORT_NONE;
+  this.sort_order = this.ASC;
+
+  this.update_caption();
 }
-
-//
-// http://oshiete.goo.ne.jp/qa/4894738.html
-//
-
-Model.prototype.loadFile = function (fileName){
-  //var result = jQuery.get(fileName);
-  //result.readyState;
-  //return result.responseText;
-  return "";
-}
-
-
-Model.prototype.ufo = function (a, b){
-  return (a < b) ? -1 : (a > b) ? 1 : 0;
-}
-
-
-//
-// CSVのパーサー
-// http://liosk.blog103.fc2.com/blog-entry-75.html
-//
-
 
 //
 // テスクチャの更新
 //
 
 Model.prototype.load_textures = function (face_n) {
-
 
   if (face_n == this.shelf_texture_loaded_item[face_n % this.NUM_FACES] || 
       face_n < 0 || face_n >= Math.ceil(this.MAX_FACES)) {
@@ -415,6 +410,8 @@ Model.prototype.shelf_main = function () {
       this.is_shelf_rolling = false;
       this.load_textures(this.shelf_rol_state + 1);
       this.load_textures(this.shelf_rol_state - 1);
+
+      this.update_caption();
     }
   }
 
@@ -581,11 +578,60 @@ Model.prototype.screen_move = function () {
 }
 
 //
+// Captionの更新
+//
+
+Model.prototype.limit_panel_id = function (panel_id) {
+  //return panel_id.limit(0, this.ITEM_MAX - 1);
+  if (panel_id >= this.ITEM_MAX) {
+    return this.ITEM_MAX - 1;
+  }else if (panel_id < 0 ) {
+    return 0;
+  } else {
+    return panel_id;
+  }
+}
+
+Model.prototype.update_caption_value = function (value) {
+  this.contents.textCastsL["Caption"].lines[0] = value;
+  this.contents.textCastsL["Caption"].invalidate();
+}
+
+Model.prototype.update_caption = function () {
+  var x = this.limit_panel_id(this.shelf_rol_state * this.NUM_PANEL);
+  var y = this.limit_panel_id((this.shelf_rol_state + 1) * this.NUM_PANEL - 1);
+  var caption = "" + this.ITEM_DATA[x][this.sort_key] + " - " + this.ITEM_DATA[y][this.sort_key];
+
+  this.update_caption_value(caption);
+}
+
+//
 // Item の Sort
 //
 
+// UFO演算子的な何か
+Model.prototype.ufo = function (a, b){
+  return (a < b) ? -1 : (a > b) ? 1 : 0;
+}
 
-Model.prototype.sort_items = function (compare) {
+// 比較用関数を返す
+Model.prototype.get_compare = function (key, order) {
+  switch (order) {
+    case this.ASC:
+      return function (a,b) { return model.ufo(a[key], b[key]); };
+    case this.DESC:
+      return function (a,b) { return model.ufo(b[key], a[key]); };
+    default:
+      return null;
+  }
+}
+
+Model.prototype.sort_items = function (key, order) {
+
+  this.sort_key = key;
+  this.sort_order = order;
+
+  var compare = this.get_compare(key, order);
 
   this.force_panel_popdown();
   this.ITEM_DATA.sort(compare);
@@ -595,4 +641,6 @@ Model.prototype.sort_items = function (compare) {
   this.load_textures(this.shelf_rol_state - 1);
   this.load_textures(this.shelf_rol_state);
   this.load_textures(this.shelf_rol_state + 1);
+
+  this.update_caption();
 }

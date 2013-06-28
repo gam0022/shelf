@@ -812,7 +812,7 @@ MxeDefaultContents.prototype.createBitmapCasts = function() {
 };
 
 MxeDefaultContents.prototype.createModelCasts = function() {
-    this.modelCasts = new Array(40);
+    this.modelCasts = new Array(38);
     this.modelCastsL = {};
     var textureCasts = this.textureCasts;
     var model;
@@ -868,7 +868,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[1] = this.modelCastsL["arrow_left"] = model = new MxeModel(this, 1, "arrow_left");
+    this.modelCasts[1] = this.modelCastsL["background"] = model = new MxeModel(this, 1, "background");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -903,77 +903,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[2] = this.modelCastsL["arrow_right"] = model = new MxeModel(this, 2, "arrow_right");
-    model.sectors = new Array(1);
-    model.sectorsL = {};
-    
-    vertexSrc = {
-        position: F32A([
-            -50.000000, -50.000000, 0.000000, 50.000000, -50.000000, 0.000000, -50.000000, 50.000000, 0.000000, 50.000000, 50.000000, 0.000000, 
-        ]),
-        normal: F32A([
-            0.000000, 0.000000, -1.000000, 0.000000, 0.000000, -1.000000, 0.000000, 0.000000, -1.000000, 0.000000, 0.000000, -1.000000, 
-        ]),
-        index: UI16A([
-            2, 3, 1, 2, 1, 0, 
-        ]),
-    };
-    model.sectors[0] = model.sectorsL["グループ0"] = sector = new MxeSector(model, 0, "グループ0");
-    sector.vertexSrc = vertexSrc;
-    sector.indexLength = 6;
-    sector.boxMin = F32A([-50.000000, -50.000000, 0.000000]);
-    sector.boxMax = F32A([50.000000, 50.000000, 0.000000]);
-    
-    sector.material = material = new MxeMaterial();
-    material.color = F32A([1.000000, 1.000000, 1.000000, 1.000000]);
-    material.emissionColor = F32A([0.000000, 0.000000, 0.000000]);
-    material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
-    material.shininess = 0.000000;
-    material.blendFactorSrc = GL.SRC_ALPHA;
-    material.blendFactorDst = GL.ONE_MINUS_SRC_ALPHA;
-    material.blendFactorAlphaSrc = GL.SRC_ALPHA;
-    material.blendFactorAlphaDst = GL.DST_ALPHA;
-    material.clippingValue = 1.000000;
-    
-    
-    
-    
-    this.modelCasts[3] = this.modelCastsL["background"] = model = new MxeModel(this, 3, "background");
-    model.sectors = new Array(1);
-    model.sectorsL = {};
-    
-    vertexSrc = {
-        position: F32A([
-            -50.000000, -50.000000, 0.000000, 50.000000, -50.000000, 0.000000, -50.000000, 50.000000, 0.000000, 50.000000, 50.000000, 0.000000, 
-        ]),
-        normal: F32A([
-            0.000000, 0.000000, -1.000000, 0.000000, 0.000000, -1.000000, 0.000000, 0.000000, -1.000000, 0.000000, 0.000000, -1.000000, 
-        ]),
-        index: UI16A([
-            2, 3, 1, 2, 1, 0, 
-        ]),
-    };
-    model.sectors[0] = model.sectorsL["グループ0"] = sector = new MxeSector(model, 0, "グループ0");
-    sector.vertexSrc = vertexSrc;
-    sector.indexLength = 6;
-    sector.boxMin = F32A([-50.000000, -50.000000, 0.000000]);
-    sector.boxMax = F32A([50.000000, 50.000000, 0.000000]);
-    
-    sector.material = material = new MxeMaterial();
-    material.color = F32A([1.000000, 1.000000, 1.000000, 1.000000]);
-    material.emissionColor = F32A([0.000000, 0.000000, 0.000000]);
-    material.specularColor = F32A([0.700000, 0.700000, 0.700000]);
-    material.shininess = 0.000000;
-    material.blendFactorSrc = GL.SRC_ALPHA;
-    material.blendFactorDst = GL.ONE_MINUS_SRC_ALPHA;
-    material.blendFactorAlphaSrc = GL.SRC_ALPHA;
-    material.blendFactorAlphaDst = GL.DST_ALPHA;
-    material.clippingValue = 1.000000;
-    
-    
-    
-    
-    this.modelCasts[4] = this.modelCastsL["panel0"] = model = new MxeModel(this, 4, "panel0");
+    this.modelCasts[2] = this.modelCastsL["panel0"] = model = new MxeModel(this, 2, "panel0");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1019,7 +949,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[5] = this.modelCastsL["panel1"] = model = new MxeModel(this, 5, "panel1");
+    this.modelCasts[3] = this.modelCastsL["panel1"] = model = new MxeModel(this, 3, "panel1");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1065,7 +995,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[6] = this.modelCastsL["panel2"] = model = new MxeModel(this, 6, "panel2");
+    this.modelCasts[4] = this.modelCastsL["panel2"] = model = new MxeModel(this, 4, "panel2");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1111,7 +1041,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[7] = this.modelCastsL["panel3"] = model = new MxeModel(this, 7, "panel3");
+    this.modelCasts[5] = this.modelCastsL["panel3"] = model = new MxeModel(this, 5, "panel3");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1157,7 +1087,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[8] = this.modelCastsL["panel4"] = model = new MxeModel(this, 8, "panel4");
+    this.modelCasts[6] = this.modelCastsL["panel4"] = model = new MxeModel(this, 6, "panel4");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1203,7 +1133,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[9] = this.modelCastsL["panel5"] = model = new MxeModel(this, 9, "panel5");
+    this.modelCasts[7] = this.modelCastsL["panel5"] = model = new MxeModel(this, 7, "panel5");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1249,7 +1179,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[10] = this.modelCastsL["panel6"] = model = new MxeModel(this, 10, "panel6");
+    this.modelCasts[8] = this.modelCastsL["panel6"] = model = new MxeModel(this, 8, "panel6");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1295,7 +1225,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[11] = this.modelCastsL["panel7"] = model = new MxeModel(this, 11, "panel7");
+    this.modelCasts[9] = this.modelCastsL["panel7"] = model = new MxeModel(this, 9, "panel7");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1341,7 +1271,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[12] = this.modelCastsL["panel8"] = model = new MxeModel(this, 12, "panel8");
+    this.modelCasts[10] = this.modelCastsL["panel8"] = model = new MxeModel(this, 10, "panel8");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1387,7 +1317,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[13] = this.modelCastsL["panel9"] = model = new MxeModel(this, 13, "panel9");
+    this.modelCasts[11] = this.modelCastsL["panel9"] = model = new MxeModel(this, 11, "panel9");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1433,7 +1363,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[14] = this.modelCastsL["panel10"] = model = new MxeModel(this, 14, "panel10");
+    this.modelCasts[12] = this.modelCastsL["panel10"] = model = new MxeModel(this, 12, "panel10");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1479,7 +1409,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[15] = this.modelCastsL["panel11"] = model = new MxeModel(this, 15, "panel11");
+    this.modelCasts[13] = this.modelCastsL["panel11"] = model = new MxeModel(this, 13, "panel11");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1525,7 +1455,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[16] = this.modelCastsL["panel12"] = model = new MxeModel(this, 16, "panel12");
+    this.modelCasts[14] = this.modelCastsL["panel12"] = model = new MxeModel(this, 14, "panel12");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1571,7 +1501,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[17] = this.modelCastsL["panel13"] = model = new MxeModel(this, 17, "panel13");
+    this.modelCasts[15] = this.modelCastsL["panel13"] = model = new MxeModel(this, 15, "panel13");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1617,7 +1547,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[18] = this.modelCastsL["panel14"] = model = new MxeModel(this, 18, "panel14");
+    this.modelCasts[16] = this.modelCastsL["panel14"] = model = new MxeModel(this, 16, "panel14");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1663,7 +1593,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[19] = this.modelCastsL["panel15"] = model = new MxeModel(this, 19, "panel15");
+    this.modelCasts[17] = this.modelCastsL["panel15"] = model = new MxeModel(this, 17, "panel15");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1709,7 +1639,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[20] = this.modelCastsL["panel16"] = model = new MxeModel(this, 20, "panel16");
+    this.modelCasts[18] = this.modelCastsL["panel16"] = model = new MxeModel(this, 18, "panel16");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1755,7 +1685,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[21] = this.modelCastsL["panel17"] = model = new MxeModel(this, 21, "panel17");
+    this.modelCasts[19] = this.modelCastsL["panel17"] = model = new MxeModel(this, 19, "panel17");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1801,7 +1731,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[22] = this.modelCastsL["panel18"] = model = new MxeModel(this, 22, "panel18");
+    this.modelCasts[20] = this.modelCastsL["panel18"] = model = new MxeModel(this, 20, "panel18");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1847,7 +1777,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[23] = this.modelCastsL["panel19"] = model = new MxeModel(this, 23, "panel19");
+    this.modelCasts[21] = this.modelCastsL["panel19"] = model = new MxeModel(this, 21, "panel19");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1893,7 +1823,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[24] = this.modelCastsL["panel20"] = model = new MxeModel(this, 24, "panel20");
+    this.modelCasts[22] = this.modelCastsL["panel20"] = model = new MxeModel(this, 22, "panel20");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1939,7 +1869,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[25] = this.modelCastsL["panel21"] = model = new MxeModel(this, 25, "panel21");
+    this.modelCasts[23] = this.modelCastsL["panel21"] = model = new MxeModel(this, 23, "panel21");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -1985,7 +1915,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[26] = this.modelCastsL["panel22"] = model = new MxeModel(this, 26, "panel22");
+    this.modelCasts[24] = this.modelCastsL["panel22"] = model = new MxeModel(this, 24, "panel22");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2031,7 +1961,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[27] = this.modelCastsL["panel23"] = model = new MxeModel(this, 27, "panel23");
+    this.modelCasts[25] = this.modelCastsL["panel23"] = model = new MxeModel(this, 25, "panel23");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2077,7 +2007,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[28] = this.modelCastsL["panel24"] = model = new MxeModel(this, 28, "panel24");
+    this.modelCasts[26] = this.modelCastsL["panel24"] = model = new MxeModel(this, 26, "panel24");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2123,7 +2053,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[29] = this.modelCastsL["panel25"] = model = new MxeModel(this, 29, "panel25");
+    this.modelCasts[27] = this.modelCastsL["panel25"] = model = new MxeModel(this, 27, "panel25");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2169,7 +2099,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[30] = this.modelCastsL["panel26"] = model = new MxeModel(this, 30, "panel26");
+    this.modelCasts[28] = this.modelCastsL["panel26"] = model = new MxeModel(this, 28, "panel26");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2215,7 +2145,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[31] = this.modelCastsL["panel27"] = model = new MxeModel(this, 31, "panel27");
+    this.modelCasts[29] = this.modelCastsL["panel27"] = model = new MxeModel(this, 29, "panel27");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2261,7 +2191,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[32] = this.modelCastsL["panel28"] = model = new MxeModel(this, 32, "panel28");
+    this.modelCasts[30] = this.modelCastsL["panel28"] = model = new MxeModel(this, 30, "panel28");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2307,7 +2237,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[33] = this.modelCastsL["panel29"] = model = new MxeModel(this, 33, "panel29");
+    this.modelCasts[31] = this.modelCastsL["panel29"] = model = new MxeModel(this, 31, "panel29");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2353,7 +2283,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[34] = this.modelCastsL["panel30"] = model = new MxeModel(this, 34, "panel30");
+    this.modelCasts[32] = this.modelCastsL["panel30"] = model = new MxeModel(this, 32, "panel30");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2399,7 +2329,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[35] = this.modelCastsL["panel31"] = model = new MxeModel(this, 35, "panel31");
+    this.modelCasts[33] = this.modelCastsL["panel31"] = model = new MxeModel(this, 33, "panel31");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2445,7 +2375,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[36] = this.modelCastsL["panel32"] = model = new MxeModel(this, 36, "panel32");
+    this.modelCasts[34] = this.modelCastsL["panel32"] = model = new MxeModel(this, 34, "panel32");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2491,7 +2421,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[37] = this.modelCastsL["panel33"] = model = new MxeModel(this, 37, "panel33");
+    this.modelCasts[35] = this.modelCastsL["panel33"] = model = new MxeModel(this, 35, "panel33");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2537,7 +2467,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[38] = this.modelCastsL["panel34"] = model = new MxeModel(this, 38, "panel34");
+    this.modelCasts[36] = this.modelCastsL["panel34"] = model = new MxeModel(this, 36, "panel34");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2583,7 +2513,7 @@ MxeDefaultContents.prototype.createModelCasts = function() {
     
     
     
-    this.modelCasts[39] = this.modelCastsL["panel35"] = model = new MxeModel(this, 39, "panel35");
+    this.modelCasts[37] = this.modelCastsL["panel35"] = model = new MxeModel(this, 37, "panel35");
     model.sectors = new Array(1);
     model.sectorsL = {};
     
@@ -2663,7 +2593,7 @@ MxeDefaultContents.prototype.createLightCasts= function() {
 };
 
 MxeDefaultContents.prototype.createTextCasts= function() {
-    this.textCasts = new Array(3);
+    this.textCasts = new Array(4);
     this.textCastsL = {};
     var text;
     
@@ -2698,7 +2628,19 @@ MxeDefaultContents.prototype.createTextCasts= function() {
     text.fontSize = 18.000000;
     text.fontFamily = "'Tahoma'";
     text.lines = new Array(1);
-    text.lines[0] = "牐捩呥硥t";
+    text.lines[0] = "牐捩呥硥t̀̣䖎壢8輀慃瑰潩n";
+    
+    this.textCasts[3] = this.textCastsL["Caption"] = text = new MxeText(this, 3, "Caption");
+    text.presetWidth = 79;
+    text.presetHeight = 29;
+    text.rotateCenter = F32A([-0.000000, -0.000000, 0]);
+    text.color = F32A([1.000000, 1.000000, 1.000000, 1.0]);
+    text.backgroundColor = F32A([0.000000, 0.000000, 0.000000, 1.0]);
+    text.bgTransparent = true;
+    text.fontSize = 18.000000;
+    text.fontFamily = "'Tahoma'";
+    text.lines = new Array(1);
+    text.lines[0] = "慃瑰潩n";
     
 };
 
@@ -3221,7 +3163,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[4] = score.tracksL["L0"] = track = new MxeTrack3D(score, 4, "L0");
     track.parentTrack = score.tracks[3];
     track.castType = 0;
-    track.cast = this.modelCasts[4];
+    track.cast = this.modelCasts[2];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3242,7 +3184,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[6] = score.tracksL["L1"] = track = new MxeTrack3D(score, 6, "L1");
     track.parentTrack = score.tracks[5];
     track.castType = 0;
-    track.cast = this.modelCasts[5];
+    track.cast = this.modelCasts[3];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3263,7 +3205,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[8] = score.tracksL["L2"] = track = new MxeTrack3D(score, 8, "L2");
     track.parentTrack = score.tracks[7];
     track.castType = 0;
-    track.cast = this.modelCasts[6];
+    track.cast = this.modelCasts[4];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3284,7 +3226,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[10] = score.tracksL["L3"] = track = new MxeTrack3D(score, 10, "L3");
     track.parentTrack = score.tracks[9];
     track.castType = 0;
-    track.cast = this.modelCasts[7];
+    track.cast = this.modelCasts[5];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3305,7 +3247,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[12] = score.tracksL["L4"] = track = new MxeTrack3D(score, 12, "L4");
     track.parentTrack = score.tracks[11];
     track.castType = 0;
-    track.cast = this.modelCasts[8];
+    track.cast = this.modelCasts[6];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3326,7 +3268,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[14] = score.tracksL["L5"] = track = new MxeTrack3D(score, 14, "L5");
     track.parentTrack = score.tracks[13];
     track.castType = 0;
-    track.cast = this.modelCasts[9];
+    track.cast = this.modelCasts[7];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3347,7 +3289,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[16] = score.tracksL["L6"] = track = new MxeTrack3D(score, 16, "L6");
     track.parentTrack = score.tracks[15];
     track.castType = 0;
-    track.cast = this.modelCasts[10];
+    track.cast = this.modelCasts[8];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3368,7 +3310,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[18] = score.tracksL["L7"] = track = new MxeTrack3D(score, 18, "L7");
     track.parentTrack = score.tracks[17];
     track.castType = 0;
-    track.cast = this.modelCasts[11];
+    track.cast = this.modelCasts[9];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3389,7 +3331,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[20] = score.tracksL["L8"] = track = new MxeTrack3D(score, 20, "L8");
     track.parentTrack = score.tracks[19];
     track.castType = 0;
-    track.cast = this.modelCasts[12];
+    track.cast = this.modelCasts[10];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3420,7 +3362,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[23] = score.tracksL["L9"] = track = new MxeTrack3D(score, 23, "L9");
     track.parentTrack = score.tracks[22];
     track.castType = 0;
-    track.cast = this.modelCasts[13];
+    track.cast = this.modelCasts[11];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3441,7 +3383,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[25] = score.tracksL["L10"] = track = new MxeTrack3D(score, 25, "L10");
     track.parentTrack = score.tracks[24];
     track.castType = 0;
-    track.cast = this.modelCasts[14];
+    track.cast = this.modelCasts[12];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3462,7 +3404,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[27] = score.tracksL["L11"] = track = new MxeTrack3D(score, 27, "L11");
     track.parentTrack = score.tracks[26];
     track.castType = 0;
-    track.cast = this.modelCasts[15];
+    track.cast = this.modelCasts[13];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3483,7 +3425,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[29] = score.tracksL["L12"] = track = new MxeTrack3D(score, 29, "L12");
     track.parentTrack = score.tracks[28];
     track.castType = 0;
-    track.cast = this.modelCasts[16];
+    track.cast = this.modelCasts[14];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3504,7 +3446,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[31] = score.tracksL["L13"] = track = new MxeTrack3D(score, 31, "L13");
     track.parentTrack = score.tracks[30];
     track.castType = 0;
-    track.cast = this.modelCasts[17];
+    track.cast = this.modelCasts[15];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3525,7 +3467,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[33] = score.tracksL["L14"] = track = new MxeTrack3D(score, 33, "L14");
     track.parentTrack = score.tracks[32];
     track.castType = 0;
-    track.cast = this.modelCasts[18];
+    track.cast = this.modelCasts[16];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3546,7 +3488,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[35] = score.tracksL["L15"] = track = new MxeTrack3D(score, 35, "L15");
     track.parentTrack = score.tracks[34];
     track.castType = 0;
-    track.cast = this.modelCasts[19];
+    track.cast = this.modelCasts[17];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3567,7 +3509,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[37] = score.tracksL["L16"] = track = new MxeTrack3D(score, 37, "L16");
     track.parentTrack = score.tracks[36];
     track.castType = 0;
-    track.cast = this.modelCasts[20];
+    track.cast = this.modelCasts[18];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3588,7 +3530,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[39] = score.tracksL["L17"] = track = new MxeTrack3D(score, 39, "L17");
     track.parentTrack = score.tracks[38];
     track.castType = 0;
-    track.cast = this.modelCasts[21];
+    track.cast = this.modelCasts[19];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3619,7 +3561,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[42] = score.tracksL["L18"] = track = new MxeTrack3D(score, 42, "L18");
     track.parentTrack = score.tracks[41];
     track.castType = 0;
-    track.cast = this.modelCasts[22];
+    track.cast = this.modelCasts[20];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3640,7 +3582,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[44] = score.tracksL["L19"] = track = new MxeTrack3D(score, 44, "L19");
     track.parentTrack = score.tracks[43];
     track.castType = 0;
-    track.cast = this.modelCasts[23];
+    track.cast = this.modelCasts[21];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3661,7 +3603,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[46] = score.tracksL["L20"] = track = new MxeTrack3D(score, 46, "L20");
     track.parentTrack = score.tracks[45];
     track.castType = 0;
-    track.cast = this.modelCasts[24];
+    track.cast = this.modelCasts[22];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3682,7 +3624,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[48] = score.tracksL["L21"] = track = new MxeTrack3D(score, 48, "L21");
     track.parentTrack = score.tracks[47];
     track.castType = 0;
-    track.cast = this.modelCasts[25];
+    track.cast = this.modelCasts[23];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3703,7 +3645,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[50] = score.tracksL["L22"] = track = new MxeTrack3D(score, 50, "L22");
     track.parentTrack = score.tracks[49];
     track.castType = 0;
-    track.cast = this.modelCasts[26];
+    track.cast = this.modelCasts[24];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3724,7 +3666,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[52] = score.tracksL["L23"] = track = new MxeTrack3D(score, 52, "L23");
     track.parentTrack = score.tracks[51];
     track.castType = 0;
-    track.cast = this.modelCasts[27];
+    track.cast = this.modelCasts[25];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3745,7 +3687,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[54] = score.tracksL["L24"] = track = new MxeTrack3D(score, 54, "L24");
     track.parentTrack = score.tracks[53];
     track.castType = 0;
-    track.cast = this.modelCasts[28];
+    track.cast = this.modelCasts[26];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3766,7 +3708,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[56] = score.tracksL["L25"] = track = new MxeTrack3D(score, 56, "L25");
     track.parentTrack = score.tracks[55];
     track.castType = 0;
-    track.cast = this.modelCasts[29];
+    track.cast = this.modelCasts[27];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3787,7 +3729,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[58] = score.tracksL["L26"] = track = new MxeTrack3D(score, 58, "L26");
     track.parentTrack = score.tracks[57];
     track.castType = 0;
-    track.cast = this.modelCasts[30];
+    track.cast = this.modelCasts[28];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3818,7 +3760,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[61] = score.tracksL["L27"] = track = new MxeTrack3D(score, 61, "L27");
     track.parentTrack = score.tracks[60];
     track.castType = 0;
-    track.cast = this.modelCasts[31];
+    track.cast = this.modelCasts[29];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3839,7 +3781,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[63] = score.tracksL["L28"] = track = new MxeTrack3D(score, 63, "L28");
     track.parentTrack = score.tracks[62];
     track.castType = 0;
-    track.cast = this.modelCasts[32];
+    track.cast = this.modelCasts[30];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3860,7 +3802,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[65] = score.tracksL["L29"] = track = new MxeTrack3D(score, 65, "L29");
     track.parentTrack = score.tracks[64];
     track.castType = 0;
-    track.cast = this.modelCasts[33];
+    track.cast = this.modelCasts[31];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3881,7 +3823,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[67] = score.tracksL["L30"] = track = new MxeTrack3D(score, 67, "L30");
     track.parentTrack = score.tracks[66];
     track.castType = 0;
-    track.cast = this.modelCasts[34];
+    track.cast = this.modelCasts[32];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3902,7 +3844,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[69] = score.tracksL["L31"] = track = new MxeTrack3D(score, 69, "L31");
     track.parentTrack = score.tracks[68];
     track.castType = 0;
-    track.cast = this.modelCasts[35];
+    track.cast = this.modelCasts[33];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3923,7 +3865,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[71] = score.tracksL["L32"] = track = new MxeTrack3D(score, 71, "L32");
     track.parentTrack = score.tracks[70];
     track.castType = 0;
-    track.cast = this.modelCasts[36];
+    track.cast = this.modelCasts[34];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3944,7 +3886,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[73] = score.tracksL["L33"] = track = new MxeTrack3D(score, 73, "L33");
     track.parentTrack = score.tracks[72];
     track.castType = 0;
-    track.cast = this.modelCasts[37];
+    track.cast = this.modelCasts[35];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3965,7 +3907,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[75] = score.tracksL["L34"] = track = new MxeTrack3D(score, 75, "L34");
     track.parentTrack = score.tracks[74];
     track.castType = 0;
-    track.cast = this.modelCasts[38];
+    track.cast = this.modelCasts[36];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -3986,7 +3928,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[77] = score.tracksL["L35"] = track = new MxeTrack3D(score, 77, "L35");
     track.parentTrack = score.tracks[76];
     track.castType = 0;
-    track.cast = this.modelCasts[39];
+    track.cast = this.modelCasts[37];
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
@@ -4006,217 +3948,217 @@ MxeDefaultContents.prototype.createScores = function() {
     ];
     
     track = score.tracks[4];
-    sectors = this.modelCasts[4].sectors;
+    sectors = this.modelCasts[2].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[6];
-    sectors = this.modelCasts[5].sectors;
+    sectors = this.modelCasts[3].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[8];
-    sectors = this.modelCasts[6].sectors;
+    sectors = this.modelCasts[4].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[10];
-    sectors = this.modelCasts[7].sectors;
+    sectors = this.modelCasts[5].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[12];
-    sectors = this.modelCasts[8].sectors;
+    sectors = this.modelCasts[6].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[14];
-    sectors = this.modelCasts[9].sectors;
+    sectors = this.modelCasts[7].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[16];
-    sectors = this.modelCasts[10].sectors;
+    sectors = this.modelCasts[8].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[18];
-    sectors = this.modelCasts[11].sectors;
+    sectors = this.modelCasts[9].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[20];
-    sectors = this.modelCasts[12].sectors;
+    sectors = this.modelCasts[10].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[23];
-    sectors = this.modelCasts[13].sectors;
+    sectors = this.modelCasts[11].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[25];
-    sectors = this.modelCasts[14].sectors;
+    sectors = this.modelCasts[12].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[27];
-    sectors = this.modelCasts[15].sectors;
+    sectors = this.modelCasts[13].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[29];
-    sectors = this.modelCasts[16].sectors;
+    sectors = this.modelCasts[14].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[31];
-    sectors = this.modelCasts[17].sectors;
+    sectors = this.modelCasts[15].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[33];
-    sectors = this.modelCasts[18].sectors;
+    sectors = this.modelCasts[16].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[35];
-    sectors = this.modelCasts[19].sectors;
+    sectors = this.modelCasts[17].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[37];
-    sectors = this.modelCasts[20].sectors;
+    sectors = this.modelCasts[18].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[39];
-    sectors = this.modelCasts[21].sectors;
+    sectors = this.modelCasts[19].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[42];
-    sectors = this.modelCasts[22].sectors;
+    sectors = this.modelCasts[20].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[44];
-    sectors = this.modelCasts[23].sectors;
+    sectors = this.modelCasts[21].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[46];
-    sectors = this.modelCasts[24].sectors;
+    sectors = this.modelCasts[22].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[48];
-    sectors = this.modelCasts[25].sectors;
+    sectors = this.modelCasts[23].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[50];
-    sectors = this.modelCasts[26].sectors;
+    sectors = this.modelCasts[24].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[52];
-    sectors = this.modelCasts[27].sectors;
+    sectors = this.modelCasts[25].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[54];
-    sectors = this.modelCasts[28].sectors;
+    sectors = this.modelCasts[26].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[56];
-    sectors = this.modelCasts[29].sectors;
+    sectors = this.modelCasts[27].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[58];
-    sectors = this.modelCasts[30].sectors;
+    sectors = this.modelCasts[28].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[61];
-    sectors = this.modelCasts[31].sectors;
+    sectors = this.modelCasts[29].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[63];
-    sectors = this.modelCasts[32].sectors;
+    sectors = this.modelCasts[30].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[65];
-    sectors = this.modelCasts[33].sectors;
+    sectors = this.modelCasts[31].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[67];
-    sectors = this.modelCasts[34].sectors;
+    sectors = this.modelCasts[32].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[69];
-    sectors = this.modelCasts[35].sectors;
+    sectors = this.modelCasts[33].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[71];
-    sectors = this.modelCasts[36].sectors;
+    sectors = this.modelCasts[34].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[73];
-    sectors = this.modelCasts[37].sectors;
+    sectors = this.modelCasts[35].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[75];
-    sectors = this.modelCasts[38].sectors;
+    sectors = this.modelCasts[36].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
     
     track = score.tracks[77];
-    sectors = this.modelCasts[39].sectors;
+    sectors = this.modelCasts[37].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
@@ -4239,7 +4181,7 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[0] = track = new MxeTrack3D(score, 0, "");
     track.parentTrack = score.selfTrack;
     track.castType = 0;
-    track.cast = this.modelCasts[3];
+    track.cast = this.modelCasts[1];
     track.maxFrame = 1;
     animation = track.animationData = new Array(1);
     track.visibleData = UI8A([1,]);
@@ -4247,7 +4189,7 @@ MxeDefaultContents.prototype.createScores = function() {
     
     
     track = score.tracks[0];
-    sectors = this.modelCasts[3].sectors;
+    sectors = this.modelCasts[1].sectors;
     track.renderList = [
         [0, sectors[0], [track]],
     ];
@@ -4255,7 +4197,7 @@ MxeDefaultContents.prototype.createScores = function() {
     
     
     score = this.scores[3];
-    score.tracks = new Array(4);
+    score.tracks = new Array(7);
     score.tracksL = {};
     score.maxFrameOfScore = 1;
     score.selfTrack = this.scores[0].tracks[1];
@@ -4305,6 +4247,35 @@ MxeDefaultContents.prototype.createScores = function() {
     animation[0] = [casts[2], [700, 60], [0.459184, 0.448276]];
     
     
+    score.tracks[4] = track = new MxeTrack2D(score, 4, "");
+    track.castType = 3;
+    track.cast = this.textCasts[0];
+    track.maxFrame = 1;
+    casts = this.textCasts;
+    animation = track.animationData = new Array(1);
+    animation[0] = [casts[0], [200, 0], [1.000000, 1.000000]];
+    
+    
+    score.tracks[5] = track = new MxeTrack2D(score, 5, "");
+    track.parentTrack = score.tracks[4];
+    track.castType = 2;
+    track.cast = this.bitmapCasts[1];
+    track.maxFrame = 1;
+    casts = this.bitmapCasts;
+    animation = track.animationData = new Array(1);
+    animation[0] = [casts[1], [0, 0], [50.000000, 6.250000], 0.000000, 0x00, 0.835294];
+    
+    
+    score.tracks[6] = track = new MxeTrack2D(score, 6, "");
+    track.parentTrack = score.tracks[4];
+    track.castType = 3;
+    track.cast = this.textCasts[3];
+    track.maxFrame = 1;
+    casts = this.textCasts;
+    animation = track.animationData = new Array(1);
+    animation[0] = [casts[3], [20, 10], [1.000000, 1.000000]];
+    
+    
     track = score.tracks[0];
     track.renderList = [[3, track]];
     
@@ -4315,6 +4286,15 @@ MxeDefaultContents.prototype.createScores = function() {
     track.renderList = [[3, track]];
     
     track = score.tracks[3];
+    track.renderList = [[3, track]];
+    
+    track = score.tracks[4];
+    track.renderList = [[3, track]];
+    
+    track = score.tracks[5];
+    track.renderList = [[2, track]];
+    
+    track = score.tracks[6];
     track.renderList = [[3, track]];
     
     

@@ -410,8 +410,6 @@ Model.prototype.shelf_main = function () {
       this.is_shelf_rolling = false;
       this.load_textures(this.shelf_rol_state + 1);
       this.load_textures(this.shelf_rol_state - 1);
-
-      this.update_caption();
     }
   }
 
@@ -477,6 +475,7 @@ Model.prototype.shelf_turn_left = function () {
 
     //this.load_textures(this.shelf_rol_state-1);
     this.update_statusbar();
+    this.update_caption();
   }
 };
 
@@ -498,6 +497,7 @@ Model.prototype.shelf_turn_right = function () {
 
     //this.load_textures(this.shelf_rol_state+1);
     this.update_statusbar();
+    this.update_caption();
   }
 };
 

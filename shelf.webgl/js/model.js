@@ -183,6 +183,13 @@ Model.prototype.init = function (contents) {
   this.main_count = 0;
 
   //
+  // Mouse の座標管理
+  //
+
+  this.mouse_x = 0;
+  this.mouse_y = 0;
+
+  //
   // Shelf の回転の制御用
   //
 
@@ -192,6 +199,10 @@ Model.prototype.init = function (contents) {
   this.shelf_rot = 0.0;
   this.shelf_rot_count = 0;
   this.is_shelf_rot_right = true;
+
+  // 微妙な回転の制御用
+  this.shelf_diff_rot = 0;
+  this.shelf_diff_rv  = 0;
 
   // 面が最後に読み込んだアイテムを記憶する
   this.shelf_texture_loaded_item = [-1, -1, -1, -1];
@@ -337,7 +348,7 @@ Model.prototype.load_textures = function (face_n) {
 //
 
 Model.prototype.update_statusbar = function () {
-  $("div#status").css("width", "" + (100.0 * (this.shelf_rol_state+1) / (this.MAX_FACES)) + "%");
+  jQuery("div#status").css("width", "" + (100.0 * (this.shelf_rol_state+1) / (this.MAX_FACES)) + "%");
 }
 
 //
@@ -402,7 +413,6 @@ Model.prototype.shelf_main = function () {
     var d   = this.shelf_rot_count / this.FRAME_SHELF_ROLL;
     var z   = this.easeOut(d);
     this.shelf_rot = this.is_shelf_rot_right ? pad + rd * z : pad - rd * z;
-    this.shelf_root.frame.rot[1] = this.shelf_rot;
 
     ++this.shelf_rot_count;
 
@@ -412,6 +422,11 @@ Model.prototype.shelf_main = function () {
       this.load_textures(this.shelf_rol_state - 1);
     }
   }
+  
+  this.shelf_diff_rot += this.shelf_diff_rv;
+  this.shelf_root.frame.rot[1] = this.shelf_rot + this.shelf_diff_rot;
+  this.shelf_diff_rot *= 0.7;
+  this.shelf_diff_rv  *= 0.7;
 
   // Panel PopUp
   if ( this.is_panel_popup && this.panel_pop_state[this.popup_panel_id] == this.POPING) {
@@ -456,6 +471,33 @@ Model.prototype.shelf_main = function () {
   }
   ++this.main_count;
 };
+
+//
+// Mouse Move
+//
+
+Model.prototype.mouse_move = function (e) {
+
+  if (this.panel_pop_state[this.popup_panel_id] == this.POPDOWN) {
+    this.shelf_diff_rv += 0.0001 * ( e.x - this.mouse_x);
+  }
+  //this.shelf_diff_rot = 0.0001 * (e.x - 400);
+
+  this.mouse_x = e.x;
+  this.mouse_y = e.y;
+
+  jQuery("div#console").html(e.x);
+};
+
+
+Model.prototype.mouse_down = function (e) {
+
+};
+
+Model.prototype.mouse_up = function (e) {
+
+};
+
 
 //
 // 棚の左回転

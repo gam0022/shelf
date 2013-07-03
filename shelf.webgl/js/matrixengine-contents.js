@@ -2616,7 +2616,7 @@ MxeDefaultContents.prototype.createTextCasts= function() {
     text.fontSize = 17.000000;
     text.fontFamily = "'Tahoma'";
     text.lines = new Array(1);
-    text.lines[0] = "敍獳条呥硥t";
+    text.lines[0] = "敍獳条呥硥t쌘⒗";
     
     this.textCasts[2] = this.textCastsL["PriceText"] = text = new MxeText(this, 2, "PriceText");
     text.presetWidth = 98;
@@ -2628,7 +2628,7 @@ MxeDefaultContents.prototype.createTextCasts= function() {
     text.fontSize = 18.000000;
     text.fontFamily = "'Tahoma'";
     text.lines = new Array(1);
-    text.lines[0] = "牐捩呥硥t̀̣䖎壢8輀慃瑰潩n";
+    text.lines[0] = "牐捩呥硥t";
     
     this.textCasts[3] = this.textCastsL["Caption"] = text = new MxeText(this, 3, "Caption");
     text.presetWidth = 79;

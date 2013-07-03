@@ -2616,7 +2616,7 @@ MxeDefaultContents.prototype.createTextCasts= function() {
     text.fontSize = 17.000000;
     text.fontFamily = "'Tahoma'";
     text.lines = new Array(1);
-    text.lines[0] = "敍獳条呥硥t쌘⒗";
+    text.lines[0] = "敍獳条呥硥t⌘㔑";
     
     this.textCasts[2] = this.textCastsL["PriceText"] = text = new MxeText(this, 2, "PriceText");
     text.presetWidth = 98;
@@ -4250,10 +4250,9 @@ MxeDefaultContents.prototype.createScores = function() {
     score.tracks[4] = track = new MxeTrack2D(score, 4, "");
     track.castType = 3;
     track.cast = this.textCasts[0];
-    track.maxFrame = 1;
+    track.maxFrame = 0;
     casts = this.textCasts;
-    animation = track.animationData = new Array(1);
-    animation[0] = [casts[0], [200, 0], [1.000000, 1.000000]];
+    animation = track.animationData = new Array(0);
     
     
     score.tracks[5] = track = new MxeTrack2D(score, 5, "");

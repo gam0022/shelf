@@ -423,10 +423,11 @@ Model.prototype.shelf_main = function () {
     }
   }
   
-  this.shelf_diff_rot += this.shelf_diff_rv;
-  this.shelf_root.frame.rot[1] = this.shelf_rot + this.shelf_diff_rot;
-  this.shelf_diff_rot *= 0.7;
-  this.shelf_diff_rv  *= 0.7;
+  //this.shelf_diff_rot += this.shelf_diff_rv;
+  //this.shelf_root.frame.rot[1] = this.shelf_rot + this.shelf_diff_rot;
+  //this.shelf_diff_rot *= 0.7;
+  //this.shelf_diff_rv  *= 0.7;
+  this.shelf_root.frame.rot[1] = this.shelf_rot;
 
   // Panel PopUp
   if ( this.is_panel_popup && this.panel_pop_state[this.popup_panel_id] == this.POPING) {
@@ -635,8 +636,9 @@ Model.prototype.limit_panel_id = function (panel_id) {
 }
 
 Model.prototype.update_caption_value = function (value) {
-  this.contents.textCastsL["Caption"].lines[0] = value;
-  this.contents.textCastsL["Caption"].invalidate();
+  //this.contents.textCastsL["Caption"].lines[0] = value;
+  //this.contents.textCastsL["Caption"].invalidate();
+  jQuery("div#caption").html(value);
 }
 
 Model.prototype.update_caption = function () {

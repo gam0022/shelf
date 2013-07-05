@@ -24,6 +24,6 @@ a#navi-right:hover {
 div.canvas {
   position: absolute;
   left: 0; top: 0;
-  width: 800px; height: 600px;
+  width: 600px; height: 600px;
   margin:0; padding:0;
 }

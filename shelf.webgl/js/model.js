@@ -212,7 +212,7 @@ Model.prototype.init = function (contents) {
   //
 
   this.panel_original_pos = [];
-  this.POPUP_TARGET_POS = [0, 23, -155];
+  this.POPUP_TARGET_POS = [0, 23, -168];
 
   this.POPDOWN = 0;
   this.POPING = 1;

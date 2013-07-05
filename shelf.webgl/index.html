@@ -20,7 +20,7 @@
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/html5shiv.js"></script>
     <![endif]-->
 
     <!-- Fav and touch icons -->
@@ -117,32 +117,34 @@
 
     <div class="container" style="width: 600px; text-align: center;">
 
-      <!--h1>Bootstrap starter template</h1>
-      <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p-->
-
       <div class="progress">
         <div class="bar" style="width: 0%;" id="status"></div>
       </div>
 
       <!--div id="console" class="well" style="">
-        console
+      console
       </div-->
-
-      <div id="caption" class="badge" style="width: 400px; font-size: 20px; padding: 15px;" align="center">
-        caption
-      </div>
 
       <div style="position: relative;">
         <div class="canvas">
-          <canvas id="matrixengine-canvas" style="border:none; margin:0;" width=600px height=600px></canvas>
+          <canvas id="matrixengine-canvas" style="border:none; margin:0;" width=600px height=600px>
         </div>
+
+        <div style="position: absolute; left: 85px; top: 10px;">
+          <div id="caption" class="badge" style="width: 400px; font-size: 20px; padding: 15px;">
+            caption
+          </div>
+        </div>
+
         <div style="position: absolute; left: 20px; top: 280px;">
           <a id="navi-left" onclick="model.shelf_turn_left();"></a>
         </div>
+
         <div style="position: absolute; left: 516px; top: 280px;">
           <a id="navi-right" onclick="model.shelf_turn_right();"></a>
         </div>
       </div>
+
     </div> <!-- /container -->
 
     <!-- Le javascript

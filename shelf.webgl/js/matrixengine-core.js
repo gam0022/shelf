@@ -4168,7 +4168,7 @@ MxeTrack.prototype.onClickHandler = function(e) {
         func = this.onClickListeners[i][0];
         e.userObj = this.onClickListeners[i][1];
         e.track = this;
-        func.apply(e.userObj, [e]);
+        //func.apply(e.userObj, [e]);
     }
 };
 

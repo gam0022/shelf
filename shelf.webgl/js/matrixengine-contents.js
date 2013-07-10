@@ -2616,7 +2616,7 @@ MxeDefaultContents.prototype.createTextCasts= function() {
     text.fontSize = 17.000000;
     text.fontFamily = "'Tahoma'";
     text.lines = new Array(1);
-    text.lines[0] = "敍獳条呥硥t狠ᅱ";
+    text.lines[0] = "敍獳条呥硥t";
     
     this.textCasts[2] = this.textCastsL["PriceText"] = text = new MxeText(this, 2, "PriceText");
     text.presetWidth = 98;

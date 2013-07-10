@@ -176,6 +176,9 @@ Model.prototype.init = function (contents) {
   // パネルのポップのフレーム数
   this.FRAME_SCREEN_POP = 15;
 
+  // SCORE'S INDEX
+  this.SHELF_SCORE_INDEX = 1;
+
   //
   // member
   //
@@ -242,11 +245,14 @@ Model.prototype.init = function (contents) {
 
   this.PANEL_TRACKS = [];
   this.PANEL_GHOST_TRACKS = [];
+  this.PANEL_INDEX_TO_ID = {};
 
+  var id = 0;
   for (var i = 0; i < 4; ++i) {
     for (var j = 0; j < 9; ++j) {
 
-      var pt = this.sShelfScore.tracks[i * 19 + j * 2 + 4];
+      var index = i * 19 + j * 2 + 4;
+      var pt = this.sShelfScore.tracks[index];
       pt.setPuppet(true);
       pt.frame.visible = true;
       pt.frame.siz = [0.17, 0.17, 0.17];
@@ -261,6 +267,7 @@ Model.prototype.init = function (contents) {
 
       this.panel_original_pos.push(jQuery.extend(true, {}, gt.frame.pos));
       this.panel_pop_state.push(this.POPDOWN);
+      this.PANEL_INDEX_TO_ID[index] = id++;
     }
   }
 
@@ -311,6 +318,17 @@ Model.prototype.init = function (contents) {
   this.sort_order = this.ASC;
 
   this.update_caption();
+
+
+  this.canvas_offset = jQuery("canvas#matrixengine-canvas").offset();
+  
+  var agent = navigator.userAgent;
+  this.is_android = false;
+  if(agent.search(/Android/) != -1){
+    this.is_android = true;
+  }
+
+  jQuery("div#console").html("is_andoroid: " + this.is_android);
 }
 
 //
@@ -484,19 +502,42 @@ Model.prototype.mouse_move = function (e) {
   }
   //this.shelf_diff_rot = 0.0001 * (e.x - 400);
 
-  this.mouse_x = e.x;
-  this.mouse_y = e.y;
+  this.mouse_x = e.x - this.canvas_offset.left;
+  this.mouse_y = e.y - this.canvas_offset.top;
 
-  jQuery("div#console").html(e.x);
+  //jQuery("div#console").html(e.x);
 };
 
 
 Model.prototype.mouse_down = function (e) {
 
+  if (this.is_android) {
+    this.mouse_x = e.x - this.canvas_offset.left;
+    this.mouse_y = e.y - this.canvas_offset.top;
+  } else {
+    this.mouse_x = e.x;
+    this.mouse_y = e.y;
+  }
+
+  jQuery("div#console").html("mouse_down, " + this.mouse_x + "," + this.mouse_y);
+  var pickUpTrack = matrixEngine.render.pickUp(this.mouse_x, this.mouse_y);
+  if (pickUpTrack != null) {
+    var mScore = pickUpTrack.score.index;
+    var mTrack = pickUpTrack.index;
+    //jQuery("div#console").html("mouse_down, " + mScore + ", " + mTrack);
+    if (mScore == this.SHELF_SCORE_INDEX) {
+      if (mTrack in this.PANEL_INDEX_TO_ID) {
+        this.panel_click(this.PANEL_INDEX_TO_ID[mTrack]);
+        //jQuery("div#console").html(this.PANEL_INDEX_TO_ID[mTrack]);
+      }
+    }
+  } else {
+    jQuery("div#console").html("mouse_down, null");
+  }
 };
 
 Model.prototype.mouse_up = function (e) {
-
+  jQuery("div#console").html("mouse_up");
 };
 
 

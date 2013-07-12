@@ -95,35 +95,38 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
-              <li><a href="https://github.com/gam0022/shelf">GitHub</a></li>
-              <li class="dropdown">
+              <!--li><a href="https://github.com/gam0022/shelf">GitHub</a></li-->
+              <li class="divider-vertical"></li>
+              <li><a id="sort_ID"    onclick="model.sort_toggle(model.KEY_ID);">▲ID</a></li>
+              <li><a id="sort_price" onclick="model.sort_toggle(model.KEY_PRICE);">price</a></li>
+              <li><a id="sort_color" onclick="model.sort_toggle(model.KEY_COLOR);">color</a></li>
+
+              <!--li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sort<b class="caret"></b></a>
               <ul class="dropdown-menu">
+                <li class="nav-header">id</li>
                 <li><a onclick="model.sort_items(model.KEY_ID, model.ASC);">ID ▲</a></li>
                 <li><a onclick="model.sort_items(model.KEY_ID, model.DESC);">ID ▼</a></li>
                 <li class="divider"></li>
+                <li class="nav-header">price</li>
                 <li><a onclick="model.sort_items(model.KEY_PRICE, model.ASC);">Price ▲</a></li>
                 <li><a onclick="model.sort_items(model.KEY_PRICE, model.DESC);">Price ▼</a></li>
                 <li class="divider"></li>
+                <li class="nav-header">color</li>
                 <li><a onclick="model.sort_items(model.KEY_COLOR, model.ASC);">COLOR ▲</a></li>
                 <li><a onclick="model.sort_items(model.KEY_COLOR, model.DESC);">COLOR ▼</a></li>
-                <!--li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="nav-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li-->
               </ul>
-              </li>
+              </li-->
+
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container" style="width: 600px; text-align: center;">
+    <div class="container" style="width: 600px; margin: 0 auto; padding: 0;">
 
-      <div class="progress">
+      <div class="progress" style="width: 500px; margin: 0 auto;">
         <div class="bar" style="width: 0%;" id="status"></div>
       </div>
 
@@ -131,13 +134,13 @@
       console
       </div-->
 
-      <div style="position: relative;">
+      <div style="width: 600px; position: relative; margin: 40px auto; padding: 0;">
         <div class="canvas">
           <canvas id="matrixengine-canvas" style="border:none; margin:0;" width=600px height=600px>
         </div>
 
-        <div style="position: absolute; left: 85px; top: 10px;">
-          <div id="caption" class="badge" style="width: 400px; font-size: 20px; padding: 15px;">
+        <div style="position: absolute; left: 85px; top: 20px;">
+          <div id="caption">
             caption
           </div>
         </div>
@@ -146,7 +149,7 @@
           <a id="navi-left" onclick="model.shelf_turn_left();"></a>
         </div>
 
-        <div style="position: absolute; left: 516px; top: 280px;">
+        <div style="position: absolute; left: 513px; top: 280px;">
           <a id="navi-right" onclick="model.shelf_turn_right();"></a>
         </div>
       </div>

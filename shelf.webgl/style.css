@@ -1,21 +1,29 @@
 a#navi-left {
   display: block;
+  margin: 0;
+  padding: 0;
   width: 64px; height: 64px;
   background-image: url("images/other/navi_left.png");
 }
 a#navi-left:hover {
   display: block;
+  margin: 0;
+  padding: 0;
   width: 64px; height: 64px;
   background-image: url("images/other/navi_left_fover.png");
 }
 
 a#navi-right {
   display: block;
+  margin: 0;
+  padding: 0;
   width: 64px; height: 64px;
   background-image: url("images/other/navi_right.png");
 }
 a#navi-right:hover {
   display: block;
+  margin: 0;
+  padding: 0;
   width: 64px; height: 64px;
   background-image: url("images/other/navi_right_fover.png");
 }
@@ -26,4 +34,29 @@ div.canvas {
   left: 0; top: 20px;
   width: 600px; height: 600px;
   margin:0; padding:0;
+}
+
+div#caption {
+  width: 400px;
+  font-size: 20px;
+  padding: 5px;
+  text-align: center;
+
+  font-weight: bold;
+  line-height: 26px;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #999999;
+
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.maru-kado {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
 }

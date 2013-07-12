@@ -186,6 +186,13 @@ Model.prototype.init = function (contents) {
   this.KEY_PRICE  = 3;
   this.KEY_COLOR  = 4;
 
+  this.KEY_NAMES = {};
+  this.KEY_NAMES[this.KEY_ID]    =  "ID";
+  this.KEY_NAMES[this.KEY_URL]   =  "URL";
+  this.KEY_NAMES[this.KEY_TITLE] =  "title";
+  this.KEY_NAMES[this.KEY_PRICE] =  "price";
+  this.KEY_NAMES[this.KEY_COLOR] =  "color";
+
   //
   // member
   //
@@ -321,14 +328,16 @@ Model.prototype.init = function (contents) {
   this.SORT_FORMAT[this.KEY_ID]  = "# {0} - {1}";
   this.SORT_FORMAT[this.KEY_PRICE] = "{0} - {1} 円";
   //this.SORT_FORMAT[this.KEY_COLOR] = 'COLOR: <span style="color: hsl({0}, 80%, 50%);">{0}</span> - <span style="color: hsl({1}, 80%, 50%);">{1}</span>';
-  this.SORT_FORMAT[this.KEY_COLOR] = '<div style="background: linear-gradient(to right, hsl({0}, 80%, 50%), hsl({1}, 80%, 50%)); padding: 10px;">color</div>';
+  this.SORT_FORMAT[this.KEY_COLOR] = '<div style="background: linear-gradient(to right, hsl({0}, 80%, 50%), hsl({1}, 80%, 50%));" class="maru-kado">color</div>';
 
   // 現在のソートの状態
   this.sort_key = this.KEY_ID;
   this.sort_order = this.ASC;
 
-  this.update_caption();
-
+  this.sort_orders = {};
+  this.sort_orders[this.KEY_ID]    = this.ASC;
+  this.sort_orders[this.KEY_PRICE] = this.DESC;
+  this.sort_orders[this.KEY_COLOR] = this.DESC;
 
   //
   // Nexsus7対応
@@ -341,8 +350,10 @@ Model.prototype.init = function (contents) {
   if(agent.search(/Android/) != -1){
     this.is_android = true;
   }
-
   //jQuery("div#console").html("is_andoroid: " + this.is_android);
+
+
+  this.update_caption();
 }
 
 //
@@ -716,7 +727,7 @@ Model.prototype.update_caption = function () {
       this.ITEM_DATA[a][this.sort_key], this.ITEM_DATA[b][this.sort_key]);
 
   jQuery("div#caption").html(caption);
-}
+};
 
 //
 // Item の Sort
@@ -732,7 +743,7 @@ Model.prototype.get_compare = function (key, order) {
     default:
       return null;
   }
-}
+};
 
 Model.prototype.sort_items = function (key, order) {
 
@@ -752,3 +763,20 @@ Model.prototype.sort_items = function (key, order) {
 
   this.update_caption();
 }
+
+Model.prototype.sort_toggle = function (key) {
+  var order = (this.sort_orders[key] ^= 1);
+
+  var order_str = (order == this.ASC) ? "▲" : "▼";
+
+  for (var ikey in this.KEY_NAMES) {
+    var name = this.KEY_NAMES[ikey];
+    if (ikey == key) {
+      jQuery("#sort_" + name).html(order_str + name);
+    } else {
+      jQuery("#sort_" + name).html(name);
+    }
+  }
+
+  this.sort_items(key, order);
+};

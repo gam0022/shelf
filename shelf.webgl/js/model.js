@@ -171,6 +171,7 @@ Model.prototype.init = function (contents) {
 
   // 棚の回転のフレーム数
   this.FRAME_SHELF_ROLL = 20;
+  this.FRAME_SHELF_LEAN = 20;
   // パネルのポップアップのフレーム数
   this.FRAME_PANEL_POPUP = 5;
   // パネルのポップのフレーム数
@@ -218,8 +219,10 @@ Model.prototype.init = function (contents) {
   this.is_shelf_rot_right = true;
 
   // 微妙な回転の制御用
-  this.shelf_diff_rot = 0;
-  this.shelf_diff_rv  = 0;
+  this.shelf_lean_count = 0;
+  this.is_shelf_lean_right = true;
+  this.is_shelf_leaning = false;
+  this.is_shelf_outing = false;
 
   // 面が最後に読み込んだアイテムを記憶する
   this.shelf_texture_loaded_item = [-1, -1, -1, -1];
@@ -476,20 +479,41 @@ Model.prototype.shelf_main = function () {
     var z   = this.easeOut(d);
     this.shelf_rot = this.is_shelf_rot_right ? pad + rd * z : pad - rd * z;
 
-    ++this.shelf_rot_count;
-
-    if (this.shelf_rot_count > this.FRAME_SHELF_ROLL) {
+    if (this.shelf_rot_count >= this.FRAME_SHELF_ROLL) {
       this.is_shelf_rolling = false;
       this.load_textures(this.shelf_rol_state + 1);
       this.load_textures(this.shelf_rol_state - 1);
+    } else {
+      ++this.shelf_rot_count;
     }
   }
 
-  //this.shelf_diff_rot += this.shelf_diff_rv;
-  //this.shelf_root.frame.rot[1] = this.shelf_rot + this.shelf_diff_rot;
-  //this.shelf_diff_rot *= 0.7;
-  //this.shelf_diff_rv  *= 0.7;
-  this.shelf_root.frame.rot[1] = this.shelf_rot;
+  // shelf-lean
+  if (this.is_shelf_leaning) {
+    if (this.shelf_lean_count >= this.FRAME_SHELF_LEAN) {
+        this.is_shelf_leaning = false;
+        //this.shelf_lean_count = this.FRAME_SHELF_LEAN;
+    } else {
+      ++this.shelf_lean_count;
+    }
+  }
+  if (this.is_shelf_outing) {
+    if (this.shelf_lean_count <= 0) {
+        this.is_shelf_outing = false;
+        //this.shelf_lean_count = 0;
+    } else {
+      --this.shelf_lean_count;
+    }
+  }
+  jQuery("div#console").html(this.shelf_lean_count);
+
+  var rot = 0.3  * this.easeOut(this.shelf_lean_count / this.FRAME_SHELF_LEAN);
+  if (this.is_shelf_rolling) {
+    rot *= Math.pow(0.8, this.shelf_rot_count);
+  }
+
+  this.shelf_root.frame.rot[1] = this.shelf_rot + (this.is_shelf_lean_right ? rot : -rot);
+  //this.shelf_root.frame.rot[1] = this.shelf_rot;
 
   // Panel PopUp
   if ( this.is_panel_popup && this.panel_pop_state[this.popup_panel_id] == this.POPING) {
@@ -541,10 +565,10 @@ Model.prototype.shelf_main = function () {
 
 Model.prototype.mouse_move = function (e) {
 
-  if (this.panel_pop_state[this.popup_panel_id] == this.POPDOWN) {
+  /*if (this.panel_pop_state[this.popup_panel_id] == this.POPDOWN) {
     this.shelf_diff_rv += 0.0001 * ( e.x - this.mouse_x);
   }
-  //this.shelf_diff_rot = 0.0001 * (e.x - 400);
+  //this.shelf_diff_rot = 0.0001 * (e.x - 400);*/
 
   this.mouse_x = e.x - this.canvas_offset.left;
   this.mouse_y = e.y - this.canvas_offset.top;
@@ -629,11 +653,47 @@ Model.prototype.shelf_turn_right = function () {
   }
 };
 
+Model.prototype.shelf_lean_right = function () {
+  if (!this.is_shelf_leaning && !this.is_shelf_outing && 
+      this.shelf_rol_state < this.MAX_FACES - 1) {
+    this.is_shelf_lean_right = true;
+    this.is_shelf_leaning = true;
+    this.is_shelf_outing = false;
+  }
+}
+
+
+Model.prototype.shelf_out_right = function () {
+  this.is_shelf_lean_right = true;
+  this.is_shelf_leaning = false;
+  this.is_shelf_outing = true;
+}
+
+
+Model.prototype.shelf_lean_left = function () {
+  if (!this.is_shelf_leaning && !this.is_shelf_outing && 
+      this.shelf_rol_state > 0) {
+    this.is_shelf_lean_right = false;
+    this.is_shelf_leaning = true;
+    this.is_shelf_outing = false;
+  }
+}
+
+
+Model.prototype.shelf_out_left = function () {
+  this.is_shelf_lean_right = false;
+  this.is_shelf_leaning = false;
+  this.is_shelf_outing = true;
+}
 //
 // PopUpされたPanelの強制PopDown
 //
 
 Model.prototype.force_panel_popdown = function () {
+
+  this.is_shelf_leaning = false;
+  this.is_shelf_outing = true;
+  //this.shelf_lean_count = 2;
 
   var panel_id = this.popup_panel_id;
   if (panel_id == -1 || this.panel_pop_state[panel_id] != this.POPUP) {

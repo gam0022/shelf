@@ -1,3 +1,4 @@
+.DS_Store
 *.~xp
 *.js~
 *.html~
@@ -6,3 +7,4 @@ shelf.webgl/bootstrap/img/._glyphicons-halflings.png
 *.swp
 *.md~
 *.css~
+.~lock.bags.csv#

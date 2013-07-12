@@ -1,1 +1,0 @@
-rsync -avze 'ssh -p 3843' --delete --exclude '*.log' ./shelf.webgl root@gam0022.net:/var/www/html/app/shelf

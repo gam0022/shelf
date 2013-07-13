@@ -330,7 +330,6 @@ Model.prototype.init = function (contents) {
   this.SORT_FORMAT = {};
   this.SORT_FORMAT[this.KEY_ID]  = "# {0} - {1}";
   this.SORT_FORMAT[this.KEY_PRICE] = "{0} - {1} 円";
-  //this.SORT_FORMAT[this.KEY_COLOR] = 'COLOR: <span style="color: hsl({0}, 80%, 50%);">{0}</span> - <span style="color: hsl({1}, 80%, 50%);">{1}</span>';
   this.SORT_FORMAT[this.KEY_COLOR] = '<div style="background: linear-gradient(to right, hsl({0}, 80%, 50%), hsl({1}, 80%, 50%));" class="maru-kado">color</div>';
 
   // 現在のソートの状態
@@ -343,18 +342,14 @@ Model.prototype.init = function (contents) {
   this.sort_orders[this.KEY_COLOR] = this.DESC;
 
   //
-  // Nexsus7対応
+  // Nexsus7の判定
   //
-
-  this.canvas_offset = jQuery("canvas#matrixengine-canvas").offset();
 
   var agent = navigator.userAgent;
   this.is_android = false;
   if(agent.search(/Android/) != -1){
     this.is_android = true;
   }
-  //jQuery("div#console").html("is_andoroid: " + this.is_android);
-
 
   this.update_caption();
 }
@@ -559,52 +554,65 @@ Model.prototype.shelf_main = function () {
 };
 
 //
-// Mouse Move
+// Android版のChromeのバグを考慮したマウス座標を返す
+//
+
+Model.prototype.get_mouse_pos = function(e) {
+  var pos = {};
+  if (this.is_android) {
+    var offset = jQuery("canvas#matrixengine-canvas").offset();
+    pos.x = e.x - offset.left;
+    pos.y = e.y - offset.top;
+  } else {
+    pos.x = e.x;
+    pos.y = e.y;
+  }
+  return pos;
+};
+
+//
+// パネルのトラック番号を得る
+//
+
+Model.prototype.get_panel_track = function(e) {
+  var pos = this.get_mouse_pos(e);
+  var pickUpTrack = matrixEngine.render.pickUp(pos.x, pos.y);
+  if (pickUpTrack != null) {
+    var mScore = pickUpTrack.score.index;
+    var mTrack = pickUpTrack.index;
+    if (mScore == this.SHELF_SCORE_INDEX) {
+      if (mTrack in this.PANEL_INDEX_TO_ID) {
+        return this.PANEL_INDEX_TO_ID[mTrack];
+      }
+    }
+  }
+  return null;
+};
+
+//
+// Mouse Events
 //
 
 Model.prototype.mouse_move = function (e) {
-
-  /*if (this.panel_pop_state[this.popup_panel_id] == this.POPDOWN) {
-    this.shelf_diff_rv += 0.0001 * ( e.x - this.mouse_x);
+  for (var i = 0; i < this.MAX_PANELS; ++i) {
+    this.PANEL_TRACKS[i].frame.siz = [0.17, 0.17, 0.17];
   }
-  //this.shelf_diff_rot = 0.0001 * (e.x - 400);*/
 
-  this.mouse_x = e.x - this.canvas_offset.left;
-  this.mouse_y = e.y - this.canvas_offset.top;
-
-  //jQuery("div#console").html(e.x);
+  var id = this.get_panel_track(e);
+  if (id != null) {
+    this.PANEL_TRACKS[id].frame.siz = [0.18, 0.18, 0.18];
+  }
 };
 
 
 Model.prototype.mouse_down = function (e) {
-
-  if (this.is_android) {
-    this.mouse_x = e.x - this.canvas_offset.left;
-    this.mouse_y = e.y - this.canvas_offset.top;
-  } else {
-    this.mouse_x = e.x;
-    this.mouse_y = e.y;
-  }
-
-  jQuery("div#console").html("mouse_down, " + this.mouse_x + "," + this.mouse_y);
-  var pickUpTrack = matrixEngine.render.pickUp(this.mouse_x, this.mouse_y);
-  if (pickUpTrack != null) {
-    var mScore = pickUpTrack.score.index;
-    var mTrack = pickUpTrack.index;
-    //jQuery("div#console").html("mouse_down, " + mScore + ", " + mTrack);
-    if (mScore == this.SHELF_SCORE_INDEX) {
-      if (mTrack in this.PANEL_INDEX_TO_ID) {
-        this.panel_click(this.PANEL_INDEX_TO_ID[mTrack]);
-        //jQuery("div#console").html(this.PANEL_INDEX_TO_ID[mTrack]);
-      }
-    }
-  } else {
-    jQuery("div#console").html("mouse_down, null");
-  }
 };
 
 Model.prototype.mouse_up = function (e) {
-  jQuery("div#console").html("mouse_up");
+  var id = this.get_panel_track(e);
+  if (id != null) {
+    this.panel_click(id);
+  }
 };
 
 

@@ -505,7 +505,6 @@ Model.prototype.shelf_main = function () {
       --this.shelf_lean_count;
     }
   }
-  jQuery("div#console").html(this.shelf_lean_count);
 
   var rot = 0.3  * this.easeOut(this.shelf_lean_count / this.FRAME_SHELF_LEAN);
   if (this.is_shelf_rolling) {
@@ -656,6 +655,7 @@ Model.prototype.shelf_turn_right = function () {
 Model.prototype.shelf_lean_right = function () {
   if (!this.is_shelf_leaning && !this.is_shelf_outing && 
       this.shelf_rol_state < this.MAX_FACES - 1) {
+    this.force_panel_popdown();
     this.is_shelf_lean_right = true;
     this.is_shelf_leaning = true;
     this.is_shelf_outing = false;
@@ -673,6 +673,7 @@ Model.prototype.shelf_out_right = function () {
 Model.prototype.shelf_lean_left = function () {
   if (!this.is_shelf_leaning && !this.is_shelf_outing && 
       this.shelf_rol_state > 0) {
+    this.force_panel_popdown();
     this.is_shelf_lean_right = false;
     this.is_shelf_leaning = true;
     this.is_shelf_outing = false;

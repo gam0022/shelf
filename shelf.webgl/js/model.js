@@ -176,6 +176,7 @@ Model.prototype.init = function (contents) {
   this.FRAME_PANEL_POPUP = 5;
   // パネルのポップのフレーム数
   this.FRAME_SCREEN_POP = 15;
+  this.FRAME_CAMERA_INIT = 30;
 
   // SCORE'S INDEX
   this.SHELF_SCORE_INDEX = 1;
@@ -287,6 +288,20 @@ Model.prototype.init = function (contents) {
       this.PANEL_INDEX_TO_ID[index] = id++;
     }
   }
+
+  //
+  //  Camera のパペット化
+  //
+
+  this.CAMERA_TRACK = this.contents.scoresL['スコア0'].tracks[0];
+  this.CAMERA_TRACK.setPuppet(true);
+  //this.CAMERA_TRACK.frame.make(1);
+  this.CAMERA_TRACK.frame.visible = true;
+  this.CAMERA_TRACK.frame.pos = [0, 28.7, -220];
+  this.CAMERA_TRACK.frame.rot = [0.1381320059299469, 0, 0, 1];
+
+  this.CAMERA_CAST = this.contents.cameraCasts[0];
+  this.CAMERA_CAST.cameraAngle = 36;
 
   //
   // Screen
@@ -544,6 +559,15 @@ Model.prototype.shelf_main = function () {
     if (this.scrren_pop_count == 0) {
       this.screen_pop_state = this.STOP;
     }
+  }
+
+  // Camera
+  if (this.main_count <= this.FRAME_CAMERA_INIT) {
+    var x = this.main_count / this.FRAME_CAMERA_INIT;
+    var y = this.easeOut(x);
+    this.CAMERA_CAST.cameraAngle = 36 + 30 - 30 * y;
+    this.CAMERA_TRACK.frame.pos = [0, 28.7, -220];
+    //this.CAMERA_TRACK.frame.rot[0] = 0.1381320059299469 + Math.PI - Math.PI * y;
   }
 
   // Main Count

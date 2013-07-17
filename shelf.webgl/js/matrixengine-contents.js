@@ -3072,8 +3072,8 @@ MxeDefaultContents.prototype.createScores = function() {
     track.maxFrame = 2;
     animation = track.animationData = new Array(2);
     track.visibleData = UI8A([0,1,]);
-    animation[0] = [F32A([0.000000, 0.000000, 103.150383]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
-    animation[1] = [F32A([0.000000, 0.000000, 103.150383]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
+    animation[0] = [F32A([0.000000, 0.000000, 103.150383]), F32A([0.000000, 0.000000, 0.000000]), F32A([10.000000, 10.000000, 10.000000]), ];
+    animation[1] = [F32A([0.000000, 0.000000, 103.150383]), F32A([0.000000, 0.000000, 0.000000]), F32A([10.000000, 10.000000, 10.000000]), ];
     
     
     score.tracks[4] = track = new MxeTrack3D(score, 4, "");
@@ -4185,7 +4185,7 @@ MxeDefaultContents.prototype.createScores = function() {
     track.maxFrame = 1;
     animation = track.animationData = new Array(1);
     track.visibleData = UI8A([1,]);
-    animation[0] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([10000.000000, 10000.000000, 10000.000000]), ];
+    animation[0] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
     
     
     track = score.tracks[0];

@@ -4185,7 +4185,7 @@ MxeDefaultContents.prototype.createScores = function() {
     track.maxFrame = 1;
     animation = track.animationData = new Array(1);
     track.visibleData = UI8A([1,]);
-    animation[0] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([1.000000, 1.000000, 1.000000]), ];
+    animation[0] = [F32A([0.000000, 0.000000, 0.000000]), F32A([0.000000, 0.000000, 0.000000]), F32A([10.000000, 10.000000, 10.000000]), ];
     
     
     track = score.tracks[0];

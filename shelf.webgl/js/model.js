@@ -196,17 +196,29 @@ Model.prototype.init = function (contents) {
   this.KEY_NAMES[this.KEY_COLOR] =  "color";
 
   //
+  // States
+  //
+  
+  // panel_pop_state 用
+  this.POPDOWN = 0;
+  this.POPING = 1;
+  this.POPUP = 2;
+
+  // screen_pop_state 用
+  this.UPING = 3;
+  this.DOWNING = 4;
+  this.STOP = 5;
+
+  // 昇順と降順
+  this.ASC = 0;
+  this.DESC = 1;
+
+
+  //
   // member
   //
 
   this.main_count = 0;
-
-  //
-  // Mouse の座標管理
-  //
-
-  this.mouse_x = 0;
-  this.mouse_y = 0;
 
   //
   // Shelf の回転の制御用
@@ -235,9 +247,6 @@ Model.prototype.init = function (contents) {
   this.panel_original_pos = [];
   this.POPUP_TARGET_POS = [0, 23, -168];
 
-  this.POPDOWN = 0;
-  this.POPING = 1;
-  this.POPUP = 2;
   this.panel_pop_state = [];
 
   this.is_panel_popup = false; 
@@ -247,6 +256,9 @@ Model.prototype.init = function (contents) {
   this.is_panel_popdown = false;
   this.popdown_panel_id = 0;
   this.popdown_panel_count = 0;
+
+  // MouseDown時に選択されたパネルを記憶する
+  this.pre_select_panel_id = -1;
 
   //
   // Shelf の Root のパペット化
@@ -315,10 +327,6 @@ Model.prototype.init = function (contents) {
   this.screen_ghost.frame.pos = this.SCREEN_POS_DOWN;
   this.screen_ghost.frame.visible = true;
 
-  this.UPING = 3;
-  this.DOWNING = 4;
-  this.STOP = 5;
-
   this.screen_pop_state = this.STOP;
   this.screen_pop_count = 0;
 
@@ -336,10 +344,6 @@ Model.prototype.init = function (contents) {
   //
   // Sort の種類
   //
-
-  // 昇順と降順
-  this.ASC = 0;
-  this.DESC = 1;
 
   // Caption
   this.SORT_FORMAT = {};
@@ -528,7 +532,6 @@ Model.prototype.shelf_main = function () {
   if ( this.is_panel_popup && this.panel_pop_state[this.popup_panel_id] == this.POPING) {
     ++this.popup_panel_count;
     this.execute_pop_panel(this.popup_panel_id, this.popup_panel_count);
-    //this.screen_move(this.popup_panel_count);
     if ( this.popup_panel_count == this.FRAME_PANEL_POPUP) {
       this.is_panel_popup = false;
       this.panel_pop_state[this.popup_panel_id] = this.POPUP;
@@ -539,7 +542,6 @@ Model.prototype.shelf_main = function () {
   if ( this.is_panel_popdown && this.panel_pop_state[this.popdown_panel_id] == this.POPING) {
     --this.popdown_panel_count;
     this.execute_pop_panel(this.popdown_panel_id, this.popdown_panel_count);
-    //this.screen_move(this.popdown_panel_count);
     if ( this.popdown_panel_count == 0) {
       this.is_panel_popdown = false;
       this.panel_pop_state[this.popdown_panel_id] = this.POPDOWN;
@@ -630,11 +632,13 @@ Model.prototype.mouse_move = function (e) {
 
 
 Model.prototype.mouse_down = function (e) {
+  var id = this.get_panel_track(e);
+  this.pre_select_panel_id = (id != null) ? id : -1;
 };
 
 Model.prototype.mouse_up = function (e) {
   var id = this.get_panel_track(e);
-  if (id != null) {
+  if (id != null && id == this.pre_select_panel_id) {
     this.panel_click(id);
   }
 };
@@ -656,7 +660,6 @@ Model.prototype.shelf_turn_left = function () {
     this.shelf_rol_state_pre = this.shelf_rol_state;
     --this.shelf_rol_state;
 
-    //this.load_textures(this.shelf_rol_state-1);
     this.update_statusbar();
     this.update_caption();
   }
@@ -678,7 +681,6 @@ Model.prototype.shelf_turn_right = function () {
     this.shelf_rol_state_pre = this.shelf_rol_state;
     ++this.shelf_rol_state;
 
-    //this.load_textures(this.shelf_rol_state+1);
     this.update_statusbar();
     this.update_caption();
   }
@@ -718,6 +720,7 @@ Model.prototype.shelf_out_left = function () {
   this.is_shelf_leaning = false;
   this.is_shelf_outing = true;
 }
+
 //
 // PopUpされたPanelの強制PopDown
 //
@@ -803,7 +806,6 @@ Model.prototype.screen_move = function () {
 //
 
 Model.prototype.limit_panel_id = function (panel_id) {
-  //return panel_id.limit(0, this.ITEM_MAX - 1);
   if (panel_id >= this.ITEM_MAX) {
     return this.ITEM_MAX - 1;
   }else if (panel_id < 0 ) {

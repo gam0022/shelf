@@ -232,10 +232,17 @@ Model.prototype.init = function (contents) {
   this.is_shelf_rot_right = true;
 
   // 微妙な回転の制御用
+  this.shelf_diff_rot = 0;
   this.shelf_lean_count = 0;
   this.is_shelf_lean_right = true;
   this.is_shelf_leaning = false;
   this.is_shelf_outing = false;
+
+  // ドラックの制御
+  this.mouse_pos = {x:0, y:0};
+  this.mouse_drag_start_pos = {x:0, y:0};
+  this.is_mouse_drag = false;
+  this.mouse_drag_weight = 0;
 
   // 面が最後に読み込んだアイテムを記憶する
   this.shelf_texture_loaded_item = [-1, -1, -1, -1];
@@ -520,13 +527,29 @@ Model.prototype.shelf_main = function () {
     }
   }
 
-  var rot = 0.3  * this.easeOut(this.shelf_lean_count / this.FRAME_SHELF_LEAN);
-  if (this.is_shelf_rolling) {
-    rot *= Math.pow(0.8, this.shelf_rot_count);
+  // mouse drag
+  if (!this.is_mouse_drag) {
+    this.mouse_drag_weight *= 0.8;
   }
 
-  this.shelf_root.frame.rot[1] = this.shelf_rot + (this.is_shelf_lean_right ? rot : -rot);
-  //this.shelf_root.frame.rot[1] = this.shelf_rot;
+  if (this.is_shelf_leaning || this.is_shelf_outing) {
+    this.shelf_diff_rot = 0.3  * this.easeOut(this.shelf_lean_count / this.FRAME_SHELF_LEAN);
+  } else {
+    var d = Math.abs(this.mouse_drag_weight);
+    if (d > 170) {
+      d = 170;
+    }
+    this.shelf_diff_rot = (d >= 30) ? 0.005 * d : 0;
+    this.is_shelf_lean_right = (this.mouse_drag_weight < 0);
+  }
+
+  // rotの重みを消す
+  if (this.is_shelf_rolling) {
+    this.shelf_diff_rot *= Math.pow(0.8, this.shelf_rot_count);
+  }
+
+  this.shelf_root.frame.rot[1] = this.shelf_rot + (this.is_shelf_lean_right ? 
+      this.shelf_diff_rot : -this.shelf_diff_rot);
 
   // Panel PopUp
   if ( this.is_panel_popup && this.panel_pop_state[this.popup_panel_id] == this.POPING) {
@@ -608,7 +631,13 @@ Model.prototype.get_panel_track = function(e) {
     var mTrack = pickUpTrack.index;
     if (mScore == this.SHELF_SCORE_INDEX) {
       if (mTrack in this.PANEL_INDEX_TO_ID) {
-        return this.PANEL_INDEX_TO_ID[mTrack];
+        var id = this.PANEL_INDEX_TO_ID[mTrack];
+        var min = (this.shelf_rol_state % this.NUM_FACES) * this.NUM_PANEL;
+        if ( min <= id && id < min + this.NUM_PANEL) {
+          return id;
+        } else {
+          return null;
+        }
       }
     }
   }
@@ -628,18 +657,34 @@ Model.prototype.mouse_move = function (e) {
   if (id != null) {
     this.PANEL_TRACKS[id].frame.siz = [0.18, 0.18, 0.18];
   }
+  this.mouse_pos = this.get_mouse_pos(e);
+  if (this.is_mouse_drag) {
+    this.mouse_drag_weight = this.mouse_pos.x - this.mouse_drag_start_pos.x;
+  } else {
+    this.mouse_drag_weight = 0;
+  }
 };
 
 
 Model.prototype.mouse_down = function (e) {
   var id = this.get_panel_track(e);
   this.pre_select_panel_id = (id != null) ? id : -1;
+  this.mouse_drag_start_pos = this.get_mouse_pos(e);
+  this.is_mouse_drag = true;
 };
 
 Model.prototype.mouse_up = function (e) {
   var id = this.get_panel_track(e);
   if (id != null && id == this.pre_select_panel_id) {
     this.panel_click(id);
+  }
+  this.is_mouse_drag = false;
+  if (Math.abs(this.mouse_drag_weight) >= 150) {
+    if (this.mouse_drag_weight >= 0) {
+      this.shelf_turn_left();
+    } else {
+      this.shelf_turn_right();
+    }
   }
 };
 
@@ -655,7 +700,7 @@ Model.prototype.shelf_turn_left = function () {
 
     this.is_shelf_rolling = true;
     this.is_shelf_rot_right = false;
-    this.shelf_rot_count = 0;
+    this.shelf_rot_count = Math.abs(this.shelf_diff_rot / Math.PI / 2 * this.FRAME_SHELF_ROLL);
 
     this.shelf_rol_state_pre = this.shelf_rol_state;
     --this.shelf_rol_state;
@@ -677,6 +722,7 @@ Model.prototype.shelf_turn_right = function () {
     this.is_shelf_rolling = true;
     this.is_shelf_rot_right = true;
     this.shelf_rot_count = 0;
+    this.shelf_rot_count = Math.abs(this.shelf_diff_rot / Math.PI / 2 * this.FRAME_SHELF_ROLL);
 
     this.shelf_rol_state_pre = this.shelf_rol_state;
     ++this.shelf_rol_state;

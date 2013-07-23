@@ -1,4 +1,97 @@
+/*------------------------------
+  Point2D
+------------------------------*/
+
+var Point2D = function (x, y) {
+  this.x = x;
+  this.y = y;
+};
+
+
+
+/*------------------------------
+  Vector3D
+------------------------------*/
+
+var Vector3D = function (vec) {
+  this.vec = jQuery.extend(true, {}, vec);
+  return this;
+};
+
+Vector3D.prototype.clone = function() {
+  return jQuery.extend(true, {}, this);
+};
+
+Vector3D.prototype.scale = function(d) {
+  this.vec[0] *= d;
+  this.vec[1] *= d;
+  this.vec[2] *= d;
+  return this;
+};
+
+Vector3D.prototype.add = function(v) {
+  this.vec[0] += v.vec[0];
+  this.vec[1] += v.vec[1];
+  this.vec[2] += v.vec[2];
+  return this;
+};
+
+Vector3D.prototype.diff = function(v) {
+  this.vec[0] -= v.vec[0];
+  this.vec[1] -= v.vec[1];
+  this.vec[2] -= v.vec[2];
+  return this;
+};
+
+
+
 var Model = function(){};
+
+/*------------------------------
+  Utility
+------------------------------*/
+
+//
+// 等間隔な [0 1] を入力として、EaseOutするような関数を返す
+//
+
+Model.prototype.easeOut = function (x) {
+  return 1 - Math.exp(-6 * x);
+}
+
+//
+// 上の逆関数
+//
+
+Model.prototype.easeOut_inv = function (x) {
+  return -Math.log(1 - x) / 6;
+}
+
+
+//
+// sprintfメソッドの定義
+// http://www.atmarkit.co.jp/ait/articles/1003/12/news088_11.html
+//
+
+Model.prototype.sprintf = function(format) {
+
+  // 第2引数以降を順に処理
+  for (var i = 1; i < arguments.length; i++) {
+
+    // 正規表現でプレイスホルダと対応する引数の値を置換処理
+    var reg = new RegExp('\\{' + (i - 1) + '\\}', 'g');
+    format = format.replace(reg, arguments[i]);
+  }
+
+  // 最終的な置き換え結果を戻り値として返す
+  return format;
+}
+
+
+
+/*==============================
+  Model
+==============================*/
 
 Model.prototype.init = function (contents) {
 
@@ -227,8 +320,8 @@ Model.prototype.init = function (contents) {
   // ドラックの制御
   //
 
-  this.mouse_pos = {x:0, y:0};
-  this.mouse_drag_start_pos = {x:0, y:0};
+  this.mouse_pos = new Point2D(0,0);
+  this.mouse_drag_start_pos = new Point2D(0,0);
   this.is_mouse_drag = false;
   this.mouse_drag_weight = 0;
   this.mouse_drag_count = 0;
@@ -259,7 +352,7 @@ Model.prototype.init = function (contents) {
   //
 
   this.panel_original_pos = [];
-  this.POPUP_TARGET_POS = [0, 23, -168];
+  this.POPUP_TARGET_POS = new Vector3D([0, 23, -168]);
 
   this.panel_pop_state = [];
 
@@ -309,7 +402,7 @@ Model.prototype.init = function (contents) {
       gt.frame.visible = true;
       this.PANEL_GHOST_TRACKS.push(gt);
 
-      this.panel_original_pos.push(jQuery.extend(true, {}, gt.frame.pos));
+      this.panel_original_pos.push(new Vector3D(gt.frame.pos));
       this.panel_pop_state.push(this.POPDOWN);
       this.PANEL_INDEX_TO_ID[index] = id++;
     }
@@ -333,8 +426,8 @@ Model.prototype.init = function (contents) {
   // Screen
   //
 
-  this.SCREEN_POS_UP = [0, 490, 0];
-  this.SCREEN_POS_DOWN = [0, 600, 0];
+  this.SCREEN_POS_UP = new Vector3D([0, 490, 0]);
+  this.SCREEN_POS_DOWN = new Vector3D([0, 600, 0]);
 
   this.screen_ghost = this.contents.scoresL["screen"].tracks[0];
   this.screen_ghost.setPuppet(true);
@@ -387,120 +480,9 @@ Model.prototype.init = function (contents) {
   this.update_caption();
 }
 
-//
-// テスクチャの更新
-//
-
-Model.prototype.load_textures = function (face_n) {
-
-  if (face_n == this.shelf_texture_loaded_item[face_n % this.NUM_FACES] || 
-      face_n < 0 || face_n >= Math.ceil(this.MAX_FACES)) {
-        return;
-      }
-
-  this.shelf_texture_loaded_item[face_n % this.NUM_FACES] = face_n;
-  var item_n = face_n * this.NUM_PANEL;
-  var texture_n = (face_n % this.NUM_FACES) * this.NUM_PANEL;
-
-  for (var i = 0; i < this.NUM_PANEL; ++i) {
-
-    var texture_id = texture_n + i;
-    var item_id = item_n + i;
-
-    if (item_id < this.ITEM_MAX) {
-      var url = this.ITEM_IMAGE_PATH + this.ITEM_DATA[item_id][this.KEY_URL];
-      this.contents.textureCasts[this.PANEL_TEXTURE[texture_id]].loadImage(url);
-      this.PANEL_TRACKS[texture_id].frame.visible = true;
-    } else {
-      this.PANEL_TRACKS[texture_id].frame.visible = false;
-    }
-  }
-};
-
-//
-// ステータスバーの更新
-//
-
-Model.prototype.update_statusbar = function () {
-  jQuery("div#status").css("width", this.sprintf("{0}%", 100.0 * (this.shelf_rot_state+1) / this.MAX_FACES));
-}
-
-//
-// 等間隔な [0 1] を入力として、EaseOutするような関数を返す
-//
-
-Model.prototype.easeOut = function (x) {
-  return 1 - Math.exp(-6 * x);
-}
-
-// 上の逆関数
-Model.prototype.easeOut_inv = function (x) {
-  return - Math.log(1 - x) / 6;
-}
-
-//
-// Util
-//
-
-Model.prototype.scale_pos = function(pos, d) {
-  var new_pos = [];
-  new_pos[0] = pos[0] * d;
-  new_pos[1] = pos[1] * d;
-  new_pos[2] = pos[2] * d;
-  return new_pos;
-}
-
-Model.prototype.add_pos = function(p0, p1) {
-  var new_pos = [];
-  new_pos[0] = p0[0] + p1[0];
-  new_pos[1] = p0[1] + p1[1];
-  new_pos[2] = p0[2] + p1[2];
-  return new_pos;
-}
-
-Model.prototype.diff_pos = function(p0, p1) {
-  var new_pos = [];
-  new_pos[0] = p0[0] - p1[0];
-  new_pos[1] = p0[1] - p1[1];
-  new_pos[2] = p0[2] - p1[2];
-  return new_pos;
-}
-
-//
-// sprintfメソッドの定義
-// http://www.atmarkit.co.jp/ait/articles/1003/12/news088_11.html
-//
-
-Model.prototype.sprintf = function(format) {
-
-  // 第2引数以降を順に処理
-  for (var i = 1; i < arguments.length; i++) {
-
-    // 正規表現でプレイスホルダと対応する引数の値を置換処理
-    var reg = new RegExp('\\{' + (i - 1) + '\\}', 'g');
-    format = format.replace(reg, arguments[i]);
-  }
-
-  // 最終的な置き換え結果を戻り値として返す
-  return format;
-}
-
-//
-// パネルのポップアップ/ポップダウンの内部処理
-//
-
-Model.prototype.execute_pop_panel = function(panel_id, count) {
-  var x = count / this.FRAME_PANEL_POPUP;// [0 1]の係数
-  var z = this.easeOut(x);
-  var original_pos = this.panel_original_pos[panel_id];
-  var v = this.diff_pos(this.POPUP_TARGET_POS, original_pos);
-  var diff = this.scale_pos(v, z);
-  this.PANEL_GHOST_TRACKS[panel_id].frame.pos = this.add_pos(original_pos, diff);
-}
-
-//
-// Main
-//
+/*------------------------------
+  Model Main
+------------------------------*/
 
 Model.prototype.shelf_main = function () {
 
@@ -521,11 +503,10 @@ Model.prototype.shelf_main = function () {
     }
   }
 
-  // shelf-lean
+  // shelf lean
   if (this.is_shelf_leaning) {
     if (this.shelf_lean_count >= this.FRAME_SHELF_LEAN) {
       this.is_shelf_leaning = false;
-      //this.shelf_lean_count = this.FRAME_SHELF_LEAN;
     } else {
       ++this.shelf_lean_count;
     }
@@ -533,7 +514,6 @@ Model.prototype.shelf_main = function () {
   if (this.is_shelf_outing) {
     if (this.shelf_lean_count <= 0) {
       this.is_shelf_outing = false;
-      //this.shelf_lean_count = 0;
     } else {
       --this.shelf_lean_count;
     }
@@ -563,7 +543,7 @@ Model.prototype.shelf_main = function () {
   // Panel PopUp
   if ( this.is_panel_popup && this.panel_pop_state[this.popup_panel_id] == this.POPING) {
     ++this.popup_panel_count;
-    this.execute_pop_panel(this.popup_panel_id, this.popup_panel_count);
+    this.panel_move(this.popup_panel_id, this.popup_panel_count);
     if ( this.popup_panel_count >= this.FRAME_PANEL_POPUP) {
       this.is_panel_popup = false;
       this.panel_pop_state[this.popup_panel_id] = this.POPUP;
@@ -573,7 +553,7 @@ Model.prototype.shelf_main = function () {
   // Panel PopDown
   if ( this.is_panel_popdown && this.panel_pop_state[this.popdown_panel_id] == this.POPING) {
     --this.popdown_panel_count;
-    this.execute_pop_panel(this.popdown_panel_id, this.popdown_panel_count);
+    this.panel_move(this.popdown_panel_id, this.popdown_panel_count);
     if ( this.popdown_panel_count <= 0) {
       this.is_panel_popdown = false;
       this.panel_pop_state[this.popdown_panel_id] = this.POPDOWN;
@@ -600,8 +580,6 @@ Model.prototype.shelf_main = function () {
     var x = this.main_count / this.FRAME_CAMERA_INIT;
     var y = this.easeOut(x);
     this.CAMERA_CAST.cameraAngle = 36 + 30 - 30 * y;
-    this.CAMERA_TRACK.frame.pos = [0, 28.7, -220];
-    //this.CAMERA_TRACK.frame.rot[0] = 0.1381320059299469 + Math.PI - Math.PI * y;
   }
 
   // Main Count
@@ -611,25 +589,28 @@ Model.prototype.shelf_main = function () {
   ++this.main_count;
 };
 
+
+
+/*------------------------------
+  Mouse
+------------------------------*/
+
 //
 // Android版のChromeのバグを考慮したマウス座標を返す
 //
 
 Model.prototype.get_mouse_pos = function(e) {
-  var pos = {};
   if (this.is_android) {
     var offset = jQuery("canvas#matrixengine-canvas").offset();
-    pos.x = e.x - offset.left;
-    pos.y = e.y - offset.top;
+    return new Point2D(e.x - offset.left, e.y - offset.top);
   } else {
-    pos.x = e.x;
-    pos.y = e.y;
+    return new Point2D(e.x, e.y);
   }
-  return pos;
 };
 
+
 //
-// パネルのトラック番号を得る
+// マウスのイベントハンドラの e からパネルのトラック番号を得る
 //
 
 Model.prototype.get_panel_track = function(e) {
@@ -653,9 +634,6 @@ Model.prototype.get_panel_track = function(e) {
   return null;
 };
 
-//
-// Mouse Events
-//
 
 Model.prototype.mouse_move = function (e) {
   for (var i = 0; i < this.MAX_PANELS; ++i) {
@@ -710,6 +688,11 @@ Model.prototype.mouse_up = function (e) {
   }
 };
 
+
+
+/*------------------------------
+  Shelf
+------------------------------*/
 
 //
 // 棚の左回転
@@ -793,6 +776,57 @@ Model.prototype.shelf_out_left = function () {
   this.is_shelf_outing = true;
 }
 
+
+
+/*------------------------------
+  Panel
+------------------------------*/
+
+//
+// テスクチャの更新
+//
+
+Model.prototype.load_textures = function (face_n) {
+
+  if (face_n == this.shelf_texture_loaded_item[face_n % this.NUM_FACES] || 
+      face_n < 0 || face_n >= Math.ceil(this.MAX_FACES)) {
+        return;
+      }
+
+  this.shelf_texture_loaded_item[face_n % this.NUM_FACES] = face_n;
+  var item_n = face_n * this.NUM_PANEL;
+  var texture_n = (face_n % this.NUM_FACES) * this.NUM_PANEL;
+
+  for (var i = 0; i < this.NUM_PANEL; ++i) {
+
+    var texture_id = texture_n + i;
+    var item_id = item_n + i;
+
+    if (item_id < this.ITEM_MAX) {
+      var url = this.ITEM_IMAGE_PATH + this.ITEM_DATA[item_id][this.KEY_URL];
+      this.contents.textureCasts[this.PANEL_TEXTURE[texture_id]].loadImage(url);
+      this.PANEL_TRACKS[texture_id].frame.visible = true;
+    } else {
+      this.PANEL_TRACKS[texture_id].frame.visible = false;
+    }
+  }
+};
+
+
+//
+// パネルのポップアップ/ポップダウンの内部処理
+//
+
+Model.prototype.panel_move = function(panel_id, count) {
+  var x = count / this.FRAME_PANEL_POPUP;// [0 1]の係数
+  var z = this.easeOut(x);
+  var origin = this.panel_original_pos[panel_id].clone();
+  var target = this.POPUP_TARGET_POS.clone();
+  var v = target.diff(origin).scale(z);
+  this.PANEL_GHOST_TRACKS[panel_id].frame.pos = origin.add(v).vec;
+}
+
+
 //
 // PopUpされたPanelの強制PopDown
 //
@@ -817,7 +851,7 @@ Model.prototype.force_panel_popdown = function () {
 }
 
 //
-// パネルのクリック
+// Panel Click
 //
 
 Model.prototype.panel_click = function (panel_id) {
@@ -861,20 +895,26 @@ Model.prototype.panel_click = function (panel_id) {
 }
 
 
+
+/*------------------------------
+  Other
+------------------------------*/
+
 //
-// Screen Pop
+// Screen
 //
 
 Model.prototype.screen_move = function () {
   var x = this.screen_pop_count / this.FRAME_SCREEN_POP;// [0 1]の係数
   var z = this.easeOut(x);
-  var v = this.diff_pos(this.SCREEN_POS_UP, this.SCREEN_POS_DOWN);
-  var diff = this.scale_pos(v, z);
-  this.screen_ghost.frame.pos = this.add_pos(this.SCREEN_POS_DOWN, diff);
+  var up = this.SCREEN_POS_UP.clone();
+  var down = this.SCREEN_POS_DOWN.clone();
+  var v = up.diff(down).scale(z);
+  this.screen_ghost.frame.pos = down.add(v).vec;
 }
 
 //
-// Captionの更新
+// Caption
 //
 
 Model.prototype.limit_panel_id = function (panel_id) {
@@ -896,9 +936,20 @@ Model.prototype.update_caption = function () {
   jQuery("div#caption").html(caption);
 };
 
+
 //
-// Item の Sort
+// StatusBar
 //
+
+Model.prototype.update_statusbar = function () {
+  jQuery("div#status").css("width", this.sprintf("{0}%", 100.0 * (this.shelf_rot_state+1) / this.MAX_FACES));
+}
+
+
+
+/*------------------------------
+  Sort Items
+------------------------------*/
 
 // 比較用関数を返す
 Model.prototype.get_compare = function (key, order) {

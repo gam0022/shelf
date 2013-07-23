@@ -229,6 +229,7 @@ Model.prototype.init = function (contents) {
   this.mouse_drag_start_pos = {x:0, y:0};
   this.is_mouse_drag = false;
   this.mouse_drag_weight = 0;
+  this.mouse_drag_count = 0;
 
   //
   // Shelf の回転の制御用
@@ -666,8 +667,10 @@ Model.prototype.mouse_move = function (e) {
   this.mouse_pos = this.get_mouse_pos(e);
   if (this.is_mouse_drag) {
     this.mouse_drag_weight = this.mouse_pos.x - this.mouse_drag_start_pos.x;
+    ++this.mouse_drag_count;
   } else {
     this.mouse_drag_weight = 0;
+    this.mouse_drag_count = 0;
   }
 };
 
@@ -679,16 +682,19 @@ Model.prototype.mouse_down = function (e) {
   // ドラッグの開始
   this.mouse_drag_start_pos = this.get_mouse_pos(e);
   this.is_mouse_drag = true;
+  this.mouse_drag_count = 0;
 };
 
 Model.prototype.mouse_up = function (e) {
   var id = this.get_panel_track(e);
-  if (id != null && id == this.select_panel_id_pre) {
-    this.panel_click(id);
-  }
+  if (id != null && id == this.select_panel_id_pre &&
+      this.mouse_drag_count <= 10 && Math.abs(this.mouse_drag_weight) < 150) {
+        this.panel_click(id);
+      }
 
   // ドラッグの終了
   this.is_mouse_drag = false;
+  this.mouse_drag_count = 0;
 
   // マウスが離された時に変位が一定以上なら棚を回転させる
   if (Math.abs(this.mouse_drag_weight) >= 150) {

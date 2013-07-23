@@ -168,6 +168,8 @@ Model.prototype.init = function (contents) {
   this.MAX_PANELS = this.NUM_PANEL * this.NUM_FACES;
   // 仮想的な面数
   this.MAX_FACES  = this.ITEM_MAX / this.NUM_PANEL;
+  // 棚の1回の回転量
+  this.SHELF_ROT = Math.PI / 2;
 
   //
   // アニメーションのフレーム数
@@ -431,6 +433,11 @@ Model.prototype.easeOut = function (x) {
   return 1 - Math.exp(-6 * x);
 }
 
+// 上の逆関数
+Model.prototype.easeOut_inv = function (x) {
+  return - Math.log(1 - x) / 6;
+}
+
 //
 // Util
 //
@@ -499,7 +506,7 @@ Model.prototype.shelf_main = function () {
 
   // Shelf
   if (this.is_shelf_rolling) {
-    var rd  = Math.PI / 2;
+    var rd  = this.SHELF_ROT;
     var pad = this.shelf_rot_state_pre * rd;
     var d   = this.shelf_rot_count / this.FRAME_SHELF_ROLL;
     var z   = this.easeOut(d);
@@ -537,8 +544,10 @@ Model.prototype.shelf_main = function () {
     this.mouse_drag_weight *= 0.7;
   }
 
-  if (this.is_shelf_leaning || this.is_shelf_outing) {
-    this.shelf_lean_rot = 0.3  * this.easeOut(this.shelf_lean_count / this.FRAME_SHELF_LEAN);
+  if (this.is_shelf_rolling) {
+    this.shelf_lean_rot = 0;
+  } else if (this.shelf_lean_count > 0) {
+    this.shelf_lean_rot = 0.3 * this.easeOut(this.shelf_lean_count / this.FRAME_SHELF_LEAN);
   } else {
     var d = Math.abs(this.mouse_drag_weight);
     if (d > 170) {
@@ -548,11 +557,6 @@ Model.prototype.shelf_main = function () {
     this.is_shelf_lean_right = (this.mouse_drag_weight < 0);
   }
 
-  // rotの重みを消す
-  if (this.is_shelf_rolling) {
-    this.shelf_lean_rot *= Math.pow(0.8, this.shelf_rot_count);
-  }
-
   this.shelf_root.frame.rot[1] = this.shelf_rot + (this.is_shelf_lean_right ? 
       this.shelf_lean_rot : -this.shelf_lean_rot);
 
@@ -560,7 +564,7 @@ Model.prototype.shelf_main = function () {
   if ( this.is_panel_popup && this.panel_pop_state[this.popup_panel_id] == this.POPING) {
     ++this.popup_panel_count;
     this.execute_pop_panel(this.popup_panel_id, this.popup_panel_count);
-    if ( this.popup_panel_count == this.FRAME_PANEL_POPUP) {
+    if ( this.popup_panel_count >= this.FRAME_PANEL_POPUP) {
       this.is_panel_popup = false;
       this.panel_pop_state[this.popup_panel_id] = this.POPUP;
     }
@@ -570,7 +574,7 @@ Model.prototype.shelf_main = function () {
   if ( this.is_panel_popdown && this.panel_pop_state[this.popdown_panel_id] == this.POPING) {
     --this.popdown_panel_count;
     this.execute_pop_panel(this.popdown_panel_id, this.popdown_panel_count);
-    if ( this.popdown_panel_count == 0) {
+    if ( this.popdown_panel_count <= 0) {
       this.is_panel_popdown = false;
       this.panel_pop_state[this.popdown_panel_id] = this.POPDOWN;
     }
@@ -580,13 +584,13 @@ Model.prototype.shelf_main = function () {
   if (this.screen_pop_state == this.UPING) {
     ++this.screen_pop_count;
     this.screen_move();
-    if (this.scrren_pop_count == this.FRAME_SCREEN_POP) {
+    if (this.screen_pop_count >= this.FRAME_SCREEN_POP) {
       this.screen_pop_state = this.STOP;
     }
-  }else if (this.screen_pop_state == this.DOWNING) {
+  } else if (this.screen_pop_state == this.DOWNING) {
     --this.screen_pop_count;
     this.screen_move();
-    if (this.scrren_pop_count == 0) {
+    if (this.screen_pop_count <= 0) {
       this.screen_pop_state = this.STOP;
     }
   }
@@ -718,7 +722,7 @@ Model.prototype.shelf_turn_left = function () {
 
     this.is_shelf_rolling = true;
     this.is_shelf_rot_right = false;
-    this.shelf_rot_count = Math.abs(this.shelf_lean_rot / Math.PI / 2 * this.FRAME_SHELF_ROLL);
+    this.shelf_rot_count = this.easeOut_inv(Math.abs(this.shelf_lean_rot / this.SHELF_ROT)) * this.FRAME_SHELF_ROLL;
 
     this.shelf_rot_state_pre = this.shelf_rot_state;
     --this.shelf_rot_state;
@@ -739,8 +743,7 @@ Model.prototype.shelf_turn_right = function () {
 
     this.is_shelf_rolling = true;
     this.is_shelf_rot_right = true;
-    this.shelf_rot_count = 0;
-    this.shelf_rot_count = Math.abs(this.shelf_lean_rot / Math.PI / 2 * this.FRAME_SHELF_ROLL);
+    this.shelf_rot_count = this.easeOut_inv(Math.abs(this.shelf_lean_rot / this.SHELF_ROT)) * this.FRAME_SHELF_ROLL;
 
     this.shelf_rot_state_pre = this.shelf_rot_state;
     ++this.shelf_rot_state;
@@ -797,8 +800,8 @@ Model.prototype.shelf_out_left = function () {
 Model.prototype.force_panel_popdown = function () {
 
   this.is_shelf_leaning = false;
-  this.is_shelf_outing = true;
-  //this.shelf_lean_count = 2;
+  this.is_shelf_outing = false;
+  this.shelf_lean_count = 0;
 
   var panel_id = this.popup_panel_id;
   if (panel_id == -1 || this.panel_pop_state[panel_id] != this.POPUP) {
@@ -877,7 +880,7 @@ Model.prototype.screen_move = function () {
 Model.prototype.limit_panel_id = function (panel_id) {
   if (panel_id >= this.ITEM_MAX) {
     return this.ITEM_MAX - 1;
-  }else if (panel_id < 0 ) {
+  } else if (panel_id < 0 ) {
     return 0;
   } else {
     return panel_id;

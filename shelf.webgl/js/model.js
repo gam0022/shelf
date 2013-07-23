@@ -97,9 +97,11 @@ Model.prototype.init = function (contents) {
 
   this.contents = contents;
 
-  //
-  // IMAGES
-  //
+
+
+  /*------------------------------
+    ITEM DATA 
+  ------------------------------*/
 
   this.ITEM_IMAGE_PATH = "./images/bag/";
   this.ITEM_MAX = 100;
@@ -207,6 +209,243 @@ Model.prototype.init = function (contents) {
     [ 100, "bag100-256.jpg", "チェックウエストポーチ", 1596, 166 ],
     ];
 
+
+
+  /*------------------------------
+    CONSTS
+  ------------------------------*/
+
+  this.SCORE_SHELF_INDEX = 1;
+
+  // 棚1面あたりのパネル数
+  this.NUM_PANEL = 9;
+  // 存在する面数
+  this.NUM_FACES = 4;
+  // 存在するパネル数
+  this.MAX_PANELS = this.NUM_PANEL * this.NUM_FACES;
+  // 仮想的な面数
+  this.MAX_FACES  = this.ITEM_MAX / this.NUM_PANEL;
+  // 棚の1回の回転量
+  this.SHELF_ROT = Math.PI / 2;
+
+
+  //
+  // アニメーションのフレーム数
+  //
+
+  this.FRAME_SHELF_ROLL = 20;
+  this.FRAME_SHELF_LEAN = 20;
+  this.FRAME_PANEL_POPUP = 5;
+  this.FRAME_SCREEN_POP = 15;
+  this.FRAME_CAMERA_INIT = 30;
+
+
+  //
+  // SORT KEYS
+  //
+
+  this.KEY_ID     = 0;
+  this.KEY_URL    = 1;
+  this.KEY_TITLE  = 2;
+  this.KEY_PRICE  = 3;
+  this.KEY_COLOR  = 4;
+
+  this.KEY_NAMES = {};
+  this.KEY_NAMES[this.KEY_ID]    =  "ID";
+  this.KEY_NAMES[this.KEY_URL]   =  "URL";
+  this.KEY_NAMES[this.KEY_TITLE] =  "title";
+  this.KEY_NAMES[this.KEY_PRICE] =  "price";
+  this.KEY_NAMES[this.KEY_COLOR] =  "color";
+
+
+  //
+  // States
+  //
+  
+  // panel_pop_state 用
+  this.POPDOWN = 0;
+  this.POPING = 1;
+  this.POPUP = 2;
+
+  // screen_pop_state 用
+  this.UPING = 3;
+  this.DOWNING = 4;
+  this.STOP = 5;
+
+  // 昇順と降順
+  this.ASC = 0;
+  this.DESC = 1;
+
+
+  //
+  // Caption
+  //
+
+  this.SORT_FORMAT = {};
+  this.SORT_FORMAT[this.KEY_ID]  = "# {0} - {1}";
+  this.SORT_FORMAT[this.KEY_PRICE] = "{0} - {1} 円";
+  this.SORT_FORMAT[this.KEY_COLOR] = '<div style="background: linear-gradient(to right, hsl({0}, 80%, 50%), hsl({1}, 80%, 50%));" class="maru-kado">color</div>';
+
+
+
+  /*------------------------------
+    MEMBER
+  ------------------------------*/
+
+  this.main_count = 0;
+
+  //
+  // Mouse
+  //
+
+  this.mouse_pos = new Point2D(0,0);
+  this.mouse_drag_start_pos = new Point2D(0,0);
+  this.is_mouse_drag = false;
+  this.mouse_drag_weight = 0;
+  this.mouse_drag_count = 0;
+
+
+  //
+  // Shelf
+  //
+
+  this.is_shelf_rolling = false;
+  this.shelf_rot_state = 0;
+  this.shelf_rot_state_pre = 0;
+  this.shelf_rot = 0.0;
+  this.shelf_rot_count = 0;
+  this.is_shelf_rot_right = true;
+
+  // lean (傾き)
+  this.shelf_lean_rot = 0;
+  this.shelf_lean_count = 0;
+  this.is_shelf_lean_right = true;
+  this.is_shelf_leaning = false;
+  this.is_shelf_outing = false;
+
+  // 面が最後に読み込んだアイテムの添字
+  this.shelf_texture_loaded_item = [-1, -1, -1, -1];
+
+
+  //
+  // Panel
+  //
+
+  this.panel_original_pos = [];
+  this.POPUP_TARGET_POS = new Vector3D([0, 23, -168]);
+
+  this.panel_pop_state = [];
+
+  this.is_panel_popup = false; 
+  this.popup_panel_id = 0;
+  this.popup_panel_count = 0;
+
+  this.is_panel_popdown = false;
+  this.popdown_panel_id = 0;
+  this.popdown_panel_count = 0;
+
+  // MouseDown時に選択されたパネルを記憶する
+  this.select_panel_id_pre = -1;
+
+
+  //
+  // Sort
+  //
+
+  // current
+  this.sort_key = this.KEY_ID;
+  this.sort_order = this.ASC;
+
+  // default
+  this.sort_orders = {};
+  this.sort_orders[this.KEY_ID]    = this.ASC;
+  this.sort_orders[this.KEY_PRICE] = this.DESC;
+  this.sort_orders[this.KEY_COLOR] = this.DESC;
+
+
+
+  /*------------------------------
+    TRACKの参照 と PUPPET化
+  ------------------------------*/
+
+  //
+  // Shelf
+  //
+
+  this.sShelfScore = this.contents.scoresL["shelf"];
+  this.shelf_root = this.sShelfScore.tracks[0];
+  this.shelf_root.setPuppet(true);
+  this.shelf_root.frame.visible = true;
+
+
+  //
+  // Panel
+  //
+
+  this.PANEL_TRACKS = [];
+  this.PANEL_GHOST_TRACKS = [];
+  this.PANEL_INDEX_TO_ID = {};
+
+  var id = 0;
+  for (var i = 0; i < 4; ++i) {
+    for (var j = 0; j < 9; ++j) {
+
+      var index = i * 19 + j * 2 + 4;
+      var pt = this.sShelfScore.tracks[index];
+      pt.setPuppet(true);
+      pt.frame.visible = true;
+      pt.frame.siz = [0.17, 0.17, 0.17];
+      this.PANEL_TRACKS.push(pt);
+
+      var gt = this.sShelfScore.tracks[i * 19 + j * 2 + 3];
+      gt.setPuppet(true);
+      gt.frame.pos = [(j%3 - 1) * 20, 35 - Math.floor( j / 3 ) * 31, -40];
+      gt.frame.siz = [1, 1, 1];
+      gt.frame.visible = true;
+      this.PANEL_GHOST_TRACKS.push(gt);
+
+      this.panel_original_pos.push(new Vector3D(gt.frame.pos));
+      this.panel_pop_state.push(this.POPDOWN);
+      this.PANEL_INDEX_TO_ID[index] = id++;
+    }
+  }
+
+
+  //
+  //  Camera
+  //
+
+  this.CAMERA_TRACK = this.contents.scoresL['スコア0'].tracks[0];
+  this.CAMERA_TRACK.setPuppet(true);
+  //this.CAMERA_TRACK.frame.make(1);
+  this.CAMERA_TRACK.frame.visible = true;
+  this.CAMERA_TRACK.frame.pos = [0, 28.7, -220];
+  this.CAMERA_TRACK.frame.rot = [0.1381320059299469, 0, 0, 1];
+
+  this.CAMERA_CAST = this.contents.cameraCasts[0];
+  this.CAMERA_CAST.cameraAngle = 36;
+
+
+  //
+  // Screen
+  //
+
+  this.SCREEN_POS_UP = new Vector3D([0, 490, 0]);
+  this.SCREEN_POS_DOWN = new Vector3D([0, 600, 0]);
+
+  this.screen_ghost = this.contents.scoresL["screen"].tracks[0];
+  this.screen_ghost.setPuppet(true);
+  this.screen_ghost.frame.pos = this.SCREEN_POS_DOWN;
+  this.screen_ghost.frame.visible = true;
+
+  this.screen_pop_state = this.STOP;
+  this.screen_pop_count = 0;
+
+
+  //
+  // Panel Texture
+  //
+
   this.PANEL_TEXTURE = [
     this.contents.textureCastsL["Texture_00"].index,
     this.contents.textureCastsL["Texture_01"].index,
@@ -246,226 +485,21 @@ Model.prototype.init = function (contents) {
     this.contents.textureCastsL["Texture_35"].index
       ];
 
-  // add
-  this.sShelfScore = this.contents.scoresL["shelf"];
-
-  //
-  // consts
-  //
-
-  // 棚1面あたりのパネル数
-  this.NUM_PANEL = 9;
-  // 存在する面数
-  this.NUM_FACES = 4;
-  // 存在するパネル数
-  this.MAX_PANELS = this.NUM_PANEL * this.NUM_FACES;
-  // 仮想的な面数
-  this.MAX_FACES  = this.ITEM_MAX / this.NUM_PANEL;
-  // 棚の1回の回転量
-  this.SHELF_ROT = Math.PI / 2;
-
-  //
-  // アニメーションのフレーム数
-  //
-
-  this.FRAME_SHELF_ROLL = 20;
-  this.FRAME_SHELF_LEAN = 20;
-  this.FRAME_PANEL_POPUP = 5;
-  this.FRAME_SCREEN_POP = 15;
-  this.FRAME_CAMERA_INIT = 30;
-
-  // SCORE'S INDEX
-  this.SCORE_SHELF_INDEX = 1;
-
-  // キー
-  this.KEY_ID     = 0;
-  this.KEY_URL    = 1;
-  this.KEY_TITLE  = 2;
-  this.KEY_PRICE  = 3;
-  this.KEY_COLOR  = 4;
-
-  this.KEY_NAMES = {};
-  this.KEY_NAMES[this.KEY_ID]    =  "ID";
-  this.KEY_NAMES[this.KEY_URL]   =  "URL";
-  this.KEY_NAMES[this.KEY_TITLE] =  "title";
-  this.KEY_NAMES[this.KEY_PRICE] =  "price";
-  this.KEY_NAMES[this.KEY_COLOR] =  "color";
-
-  //
-  // States
-  //
-  
-  // panel_pop_state 用
-  this.POPDOWN = 0;
-  this.POPING = 1;
-  this.POPUP = 2;
-
-  // screen_pop_state 用
-  this.UPING = 3;
-  this.DOWNING = 4;
-  this.STOP = 5;
-
-  // 昇順と降順
-  this.ASC = 0;
-  this.DESC = 1;
 
 
-  //
-  // member
-  //
-
-  this.main_count = 0;
-
-  //
-  // ドラックの制御
-  //
-
-  this.mouse_pos = new Point2D(0,0);
-  this.mouse_drag_start_pos = new Point2D(0,0);
-  this.is_mouse_drag = false;
-  this.mouse_drag_weight = 0;
-  this.mouse_drag_count = 0;
-
-  //
-  // Shelf の回転の制御用
-  //
-
-  this.is_shelf_rolling = false;
-  this.shelf_rot_state = 0;
-  this.shelf_rot_state_pre = 0;
-  this.shelf_rot = 0.0;
-  this.shelf_rot_count = 0;
-  this.is_shelf_rot_right = true;
-
-  // 棚の傾きの制御用
-  this.shelf_lean_rot = 0;
-  this.shelf_lean_count = 0;
-  this.is_shelf_lean_right = true;
-  this.is_shelf_leaning = false;
-  this.is_shelf_outing = false;
-
-  // 面が最後に読み込んだアイテムを記憶する
-  this.shelf_texture_loaded_item = [-1, -1, -1, -1];
-
-  //
-  // Panel の PopUp/PopDown の制御用
-  //
-
-  this.panel_original_pos = [];
-  this.POPUP_TARGET_POS = new Vector3D([0, 23, -168]);
-
-  this.panel_pop_state = [];
-
-  this.is_panel_popup = false; 
-  this.popup_panel_id = 0;
-  this.popup_panel_count = 0;
-
-  this.is_panel_popdown = false;
-  this.popdown_panel_id = 0;
-  this.popdown_panel_count = 0;
-
-  // MouseDown時に選択されたパネルを記憶する
-  this.select_panel_id_pre = -1;
-
-  //
-  // Shelf の Root のパペット化
-  //
-
-  this.shelf_root = this.sShelfScore.tracks[0];
-  this.shelf_root.setPuppet(true);
-  this.shelf_root.frame.visible = true;
-
-
-  //
-  // Panel のパペット化
-  //
-
-  this.PANEL_TRACKS = [];
-  this.PANEL_GHOST_TRACKS = [];
-  this.PANEL_INDEX_TO_ID = {};
-
-  var id = 0;
-  for (var i = 0; i < 4; ++i) {
-    for (var j = 0; j < 9; ++j) {
-
-      var index = i * 19 + j * 2 + 4;
-      var pt = this.sShelfScore.tracks[index];
-      pt.setPuppet(true);
-      pt.frame.visible = true;
-      pt.frame.siz = [0.17, 0.17, 0.17];
-      this.PANEL_TRACKS.push(pt);
-
-      var gt = this.sShelfScore.tracks[i * 19 + j * 2 + 3];
-      gt.setPuppet(true);
-      gt.frame.pos = [(j%3 - 1) * 20, 35 - Math.floor( j / 3 ) * 31, -40];
-      gt.frame.siz = [1, 1, 1];
-      gt.frame.visible = true;
-      this.PANEL_GHOST_TRACKS.push(gt);
-
-      this.panel_original_pos.push(new Vector3D(gt.frame.pos));
-      this.panel_pop_state.push(this.POPDOWN);
-      this.PANEL_INDEX_TO_ID[index] = id++;
-    }
-  }
-
-  //
-  //  Camera のパペット化
-  //
-
-  this.CAMERA_TRACK = this.contents.scoresL['スコア0'].tracks[0];
-  this.CAMERA_TRACK.setPuppet(true);
-  //this.CAMERA_TRACK.frame.make(1);
-  this.CAMERA_TRACK.frame.visible = true;
-  this.CAMERA_TRACK.frame.pos = [0, 28.7, -220];
-  this.CAMERA_TRACK.frame.rot = [0.1381320059299469, 0, 0, 1];
-
-  this.CAMERA_CAST = this.contents.cameraCasts[0];
-  this.CAMERA_CAST.cameraAngle = 36;
-
-  //
-  // Screen
-  //
-
-  this.SCREEN_POS_UP = new Vector3D([0, 490, 0]);
-  this.SCREEN_POS_DOWN = new Vector3D([0, 600, 0]);
-
-  this.screen_ghost = this.contents.scoresL["screen"].tracks[0];
-  this.screen_ghost.setPuppet(true);
-  this.screen_ghost.frame.pos = this.SCREEN_POS_DOWN;
-  this.screen_ghost.frame.visible = true;
-
-  this.screen_pop_state = this.STOP;
-  this.screen_pop_count = 0;
-
+  /*------------------------------
+    Other
+  ------------------------------*/
 
   //
   // Load Textures
   //
 
-  this.load_textures(0);
-  this.load_textures(1);
-  this.load_textures(2);
-  this.load_textures(3);
+  this.update_textures(0);
+  this.update_textures(1);
+  this.update_textures(2);
+  this.update_textures(3);
 
-
-  //
-  // Sort の種類
-  //
-
-  // Caption
-  this.SORT_FORMAT = {};
-  this.SORT_FORMAT[this.KEY_ID]  = "# {0} - {1}";
-  this.SORT_FORMAT[this.KEY_PRICE] = "{0} - {1} 円";
-  this.SORT_FORMAT[this.KEY_COLOR] = '<div style="background: linear-gradient(to right, hsl({0}, 80%, 50%), hsl({1}, 80%, 50%));" class="maru-kado">color</div>';
-
-  // 現在のソートの状態
-  this.sort_key = this.KEY_ID;
-  this.sort_order = this.ASC;
-
-  this.sort_orders = {};
-  this.sort_orders[this.KEY_ID]    = this.ASC;
-  this.sort_orders[this.KEY_PRICE] = this.DESC;
-  this.sort_orders[this.KEY_COLOR] = this.DESC;
 
   //
   // Nexsus7の判定
@@ -477,6 +511,7 @@ Model.prototype.init = function (contents) {
     this.is_android = true;
   }
 
+
   this.update_caption();
 }
 
@@ -486,7 +521,10 @@ Model.prototype.init = function (contents) {
 
 Model.prototype.shelf_main = function () {
 
+  //
   // Shelf
+  //
+
   if (this.is_shelf_rolling) {
     var rd  = this.SHELF_ROT;
     var pad = this.shelf_rot_state_pre * rd;
@@ -496,14 +534,17 @@ Model.prototype.shelf_main = function () {
 
     if (this.shelf_rot_count >= this.FRAME_SHELF_ROLL) {
       this.is_shelf_rolling = false;
-      this.load_textures(this.shelf_rot_state + 1);
-      this.load_textures(this.shelf_rot_state - 1);
+      this.update_textures(this.shelf_rot_state + 1);
+      this.update_textures(this.shelf_rot_state - 1);
     } else {
       ++this.shelf_rot_count;
     }
   }
 
-  // shelf lean
+  //
+  // Shelf Lean
+  //
+
   if (this.is_shelf_leaning) {
     if (this.shelf_lean_count >= this.FRAME_SHELF_LEAN) {
       this.is_shelf_leaning = false;
@@ -540,7 +581,11 @@ Model.prototype.shelf_main = function () {
   this.shelf_root.frame.rot[1] = this.shelf_rot + (this.is_shelf_lean_right ? 
       this.shelf_lean_rot : -this.shelf_lean_rot);
 
-  // Panel PopUp
+
+  //
+  // Panel
+  //
+
   if ( this.is_panel_popup && this.panel_pop_state[this.popup_panel_id] == this.POPING) {
     ++this.popup_panel_count;
     this.panel_move(this.popup_panel_id, this.popup_panel_count);
@@ -550,7 +595,6 @@ Model.prototype.shelf_main = function () {
     }
   }
 
-  // Panel PopDown
   if ( this.is_panel_popdown && this.panel_pop_state[this.popdown_panel_id] == this.POPING) {
     --this.popdown_panel_count;
     this.panel_move(this.popdown_panel_id, this.popdown_panel_count);
@@ -560,7 +604,11 @@ Model.prototype.shelf_main = function () {
     }
   }
 
+
+  //
   // Screen
+  //
+
   if (this.screen_pop_state == this.UPING) {
     ++this.screen_pop_count;
     this.screen_move();
@@ -575,18 +623,26 @@ Model.prototype.shelf_main = function () {
     }
   }
 
+
+  //
   // Camera
+  //
+
   if (this.main_count <= this.FRAME_CAMERA_INIT) {
     var x = this.main_count / this.FRAME_CAMERA_INIT;
     var y = this.easeOut(x);
     this.CAMERA_CAST.cameraAngle = 36 + 30 - 30 * y;
   }
 
+  //
   // Main Count
+  //
+
   if (this.main_count == 0) {
     this.update_statusbar();
   }
   ++this.main_count;
+
 };
 
 
@@ -635,6 +691,10 @@ Model.prototype.get_panel_track = function(e) {
 };
 
 
+//
+//  Mouse Move
+//
+
 Model.prototype.mouse_move = function (e) {
   for (var i = 0; i < this.MAX_PANELS; ++i) {
     this.PANEL_TRACKS[i].frame.siz = [0.17, 0.17, 0.17];
@@ -657,6 +717,10 @@ Model.prototype.mouse_move = function (e) {
 };
 
 
+//
+//  Mouse Down
+//
+
 Model.prototype.mouse_down = function (e) {
   var id = this.get_panel_track(e);
   this.select_panel_id_pre = (id != null) ? id : -1;
@@ -666,6 +730,11 @@ Model.prototype.mouse_down = function (e) {
   this.is_mouse_drag = true;
   this.mouse_drag_count = 0;
 };
+
+
+//
+//  Mouse Up
+//
 
 Model.prototype.mouse_up = function (e) {
   var id = this.get_panel_track(e);
@@ -695,7 +764,7 @@ Model.prototype.mouse_up = function (e) {
 ------------------------------*/
 
 //
-// 棚の左回転
+// Turn
 //
 
 Model.prototype.shelf_turn_left = function () {
@@ -715,10 +784,6 @@ Model.prototype.shelf_turn_left = function () {
   }
 };
 
-//
-// 棚の右回転
-//
-
 Model.prototype.shelf_turn_right = function () {
   if (!this.is_shelf_rolling && this.shelf_rot_state < this.MAX_FACES - 1) {
 
@@ -737,7 +802,10 @@ Model.prototype.shelf_turn_right = function () {
 };
 
 
-// 棚の右への傾き
+//
+// Lean (傾き)
+//
+
 Model.prototype.shelf_lean_right = function () {
   if (!this.is_shelf_leaning && !this.is_shelf_outing && 
       this.shelf_rot_state < this.MAX_FACES - 1) {
@@ -748,16 +816,6 @@ Model.prototype.shelf_lean_right = function () {
       }
 }
 
-
-// 棚の右への傾きの解除
-Model.prototype.shelf_out_right = function () {
-  this.is_shelf_lean_right = true;
-  this.is_shelf_leaning = false;
-  this.is_shelf_outing = true;
-}
-
-
-// 棚の左への傾き
 Model.prototype.shelf_lean_left = function () {
   if (!this.is_shelf_leaning && !this.is_shelf_outing && 
       this.shelf_rot_state > 0) {
@@ -768,8 +826,16 @@ Model.prototype.shelf_lean_left = function () {
       }
 }
 
+//
+// Lean の解除
+//
 
-// 棚の左への傾きの解除
+Model.prototype.shelf_out_right = function () {
+  this.is_shelf_lean_right = true;
+  this.is_shelf_leaning = false;
+  this.is_shelf_outing = true;
+}
+
 Model.prototype.shelf_out_left = function () {
   this.is_shelf_lean_right = false;
   this.is_shelf_leaning = false;
@@ -783,10 +849,10 @@ Model.prototype.shelf_out_left = function () {
 ------------------------------*/
 
 //
-// テスクチャの更新
+// Update Texture
 //
 
-Model.prototype.load_textures = function (face_n) {
+Model.prototype.update_textures = function (face_n) {
 
   if (face_n == this.shelf_texture_loaded_item[face_n % this.NUM_FACES] || 
       face_n < 0 || face_n >= Math.ceil(this.MAX_FACES)) {
@@ -814,7 +880,7 @@ Model.prototype.load_textures = function (face_n) {
 
 
 //
-// パネルのポップアップ/ポップダウンの内部処理
+// Panel Move
 //
 
 Model.prototype.panel_move = function(panel_id, count) {
@@ -975,9 +1041,9 @@ Model.prototype.sort_items = function (key, order) {
 
   // テスクチャの更新
   this.shelf_texture_loaded_item = [-1, -1, -1, -1];
-  this.load_textures(this.shelf_rot_state - 1);
-  this.load_textures(this.shelf_rot_state);
-  this.load_textures(this.shelf_rot_state + 1);
+  this.update_textures(this.shelf_rot_state - 1);
+  this.update_textures(this.shelf_rot_state);
+  this.update_textures(this.shelf_rot_state + 1);
 
   this.update_caption();
 }

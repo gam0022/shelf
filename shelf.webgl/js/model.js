@@ -394,7 +394,7 @@ Model.prototype.init = function (contents) {
       var pt = this.sShelfScore.tracks[index];
       pt.setPuppet(true);
       pt.frame.visible = true;
-      pt.frame.siz = [0.17, 0.17, 0.17];
+      pt.frame.siz = [0.17, 0.17, 0];
       this.PANEL_TRACKS.push(pt);
 
       var gt = this.sShelfScore.tracks[i * 19 + j * 2 + 3];
@@ -495,10 +495,11 @@ Model.prototype.init = function (contents) {
   // Load Textures
   //
 
+  this.invisible_textures(-1)
   this.update_textures(0);
   this.update_textures(1);
   this.update_textures(2);
-  this.update_textures(3);
+  //this.invisible_textures(2)
 
 
   //
@@ -534,8 +535,9 @@ Model.prototype.shelf_main = function () {
 
     if (this.shelf_rot_count >= this.FRAME_SHELF_ROLL) {
       this.is_shelf_rolling = false;
-      this.update_textures(this.shelf_rot_state + 1);
       this.update_textures(this.shelf_rot_state - 1);
+      this.update_textures(this.shelf_rot_state + 1);
+      //this.invisible_textures(this.shelf_rot_state + 2);
     } else {
       ++this.shelf_rot_count;
     }
@@ -681,8 +683,13 @@ Model.prototype.get_panel_track = function(e) {
         var min = (this.shelf_rot_state % this.NUM_FACES) * this.NUM_PANEL;
         if ( min <= id && id < min + this.NUM_PANEL) {
           return id;
-        } else {
-          return null;
+        } else if (this.is_android) {
+          // Androidでは、pickUpTrack() が背面のトラックまで拾ってしまうので補正する。
+          //jQuery("div#console").append(id + ",");
+          var id2 = id + 16;
+          if ( min <= id2 && id2 < min + this.NUM_PANEL) {
+            return id2;
+          }
         }
       }
     }
@@ -697,7 +704,7 @@ Model.prototype.get_panel_track = function(e) {
 
 Model.prototype.mouse_move = function (e) {
   for (var i = 0; i < this.MAX_PANELS; ++i) {
-    this.PANEL_TRACKS[i].frame.siz = [0.17, 0.17, 0.17];
+    this.PANEL_TRACKS[i].frame.siz = [0.17, 0.17, 0];
   }
 
   var id = this.get_panel_track(e);
@@ -709,6 +716,7 @@ Model.prototype.mouse_move = function (e) {
   this.mouse_pos = this.get_mouse_pos(e);
   if (this.is_mouse_drag) {
     this.mouse_drag_weight = this.mouse_pos.x - this.mouse_drag_start_pos.x;
+    this.force_panel_popdown();
     ++this.mouse_drag_count;
   } else {
     this.mouse_drag_weight = 0;
@@ -854,10 +862,14 @@ Model.prototype.shelf_out_left = function () {
 
 Model.prototype.update_textures = function (face_n) {
 
-  if (face_n == this.shelf_texture_loaded_item[face_n % this.NUM_FACES] || 
-      face_n < 0 || face_n >= Math.ceil(this.MAX_FACES)) {
-        return;
-      }
+  if (face_n == this.shelf_texture_loaded_item[face_n % this.NUM_FACES]) {
+    return;
+  }
+
+  if (face_n < 0 || face_n >= Math.ceil(this.MAX_FACES)) {
+    this.invisible_textures(face_n);
+    return;
+  }
 
   this.shelf_texture_loaded_item[face_n % this.NUM_FACES] = face_n;
   var item_n = face_n * this.NUM_PANEL;
@@ -872,12 +884,25 @@ Model.prototype.update_textures = function (face_n) {
       var url = this.ITEM_IMAGE_PATH + this.ITEM_DATA[item_id][this.KEY_URL];
       this.contents.textureCasts[this.PANEL_TEXTURE[texture_id]].loadImage(url);
       this.PANEL_TRACKS[texture_id].frame.visible = true;
+      //this.PANEL_TRACKS[texture_id].frame.siz = [0.17, 0.17, 0];
     } else {
       this.PANEL_TRACKS[texture_id].frame.visible = false;
     }
   }
 };
 
+Model.prototype.invisible_textures = function (face_n) {
+
+  var face_n2 = (face_n + this.NUM_FACES) % this.NUM_FACES;
+  this.shelf_texture_loaded_item[face_n2] = -1;
+  var texture_n = face_n2 * this.NUM_PANEL;
+
+  for (var i = 0; i < this.NUM_PANEL; ++i) {
+    var texture_id = texture_n + i;
+    this.PANEL_TRACKS[texture_id].frame.visible = false;
+    //this.PANEL_TRACKS[texture_id].frame.siz = [0, 0, 0];
+  }
+};
 
 //
 // Panel Move
@@ -1044,6 +1069,7 @@ Model.prototype.sort_items = function (key, order) {
   this.update_textures(this.shelf_rot_state - 1);
   this.update_textures(this.shelf_rot_state);
   this.update_textures(this.shelf_rot_state + 1);
+  //this.invisible_textures(this.shelf_rot_state + 2);
 
   this.update_caption();
 }

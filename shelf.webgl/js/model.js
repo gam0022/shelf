@@ -56,7 +56,11 @@ var Model = function(){};
 //
 
 Model.prototype.easeOut = function (x) {
-  return 1 - Math.exp(-6 * x);
+  if (this.config_isEaseOut) {
+    return 1 - Math.exp(-6 * x);
+  } else {
+    return x;
+  }
 }
 
 //
@@ -64,7 +68,11 @@ Model.prototype.easeOut = function (x) {
 //
 
 Model.prototype.easeOut_inv = function (x) {
-  return -Math.log(1 - x) / 6;
+  if (this.config_isEaseOut) {
+    return -Math.log(1 - x) / 6;
+  } else {
+    return x;
+  }
 }
 
 
@@ -252,8 +260,8 @@ Model.prototype.init = function (contents) {
   this.KEY_COLOR  = 4;
 
   this.KEY_NAMES = {};
-  this.KEY_NAMES[this.KEY_ID]    =  "ID";
-  this.KEY_NAMES[this.KEY_URL]   =  "URL";
+  this.KEY_NAMES[this.KEY_ID]    =  "id";
+  this.KEY_NAMES[this.KEY_URL]   =  "url";
   this.KEY_NAMES[this.KEY_TITLE] =  "title";
   this.KEY_NAMES[this.KEY_PRICE] =  "price";
   this.KEY_NAMES[this.KEY_COLOR] =  "color";
@@ -501,6 +509,16 @@ Model.prototype.init = function (contents) {
   }
   jQuery("ul#pagination").append(
       '<li><a onclick="model.shelf_turn_right();" onmouseover="model.shelf_lean_right();" onmouseout="model.shelf_out_right();">&raquo;</a></li>');
+
+
+
+  /*------------------------------
+    Config
+  ------------------------------*/
+
+  this.config_isEaseOut = true;
+  this.config_isPagination = true;
+  this.config_isProgressBar = false;
 
 
 
@@ -1065,9 +1083,24 @@ Model.prototype.update_caption = function () {
 //
 
 Model.prototype.update_statusbar = function () {
-  jQuery('div#status').css('width', this.sprintf("{0}%", 100.0 * (this.shelf_rot_state+1) / this.MAX_FACES));
+  jQuery('#progress').css('width', this.sprintf("{0}%", 100.0 * (this.shelf_rot_state+1) / this.MAX_FACES));
+
   jQuery(this.sprintf('ul#pagination>li.p{0}', this.shelf_rot_state_pre)).removeClass('active');
   jQuery(this.sprintf('ul#pagination>li.p{0}', this.shelf_rot_state)).addClass('active');
+}
+
+
+//
+// Config
+//
+
+Model.prototype.config_apply = function () {
+  this.config_isEaseOut = jQuery('#configEaseOut').prop('checked');
+  this.config_isPagination = jQuery('#statusBarTypePagination').prop('checked');
+  this.config_isProgressBar = jQuery('#statusBarTypeProgressBar').prop('checked');
+
+  jQuery('#div_pagination').css('display', this.config_isPagination ? 'block' : 'none');
+  jQuery('#div_progress').css('display', this.config_isProgressBar ? 'block' : 'none');
 }
 
 
@@ -1115,10 +1148,13 @@ Model.prototype.sort_toggle = function (key) {
 
   for (var ikey in this.KEY_NAMES) {
     var name = this.KEY_NAMES[ikey];
+    var id = this.sprintf('#sort_{0}', name);
     if (ikey == key) {
-      jQuery("#sort_" + name).html(order_str + name);
+      jQuery(id).html(order_str + name);
+      jQuery(id).parent('li').addClass('active');
     } else {
-      jQuery("#sort_" + name).html(name);
+      jQuery(id).html(name);
+      jQuery(id).parent('li').removeClass('active');
     }
   }
 

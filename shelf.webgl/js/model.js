@@ -235,6 +235,7 @@ Model.prototype.init = function (contents) {
 
   this.FRAME_SHELF_ROLL = 20;
   this.FRAME_SHELF_LEAN = 20;
+  this.FRAME_SHELF_OUT_DRAG = 8;
   this.FRAME_PANEL_POPUP = 5;
   this.FRAME_SCREEN_POP = 15;
   this.FRAME_CAMERA_INIT = 30;
@@ -322,6 +323,8 @@ Model.prototype.init = function (contents) {
   this.is_shelf_lean_right = true;
   this.is_shelf_leaning = false;
   this.is_shelf_outing = false;
+  this.is_shelf_drag_outing = false;
+  this.shelf_drag_end_rot = 0;
 
   // 面が最後に読み込んだアイテムの添字
   this.shelf_texture_loaded_item = [-1, -1, -1, -1];
@@ -554,23 +557,23 @@ Model.prototype.shelf_main = function () {
       ++this.shelf_lean_count;
     }
   }
-  if (this.is_shelf_outing) {
+  if (this.is_shelf_outing || this.is_shelf_drag_outing) {
     if (this.shelf_lean_count <= 0) {
       this.is_shelf_outing = false;
+      this.is_shelf_drag_outing = false;
     } else {
       --this.shelf_lean_count;
     }
   }
 
-  // mouse drag
-  if (!this.is_mouse_drag) {
-    this.mouse_drag_weight *= 0.7;
-  }
-
   if (this.is_shelf_rolling) {
     this.shelf_lean_rot = 0;
   } else if (this.shelf_lean_count > 0) {
-    this.shelf_lean_rot = 0.3 * this.easeOut(this.shelf_lean_count / this.FRAME_SHELF_LEAN);
+    if (this.is_shelf_drag_outing) {
+      this.shelf_lean_rot = this.shelf_drag_end_rot * this.easeOut(this.shelf_lean_count / this.FRAME_SHELF_OUT_DRAG);
+    } else {
+      this.shelf_lean_rot = 0.3 * this.easeOut(this.shelf_lean_count / this.FRAME_SHELF_LEAN);
+    }
   } else {
     var d = Math.abs(this.mouse_drag_weight);
     if (d > 170) {
@@ -751,18 +754,27 @@ Model.prototype.mouse_up = function (e) {
         this.panel_click(id);
       }
 
+  //
   // ドラッグの終了
-  this.is_mouse_drag = false;
-  this.mouse_drag_count = 0;
+  //
 
-  // マウスが離された時に変位が一定以上なら棚を回転させる
   if (Math.abs(this.mouse_drag_weight) >= 150) {
+    // マウスが離された時に変位が一定以上なら棚を回転させる
     if (this.mouse_drag_weight >= 0) {
       this.shelf_turn_left();
     } else {
       this.shelf_turn_right();
     }
+  } else {
+    // 回転させないならば、棚を正常位置に戻す
+    this.is_shelf_drag_outing = true;
+    this.shelf_drag_end_rot = this.shelf_lean_rot;
+    this.shelf_lean_count = this.FRAME_SHELF_OUT_DRAG;
   }
+
+  this.is_mouse_drag = false;
+  this.mouse_drag_count = 0;
+  this.mouse_drag_weight = 0;
 };
 
 

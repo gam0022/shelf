@@ -126,32 +126,43 @@
 
     <div class="container" style="width: 600px; margin: 0 auto; padding: 0;">
 
-      <div class="progress" style="width: 500px; margin: 0 auto;">
-        <div class="bar" style="width: 0%;" id="status"></div>
-      </div>
 
       <!--div id="console" class="well" style="">
       console
       </div-->
 
-      <div style="width: 600px; position: relative; margin: 40px auto; padding: 0;">
-        <div class="canvas">
+      <div style="width: 600px; position: relative; margin: 10px auto; padding: 0;">
+
+        <div class="canvas" style="left: 0; top: 50px;">
           <canvas id="matrixengine-canvas" style="border:none; margin:0;" width=600px height=600px>
         </div>
 
-        <div style="position: absolute; left: 125px; top: 20px;">
+        <div style="position: absolute; left: 0px; top: 0px; width: 600px;">
+          <div class="pagination pagination-centered" style="width: auto; margin: 0 auto;">
+            <ul id="pagination"></ul>
+          </div>
+        </div>
+
+        <div style="position: absolute; left: 0px; top: 50px; width: 600px;">
           <div id="caption">
             caption
           </div>
         </div>
 
-        <div style="position: absolute; left: 20px; top: 280px;">
+        <div style="position: absolute; left: 20px; top: 320px;">
           <a id="navi-left" onclick="model.shelf_turn_left();" onmouseover="model.shelf_lean_left();" onmouseout="model.shelf_out_left();"></a>
         </div>
 
-        <div style="position: absolute; left: 513px; top: 280px;">
+        <div style="position: absolute; left: 513px; top: 320px;">
           <a id="navi-right" onclick="model.shelf_turn_right();" onmouseover="model.shelf_lean_right();" onmouseout="model.shelf_out_right();"></a>
         </div>
+
+        <div style="position: absolute; left: 0px; top: 650px; width: 600px; display:none">
+          <div class="progress" style="width: 400px; margin: 0 auto;">
+            <div class="bar" style="width: 0%;" id="status"></div>
+          </div>
+        </div>
+
       </div>
 
     </div> <!-- /container -->

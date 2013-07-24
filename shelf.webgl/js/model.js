@@ -315,7 +315,6 @@ Model.prototype.init = function (contents) {
   this.shelf_rot_state_pre = 0;
   this.shelf_rot = 0.0;
   this.shelf_rot_count = 0;
-  this.is_shelf_rot_right = true;
 
   // lean (傾き)
   this.shelf_lean_rot = 0;
@@ -491,6 +490,21 @@ Model.prototype.init = function (contents) {
 
 
   /*------------------------------
+    Pagination
+  ------------------------------*/
+
+  jQuery("ul#pagination").append(
+      '<li><a onclick="model.shelf_turn_left();" onmouseover="model.shelf_lean_left();" onmouseout="model.shelf_out_left();">&laquo;</a></li>');
+  for (var i = 0; i < this.MAX_FACES; ++i) {
+    jQuery("ul#pagination").append(
+        this.sprintf('<li class="p{0}"><a onclick="model.shelf_jump({0});">{1}</a></li>', i, i+1));
+  }
+  jQuery("ul#pagination").append(
+      '<li><a onclick="model.shelf_turn_right();" onmouseover="model.shelf_lean_right();" onmouseout="model.shelf_out_right();">&raquo;</a></li>');
+
+
+
+  /*------------------------------
     Other
   ------------------------------*/
 
@@ -530,11 +544,11 @@ Model.prototype.shelf_main = function () {
   //
 
   if (this.is_shelf_rolling) {
-    var rd  = this.SHELF_ROT;
-    var pad = this.shelf_rot_state_pre * rd;
-    var d   = this.shelf_rot_count / this.FRAME_SHELF_ROLL;
-    var z   = this.easeOut(d);
-    this.shelf_rot = this.is_shelf_rot_right ? pad + rd * z : pad - rd * z;
+    var r   = this.SHELF_ROT * (this.shelf_rot_state - this.shelf_rot_state_pre);
+    var pad = this.shelf_rot_state_pre * this.SHELF_ROT;
+    var t   = this.shelf_rot_count / this.FRAME_SHELF_ROLL;
+    var x   = this.easeOut(t);
+    this.shelf_rot = pad + r * x;
 
     if (this.shelf_rot_count >= this.FRAME_SHELF_ROLL) {
       this.is_shelf_rolling = false;
@@ -544,6 +558,8 @@ Model.prototype.shelf_main = function () {
     } else {
       ++this.shelf_rot_count;
     }
+  } else {
+    this.shelf_rot = this.SHELF_ROT * this.shelf_rot_state;
   }
 
   //
@@ -787,37 +803,41 @@ Model.prototype.mouse_up = function (e) {
 // Turn
 //
 
-Model.prototype.shelf_turn_left = function () {
-  if (!this.is_shelf_rolling && this.shelf_rot_state > 0) {
+Model.prototype.shelf_jump = function (face_n) {
 
     this.force_panel_popdown();
 
     this.is_shelf_rolling = true;
-    this.is_shelf_rot_right = false;
     this.shelf_rot_count = this.easeOut_inv(Math.abs(this.shelf_lean_rot / this.SHELF_ROT)) * this.FRAME_SHELF_ROLL;
 
     this.shelf_rot_state_pre = this.shelf_rot_state;
-    --this.shelf_rot_state;
+    this.shelf_rot_state = face_n;
+
+    this.update_textures(this.shelf_rot_state - 1);
+    this.update_textures(this.shelf_rot_state);
+    this.update_textures(this.shelf_rot_state + 1);
 
     this.update_statusbar();
     this.update_caption();
+};
+
+Model.prototype.shelf_turn_left = function () {
+  if (!this.is_shelf_rolling) {
+    if (this.shelf_rot_state > 0) {
+      this.shelf_jump(this.shelf_rot_state - 1);
+    } else {
+      this.shelf_jump(Math.ceil(this.MAX_FACES) - 1);
+    }
   }
 };
 
 Model.prototype.shelf_turn_right = function () {
-  if (!this.is_shelf_rolling && this.shelf_rot_state < this.MAX_FACES - 1) {
-
-    this.force_panel_popdown();
-
-    this.is_shelf_rolling = true;
-    this.is_shelf_rot_right = true;
-    this.shelf_rot_count = this.easeOut_inv(Math.abs(this.shelf_lean_rot / this.SHELF_ROT)) * this.FRAME_SHELF_ROLL;
-
-    this.shelf_rot_state_pre = this.shelf_rot_state;
-    ++this.shelf_rot_state;
-
-    this.update_statusbar();
-    this.update_caption();
+  if (!this.is_shelf_rolling) {
+    if (this.shelf_rot_state < this.MAX_FACES - 1) {
+      this.shelf_jump(this.shelf_rot_state + 1);
+    } else {
+      this.shelf_jump(0);
+    }
   }
 };
 
@@ -1045,7 +1065,9 @@ Model.prototype.update_caption = function () {
 //
 
 Model.prototype.update_statusbar = function () {
-  jQuery("div#status").css("width", this.sprintf("{0}%", 100.0 * (this.shelf_rot_state+1) / this.MAX_FACES));
+  jQuery('div#status').css('width', this.sprintf("{0}%", 100.0 * (this.shelf_rot_state+1) / this.MAX_FACES));
+  jQuery(this.sprintf('ul#pagination>li.p{0}', this.shelf_rot_state_pre)).removeClass('active');
+  jQuery(this.sprintf('ul#pagination>li.p{0}', this.shelf_rot_state)).addClass('active');
 }
 
 

@@ -1099,8 +1099,8 @@ Model.prototype.config_apply = function () {
   this.config_isPagination = jQuery('#statusBarTypePagination').prop('checked');
   this.config_isProgressBar = jQuery('#statusBarTypeProgressBar').prop('checked');
 
-  jQuery('#div_pagination').css('display', this.config_isPagination ? 'block' : 'none');
-  jQuery('#div_progress').css('display', this.config_isProgressBar ? 'block' : 'none');
+  jQuery('#divPagination').css('display', this.config_isPagination ? 'block' : 'none');
+  jQuery('#divProgress').css('display', this.config_isProgressBar ? 'block' : 'none');
 }
 
 
@@ -1144,16 +1144,17 @@ Model.prototype.sort_items = function (key, order) {
 Model.prototype.sort_toggle = function (key) {
   var order = (this.sort_orders[key] ^= 1);
 
+  var pre = '&nbsp;&nbsp;';
   var order_str = (order == this.ASC) ? "▲" : "▼";
 
   for (var ikey in this.KEY_NAMES) {
     var name = this.KEY_NAMES[ikey];
     var id = this.sprintf('#sort_{0}', name);
     if (ikey == key) {
-      jQuery(id).html(order_str + name);
+      jQuery(id).html(pre + name + order_str);
       jQuery(id).parent('li').addClass('active');
     } else {
-      jQuery(id).html(name);
+      jQuery(id).html(pre + name);
       jQuery(id).parent('li').removeClass('active');
     }
   }

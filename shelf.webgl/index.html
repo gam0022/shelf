@@ -94,31 +94,13 @@
           <a class="brand" href="#">Shelf</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li><a><i class="icon-search icon-white"></i></a></li>
-              <li class="active"><a id="sort_id"    onclick="model.sort_toggle(model.KEY_ID);">▲id</a></li>
-              <li><a id="sort_price" onclick="model.sort_toggle(model.KEY_PRICE);">price</a></li>
-              <li><a id="sort_color" onclick="model.sort_toggle(model.KEY_COLOR);">color</a></li>
+              <li class="disable"><a><i class="icon-search icon-white"></i></a></li>
+              <li class="active"><a id="sort_id" onclick="model.sort_toggle(model.KEY_ID);">&nbsp;&nbsp;id▲</a></li>
+              <li><a id="sort_price" onclick="model.sort_toggle(model.KEY_PRICE);">&nbsp;&nbsp;price</a></li>
+              <li><a id="sort_color" onclick="model.sort_toggle(model.KEY_COLOR);">&nbsp;&nbsp;color</a></li>
 
               <li class="divider-vertical"></li>
               <li><a href="#config" data-toggle="modal"><i class="icon-cog icon-white"></i></a></li>
-
-              <!--li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sort<b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li class="nav-header">id</li>
-                <li><a onclick="model.sort_items(model.KEY_ID, model.ASC);">ID ▲</a></li>
-                <li><a onclick="model.sort_items(model.KEY_ID, model.DESC);">ID ▼</a></li>
-                <li class="divider"></li>
-                <li class="nav-header">price</li>
-                <li><a onclick="model.sort_items(model.KEY_PRICE, model.ASC);">Price ▲</a></li>
-                <li><a onclick="model.sort_items(model.KEY_PRICE, model.DESC);">Price ▼</a></li>
-                <li class="divider"></li>
-                <li class="nav-header">color</li>
-                <li><a onclick="model.sort_items(model.KEY_COLOR, model.ASC);">COLOR ▲</a></li>
-                <li><a onclick="model.sort_items(model.KEY_COLOR, model.DESC);">COLOR ▼</a></li>
-              </ul>
-              </li-->
-
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -168,31 +150,28 @@
 
       <div style="width: 600px; position: relative; margin: 10px auto; padding: 0;">
 
-        <div class="canvas" style="left: 0; top: 50px;">
+        <div class="canvas" style="left: 0; top: 10px;">
           <canvas id="matrixengine-canvas" style="border:none; margin:0;" width=600px height=600px>
         </div>
 
-        <div style="position: absolute; left: 0px; top: 0px; width: 600px;" id="div_pagination">
-          <div class="pagination pagination-centered" style="width: auto; margin: 0 auto;">
-            <ul id="pagination"></ul>
-          </div>
-        </div>
-
-        <div style="position: absolute; left: 0px; top: 0px; width: 600px; display: none;" id="div_progress">
-          <div class="progress" style="width: 400px; margin: 0 auto;">
-            <div class="bar" style="width: 0%;" id="progress"></div>
-          </div>
-        </div>
-
-        <div style="position: absolute; left: 0px; top: 50px; width: 600px;">
+        <div style="position: absolute; left: 0px; top: 10px; width: 600px;">
           <div id="caption">caption</div>
         </div>
 
-        <div style="position: absolute; left: 20px; top: 320px;">
+        <div id="statusBar" style="position: absolute; left: 0px; top: 620px; width: 600px;">
+          <div id="divPagination" class="pagination pagination-centered" style="width: auto; margin: 0 auto;">
+            <ul id="pagination"></ul>
+          </div>
+          <div id="divProgress" class="progress" style="width: 400px; margin: 0 auto; display: none;">
+            <div id="progress" class="bar" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <div style="position: absolute; left: 20px; top: 280px;">
           <a id="navi-left" onclick="model.shelf_turn_left();" onmouseover="model.shelf_lean_left();" onmouseout="model.shelf_out_left();"></a>
         </div>
 
-        <div style="position: absolute; left: 513px; top: 320px;">
+        <div style="position: absolute; left: 513px; top: 280px;">
           <a id="navi-right" onclick="model.shelf_turn_right();" onmouseover="model.shelf_lean_right();" onmouseout="model.shelf_out_right();"></a>
         </div>
 

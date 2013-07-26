@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Shelf</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--meta name="viewport" content="width=600"-->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+
+    <!-- matrix engine -->
+    <!--meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" /-->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="./">Shelf</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a><i class="icon-search icon-white"></i></a></li>
+              <li><a>&nbsp;&nbsp;id▲</a></li>
+              <li><a>&nbsp;&nbsp;price</a></li>
+              <li><a>&nbsp;&nbsp;color</a></li>
+
+              <li class="divider-vertical"></li>
+              <li><a><i class="icon-cog icon-white"></i></a></li>
+
+              <li class="divider-vertical"></li>
+              <li class="active"><a href="#about" data-toggle="modal"><i class="icon-question-sign icon-white"></i></a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container manual">
+
+      <div class="hero-unit">
+        <h1>3D Web Catalog Manual</h1>
+        <p>SW107</p>
+        <p><a href="./" class="btn btn-primary btn-large">Back to top &raquo;</a></p>
+      </div>
+
+      <h1>これは何</h1>
+
+      <p>カバンの商品カタログです。</p>
+
+      <h1>操作方法</h1>
+
+
+      <h2>棚の回転方法</h2>
+
+      <p>棚を回転させる方法は3種類あります。</p>
+
+      <ol>
+        <li>棚の左右のアイコンをクリックする。</li>
+        <li>画面下のバーの数字をクリックする。</li>
+        <li>棚をドラッグする。</li>
+      </ol>
+
+
+      <h2>商品の詳細情報</h2> 
+
+      <p>カバンのパネルをクリックすると、パネルが手前にポップアップし、商品名や値段などの詳細情報を見ることができます。</p>
+
+
+      <h2>検索機能</h2>
+
+      <p>画面上部のナビゲーションバーに、「id」「price」「color」などの項目があります。</p>
+
+      <p>これらの項目をクリックすることで、それぞれ、商品ID、値段、色によってカバンをソートできます。</p>
+
+      <p>もちろん、昇順ソートと降順ソートの両方に対応しています。</p>
+
+
+      <h1>設定</h1>
+
+      <p>画面上部のナビゲーションバーの歯車のようなアイコンを開くと設定画面が開きます。</p>
+
+      <p>ここから、次の項目を設定出来ます。</p>
+
+      <ol>
+        <li>アニメーションの動きにEaseOutを効かせるかどうか。</li>
+        <li>ステータスバーのタイプ。</li>
+      </ol>
+
+
+      <h1>開発情報</h1>
+
+      開発には次のようなものを使いました。
+
+      <ol>
+        <li>MatrixEngine (WebGL)</li>
+        <li>JavaScript (jQuery)</li>
+        <li>HTML5, CSS3</li>
+        <li>Bootstrap</li>
+      </ol>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/bootstrap-transition.js"></script>
+    <script src="assets/js/bootstrap-alert.js"></script>
+    <script src="assets/js/bootstrap-modal.js"></script>
+    <script src="assets/js/bootstrap-dropdown.js"></script>
+    <script src="assets/js/bootstrap-scrollspy.js"></script>
+    <script src="assets/js/bootstrap-tab.js"></script>
+    <script src="assets/js/bootstrap-tooltip.js"></script>
+    <script src="assets/js/bootstrap-popover.js"></script>
+    <script src="assets/js/bootstrap-button.js"></script>
+    <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-carousel.js"></script>
+    <script src="assets/js/bootstrap-typeahead.js"></script>
+
+  </body>
+</html>
+

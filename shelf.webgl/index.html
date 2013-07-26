@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>COJT用の何か</title>
+    <title>Shelf</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--meta name="viewport" content="width=600"-->
     <meta name="description" content="">
@@ -94,25 +94,30 @@
           <a class="brand" href="#">Shelf</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="disable"><a><i class="icon-search icon-white"></i></a></li>
+              <li><a><i class="icon-search icon-white"></i></a></li>
               <li class="active"><a id="sort_id" onclick="model.sort_toggle(model.KEY_ID);">&nbsp;&nbsp;id▲</a></li>
               <li><a id="sort_price" onclick="model.sort_toggle(model.KEY_PRICE);">&nbsp;&nbsp;price</a></li>
               <li><a id="sort_color" onclick="model.sort_toggle(model.KEY_COLOR);">&nbsp;&nbsp;color</a></li>
 
               <li class="divider-vertical"></li>
               <li><a href="#config" data-toggle="modal"><i class="icon-cog icon-white"></i></a></li>
+
+              <li class="divider-vertical"></li>
+              <li><a href="#about" data-toggle="modal"><i class="icon-question-sign icon-white"></i></a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container" style="width: 600px; margin: 0 auto; padding: 0;">
+    <div class="container">
 
 
       <!--div id="console" class="well" style="">
       console
       </div-->
+
+
 
       <!-- Config Modal -->
       <div id="config" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -144,6 +149,50 @@
         <div class="modal-footer">
           <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
           <button class="btn btn-primary" onclick='model.config_apply();' data-dismiss="modal" aria-hidden="true">Save changes</button>
+        </div>
+      </div>
+
+
+      <!-- About Modal -->
+      <div id="about" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">About</h3>
+        </div>
+        <div class="modal-body">
+
+          <p>より詳しい情報は Manual を見てください。</p>
+
+          <p><a class="btn" href="manual.html">Manual &raquo;</a></p>
+
+          <legend>棚の回転方法</legend>
+
+          <p>棚を回転させる方法は3種類あります。</p>
+
+          <ol>
+            <li>棚の左右のアイコンをクリックする。</li>
+            <li>画面下のバーの数字をクリックする。</li>
+            <li>棚をドラッグする。</li>
+          </ol>
+
+
+          <legend>商品の詳細情報</legend> 
+
+          <p>カバンのパネルをクリックすると、パネルが手前にポップアップし、商品名や値段などの詳細情報を見ることができます。</p>
+
+
+          <legend>検索機能</legend>
+
+          <p>画面上部のナビゲーションバーに、「id」「price」「color」などの項目があります。</p>
+
+          <p>これらの項目をクリックすることで、それぞれ、商品ID、値段、色によってカバンをソートできます。</p>
+
+          <p>もちろん、昇順ソートと降順ソートの両方に対応しています。</p>
+
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
       </div>
 

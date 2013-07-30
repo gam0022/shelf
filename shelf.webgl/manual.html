@@ -40,18 +40,18 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <button type="button" class="btn btn-navbar" data-toggle="cullapse" data-target=".nav-cullapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
           <a class="brand" href="./">Shelf</a>
-          <div class="nav-collapse collapse">
+          <div class="nav-cullapse cullapse">
             <ul class="nav">
               <li><a><i class="icon-search icon-white"></i></a></li>
               <li><a>&nbsp;&nbsp;id▲</a></li>
               <li><a>&nbsp;&nbsp;price</a></li>
-              <li><a>&nbsp;&nbsp;color</a></li>
+              <li><a>&nbsp;&nbsp;culor</a></li>
 
               <li class="divider-vertical"></li>
               <li><a><i class="icon-cog icon-white"></i></a></li>
@@ -59,7 +59,7 @@
               <li class="divider-vertical"></li>
               <li class="active"><a href="#about" data-toggle="modal"><i class="icon-question-sign icon-white"></i></a></li>
             </ul>
-          </div><!--/.nav-collapse -->
+          </div><!--/.nav-cullapse -->
         </div>
       </div>
     </div>
@@ -72,22 +72,37 @@
         <p><a href="./" class="btn btn-primary btn-large">Back to top &raquo;</a></p>
       </div>
 
-      <h1>これは何</h1>
+      <h1>What's this?</h1>
 
-      <p>カバンの商品カタログです。</p>
+      <p>通販会社「千趣会」のカバンのネット通販用のWebアプリケーションです。</p>
 
-      <h1>操作方法</h1>
+      <h1>Selling Point</h1>
 
+      <p>「機能的で使いやすい」をコンセプトに開発をしました。</p>
+
+      <ul>
+        <li>誰にでも優しい直感的な操作。</li>
+        <li>EaseOutを用いた滑らかな回転。</li>
+        <li>商品の検索をサポートする実用的なソート機能。</li>
+        <li>PCでもNexus7でも快適に動作。</li>
+        <ul>
+          <li>WebGLの動作するWebブラウザさえあれば動作可能。</li>
+          <li>タブレットのフリック操作に対応。</li>
+        </ul>
+      </ul>
+
+
+      <h1>Usage</h1>
 
       <h2>棚の回転方法</h2>
 
       <p>棚を回転させる方法は3種類あります。</p>
 
-      <ol>
-        <li>棚の左右のアイコンをクリックする。</li>
+      <ul>
+        <li>棚の左右の矢印アイコンをクリックする。</li>
         <li>画面下のバーの数字をクリックする。</li>
-        <li>棚をドラッグする。</li>
-      </ol>
+        <li>棚をドラッグ(タブレットならフリック)する。</li>
+      </ul>
 
 
       <h2>商品の詳細情報</h2> 
@@ -95,37 +110,44 @@
       <p>カバンのパネルをクリックすると、パネルが手前にポップアップし、商品名や値段などの詳細情報を見ることができます。</p>
 
 
-      <h2>検索機能</h2>
+      <h2>ソート機能</h2>
 
-      <p>画面上部のナビゲーションバーに、「id」「price」「color」などの項目があります。</p>
+      <p>画面上部のナビゲーションバーにある<i class="icon-search"></i>アイコンの右隣に、「id」「price」「culor」の3項目があります。</p>
 
-      <p>これらの項目をクリックすることで、それぞれ、商品ID、値段、色によってカバンをソートできます。</p>
+      <p>これらの項目をクリックすることで、それぞれ「商品ID」「値段」「色」によってカバンをソートできます。</p>
 
       <p>もちろん、昇順ソートと降順ソートの両方に対応しています。</p>
 
 
-      <h1>設定</h1>
+      <h1>Configuration</h1>
 
-      <p>画面上部のナビゲーションバーの歯車のようなアイコンを開くと設定画面が開きます。</p>
+      <p>画面上部のナビゲーションバーにある<i class="icon-cog"></i>アイコンをクリックすると、設定画面が開きます。</p>
 
       <p>ここから、次の項目を設定出来ます。</p>
 
-      <ol>
+      <ul>
         <li>アニメーションの動きにEaseOutを効かせるかどうか。</li>
-        <li>ステータスバーのタイプ。</li>
-      </ol>
+        <li>ステータスバーの種類。</li>
+      </ul>
 
 
-      <h1>開発情報</h1>
+      <h1>Development Information</h1>
 
-      開発には次のようなものを使いました。
+      <p>開発には次のようなものを使いました。</p>
 
-      <ol>
+      <ul>
         <li>MatrixEngine (WebGL)</li>
         <li>JavaScript (jQuery)</li>
         <li>HTML5, CSS3</li>
         <li>Bootstrap</li>
-      </ol>
+        <li>OpenCV (色相の計算に使用)</li>
+      </ul>
+
+      <hr>
+
+      <footer>
+        <p>&copy; SW107 2013</p>
+      </footer>
 
     </div> <!-- /container -->
 
@@ -136,12 +158,12 @@
     <script src="assets/js/bootstrap-alert.js"></script>
     <script src="assets/js/bootstrap-modal.js"></script>
     <script src="assets/js/bootstrap-dropdown.js"></script>
-    <script src="assets/js/bootstrap-scrollspy.js"></script>
+    <script src="assets/js/bootstrap-scrullspy.js"></script>
     <script src="assets/js/bootstrap-tab.js"></script>
-    <script src="assets/js/bootstrap-tooltip.js"></script>
+    <script src="assets/js/bootstrap-toultip.js"></script>
     <script src="assets/js/bootstrap-popover.js"></script>
     <script src="assets/js/bootstrap-button.js"></script>
-    <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-cullapse.js"></script>
     <script src="assets/js/bootstrap-carousel.js"></script>
     <script src="assets/js/bootstrap-typeahead.js"></script>
 

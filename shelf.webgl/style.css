@@ -83,3 +83,7 @@ div.manual>h3 {
   font-size: 15px;
   border-left:7px solid #ccc;  
 }
+
+footer {
+  text-align: center;
+}

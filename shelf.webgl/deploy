@@ -1,1 +1,1 @@
-rsync -avze 'ssh -p 3843' --delete --exclude '*.log' ./ root@gam0022.net:/var/www/html/app/shelf
+rsync --iconv=UTF-8-MAC,UTF-8 -avzc --delete --exclude='*.log' ./ g22:/var/www/html/app/shelf
